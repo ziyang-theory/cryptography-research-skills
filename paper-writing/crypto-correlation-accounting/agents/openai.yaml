@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crypto Correlation Accounting"
+  short_description: "Normalize cryptographic correlation units"
+  default_prompt: "Use $crypto-correlation-accounting to define and normalize these correlation counts or throughput claims."

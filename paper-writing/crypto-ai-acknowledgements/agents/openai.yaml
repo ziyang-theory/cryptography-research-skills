@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cryptography AI Acknowledgements"
+  short_description: "Draft precise AI-use disclosures for cryptography papers"
+  default_prompt: "Use $crypto-ai-acknowledgements to draft or review an AI-use acknowledgement for my cryptography paper from the supplied account of assistance and human checking."

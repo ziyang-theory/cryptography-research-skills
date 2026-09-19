@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cryptography Research Artifacts"
+  short_description: "Prepare reproducible cryptography research packages"
+  default_prompt: "Use $crypto-research-artifacts to prepare and validate a scoped reviewer artifact for a cryptography paper."

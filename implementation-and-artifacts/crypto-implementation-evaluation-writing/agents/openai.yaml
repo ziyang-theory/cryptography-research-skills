@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crypto Implementation Evaluation"
+  short_description: "Write reproducible cryptography evaluations"
+  default_prompt: "Use $crypto-implementation-evaluation-writing to turn MPC or zero-knowledge implementation evidence into a precise evaluation section."

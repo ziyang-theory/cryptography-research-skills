@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crypto Proof Auditor"
+  short_description: "Defect-first audits of cryptographic proofs"
+  default_prompt: "Use $crypto-proof-auditor to audit this cryptographic proof for concrete gaps and unsupported claims."

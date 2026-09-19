@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crypto Prior-Work Comparison"
+  short_description: "Write fair cryptography prior-work comparisons"
+  default_prompt: "Use $crypto-prior-work-comparison to draft a fair comparison with prior cryptographic results."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Crypto Literature Evidence"
+  short_description: "Build traceable evidence from crypto papers"
+  default_prompt: "Use $crypto-literature-evidence to verify and synthesize the primary-source evidence for this cryptography question."

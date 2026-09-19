@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cryptography Manuscript QA"
+  short_description: "Validate cryptographic sources and rendered papers"
+  default_prompt: "Use $crypto-manuscript-qa to check the authoritative manuscript sources, references, and rendered PDF within the requested scope."
