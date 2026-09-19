@@ -66,6 +66,24 @@ Start a fresh agent session after installation. In Codex, mention `$crypto-proof
 
 The installer preserves existing files and matching links. Keep the checkout in place while the skills are installed. See the [installation details](docs/installation.md) for personal directories, individual skills, custom destinations, previews, updates, and conflict handling.
 
+## Showcase: a short MPC security proof
+
+We asked two isolated Codex sessions, using the same model and prompt, to write a short privacy proof for the semi-honest protocol in Section 3.4 of DN07 (Damgård–Nielsen, 2007). Both assumed protocol correctness and ideal preprocessing. One session had no skills; the other used this collection.
+
+The excerpts below show how the skills affect proof presentation: the response with skills describes the simulator and then gives named hybrid arguments, making the real-to-ideal transitions explicit.
+
+### Without skills
+
+The response justifies the simulation through a direct distributional argument.
+
+![Excerpt of the proof without skills, using a direct argument to justify the simulated view.](docs/images/dn07-without-skills.png)
+
+### With skills
+
+The response follows the simulator description with labeled hybrids and explanations of the transitions.
+
+![Excerpt of the proof with skills, showing the simulator followed by the first two labeled hybrids.](docs/images/dn07-with-skills.png)
+
 ## Further reading
 
 - [Skill catalog](docs/skills.md): all eleven skills and guidance on choosing one.
