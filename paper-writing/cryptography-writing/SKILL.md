@@ -31,11 +31,13 @@ A request to review, explain, proofread, or suggest wording is read-only unless 
 - For manuscript source selection, LaTeX builds, cross-references, and rendered PDF checks, use `crypto-manuscript-qa` when available.
 - Follow applicable project-local guidance for source selection, notation, construction invariants, and document checks. This skill requires no particular repository, manuscript layout, protocol, or parameter profile.
 
-## Proof-writing preference
+## Proof organization
 
-For a new security proof or an authorized substantial rewrite, first try a faithful simulation-based organization when the governing definition permits it: describe each simulator's permitted information, interfaces, state, and behavior; then give explicit real-to-simulated hybrids and accumulate the distinguishing bound. Use consecutive `Hyb_0:`, `Hyb_1:`, ... labels (`$\mathsf{Hyb}_0$:` in LaTeX), introducing each hybrid and justifying its transition before proceeding. Read [references/security-claims.md](references/security-claims.md) for the complete experiment, surrounding-view, repeated-family, and reduction obligations.
+For a new simulation-based security proof, or an authorized substantial rewrite or completion of one, describe each simulator's permitted information, interfaces, state, and behavior; then present explicit real-to-simulated hybrids and accumulate the distinguishing bound. Use consecutive `Hyb_0:`, `Hyb_1:`, ... labels (`$\mathsf{Hyb}_0$:` in LaTeX), introducing each hybrid and justifying its transition before proceeding. Read [references/security-claims.md](references/security-claims.md) for the complete experiment, surrounding-view, repeated-family, and reduction obligations.
 
-Follow the governing definition when a direct, game-, reduction-, relation-, or extraction-based argument is more faithful. Do not invent a simulator or vacuous hybrids. Preserve the source's proof organization during local edits; this presentation preference does not establish validity or authorize a changed theorem.
+This organization also applies to perfect-security proofs. Exact distributional equalities and conditional-distribution arguments can justify hybrid transitions; do not omit hybrids merely because a direct equality-of-distributions argument is available. Depart from this organization only when it conflicts with the governing definition or would require vacuous or ill-defined intermediate experiments, and explain the specific reason. Never invent a simulator, assumption, or proof step to satisfy the format.
+
+For claims whose governing definition does not call for simulation, follow the appropriate game-, reduction-, relation-, extraction-, or other proof form. Preserve the source's proof organization during local edits. This presentation requirement does not establish validity or authorize a changed theorem.
 
 ## Working method
 

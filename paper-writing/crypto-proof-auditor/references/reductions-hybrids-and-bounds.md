@@ -22,6 +22,8 @@ Audit all guessing, artificial-abort, rejection-sampling, conditioning, fork, re
 
 For hybrids `Hyb_0, ..., Hyb_m`, make every adjacent change explicit. For authored proofs or authorized reorganizations, use separate `Hyb_0:`, `Hyb_1:`, ... labels (`$\mathsf{Hyb}_0$:` in LaTeX), and define each hybrid and justify its edge from the immediately preceding hybrid before proceeding. Keep the source's own labels when reporting a read-only audit; notation alone does not determine validity.
 
+Apply the entrypoint's simulator-then-hybrids requirement to authorized writing of simulation-based proofs, including perfect-security proofs. An exact change in sampling or computation can be a meaningful transition even when the observed distribution is unchanged; verify the complete joint view and retained state. A direct conditional-distribution argument is not by itself a reason to omit the hybrid experiments. Any exception must give the specific reason required by the entrypoint; during read-only audits, assess direct proofs on their mathematical merits.
+
 For a repeated indexed family, verify a complete rule for every consecutive index and a uniform justification of `Hyb_{i-1}` to `Hyb_i`, with the correct surrounding state and bound for each transition. Check the first and last members and their connections to neighboring hybrids. A family label, ellipsis, or endpoint bound must not conceal an intermediate experiment or an unjustified jump. Record the required justifications in a table:
 
 | Edge | Changed component | Relation | Justification | Bad event | Advantage bound | Reduction cost |

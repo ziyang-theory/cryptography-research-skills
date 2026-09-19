@@ -34,7 +34,11 @@ An audit of a theoretical result needs its definitions, construction, proof, and
 
 ## Presentation and authorized repairs
 
-For an authorized proof rewrite or completion, describe the simulator first when appropriate, then present separate consecutive `Hyb_0:`, `Hyb_1:`, ... definitions, justifying each adjacent transition before introducing the next hybrid. In LaTeX use `$\mathsf{Hyb}_0$:`. During a read-only audit, retain the source's labels in findings and distinguish this presentation preference from validity: different labels or organization alone are not a technical defect, whereas an undefined intermediate experiment or an unjustified transition may be a proof gap or error.
+For an authorized new simulation-based security proof, substantial rewrite, or proof completion, describe the simulator first, then present separate consecutive `Hyb_0:`, `Hyb_1:`, ... definitions, justifying each adjacent transition before introducing the next hybrid. In LaTeX use `$\mathsf{Hyb}_0$:`. This organization also applies to perfect-security proofs: exact distributional equalities and conditional-distribution arguments can justify transitions. Do not omit hybrids merely because a direct equality-of-distributions argument is available.
+
+Depart from this organization only when it conflicts with the governing definition or would require vacuous or ill-defined intermediate experiments, and explain the specific reason. Never invent a simulator, assumption, or proof step to satisfy the format. For claims whose governing definition does not call for simulation, follow the appropriate proof form. Preserve existing organization during local repairs unless reorganization is authorized.
+
+During a read-only audit, retain the source's labels in findings and distinguish presentation requirements from validity: different labels or organization alone are not a technical defect, whereas an undefined intermediate experiment or an unjustified transition may be a proof gap or error.
 
 ## Core workflow
 
