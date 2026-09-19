@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: >-
+  If you find these skills useful in your research, please consider citing
+  this repository. Citation is appreciated but not required.
+type: software
+title: Cryptography Research Skills
+authors:
+  - family-names: Jin
+    given-names: Ziyang
+repository-code: https://github.com/ziyang-theory/cryptography-research-skills
+url: https://github.com/ziyang-theory/cryptography-research-skills
+license: MIT

@@ -71,3 +71,9 @@ The installer preserves existing files and matching links. Keep the checkout in 
 - [Skill catalog](docs/skills.md): all eleven skills and guidance on choosing one.
 - [Installation details](docs/installation.md): how Codex and Claude Code share the skills and additional installation options.
 - [Maintenance](docs/maintenance.md): repository layout, validation, and guidance for changes.
+
+## License and citation
+
+The repository's original skill instructions, documentation, configuration, and code are available under the [MIT License](LICENSE). Third-party material remains subject to its own terms.
+
+If you find these skills useful in your research, please consider citing this repository using the metadata in [CITATION.cff](CITATION.cff). Academic citation is appreciated but not required; the MIT license and copyright notice requirements still apply when copying or redistributing the material.

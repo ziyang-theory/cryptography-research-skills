@@ -4,6 +4,8 @@
 
 ```text
 README.md                         Introduction and quick installation
+LICENSE                           MIT license and copyright notice
+CITATION.cff                      Optional academic citation metadata
 docs/skills.md                    Skill catalog and selection guide
 docs/installation.md              Agent compatibility and installation options
 docs/maintenance.md               Repository layout and validation
