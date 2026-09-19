@@ -1,6 +1,6 @@
 # Cryptography Research Skills
 
-Reusable agent skills for cryptography research, organized into two independently selectable collections.
+Reusable agent skills for cryptography research in **Codex and Claude Code**, organized into two independently selectable collections.
 
 **Paper Writing** supports a theoretical project from literature and definitions through constructions, proofs, symbolic cost analysis, comparisons and manuscript preparation. It does not require an implementation, experiments or a software artifact.
 
@@ -46,32 +46,79 @@ Evaluation writing belongs here because its methods depend on experimental desig
 
 The collection applies across MPC, zero knowledge and other cryptographic research. Construction-specific references are loaded only when relevant. Retained literature examples are primarily MPC-focused and carry their own source/verification qualifications; they do not establish comprehensive coverage of every subfield.
 
-## Local installation in Codex
+## How Codex and Claude Code use the same skills
 
-From this checkout, install only Paper Writing:
+Both tools read the shared `SKILL.md` files and their skill-local `references/`. The YAML `name` and `description` identify each skill; the Markdown body contains its research workflow. The installer links each selected skill into the chosen tool's personal skills directory, so both installations use one source copy in this checkout.
+
+| Tool | Personal installation directory | Explicit invocation example |
+| --- | --- | --- |
+| Codex | `~/.agents/skills/<skill-name>/` | `$crypto-proof-auditor` |
+| Claude Code | `~/.claude/skills/<skill-name>/` | `/crypto-proof-auditor` |
+
+Both tools can select a skill from its description when the request matches. Codex's optional `agents/openai.yaml` files supply its display names and suggested prompts; the shared workflow does not depend on those files. Claude Code uses `SKILL.md` for these standalone skills. The collection directory names organize this repository; each installed skill is linked directly below the tool's skills directory.
+
+See the official [Codex skill documentation](https://learn.chatgpt.com/docs/build-skills) and [Claude Code skill documentation](https://code.claude.com/docs/en/skills) for discovery, invocation, and symlink support. This installer targets local personal skills. Claude account uploads, cloud sessions, and plugin-manager distribution use separate installation mechanisms.
+
+## Installation
+
+Clone this repository to a stable location, then run the commands from its root. The installer uses Python 3's standard library and requires permission to create directory symlinks. Install the agent you intend to use separately.
+
+### Codex
+
+Install Paper Writing for all your local Codex projects:
 
 ```sh
-python3 scripts/install.py --collection paper-writing
+python3 scripts/install.py --agent codex --collection paper-writing
 ```
 
-Install the optional implementation collection, or both collections:
+Omitting `--agent` preserves the original Codex default. Omitting `--collection` selects Paper Writing.
+
+### Claude Code
+
+Install Paper Writing for all your local Claude Code projects:
 
 ```sh
-python3 scripts/install.py --collection implementation-and-artifacts
-python3 scripts/install.py --collection all
+python3 scripts/install.py --agent claude --collection paper-writing
 ```
 
-Preview the operation without creating files:
+Start a fresh Claude Code session after the first installation and try:
+
+```text
+/crypto-proof-auditor Audit the security proof in this manuscript.
+```
+
+In Codex, use the corresponding `$crypto-proof-auditor` mention. You can also make a matching research request in either tool and allow it to select the relevant skill.
+
+### Both tools and other selections
+
+To use the same Paper Writing collection in both tools, run both installation commands above. Each tool's links point to the same source folders. Installing for Claude Code leaves the Codex links intact.
+
+For either agent, select only the optional implementation collection, all eleven skills, or one individual skill. These examples use Claude Code; replace `claude` with `codex` for Codex:
 
 ```sh
-python3 scripts/install.py --collection all --dry-run
+python3 scripts/install.py --agent claude --collection implementation-and-artifacts
+python3 scripts/install.py --agent claude --collection all
+python3 scripts/install.py --agent claude --skill crypto-proof-auditor
 ```
 
-The installer uses Python 3's standard library and creates one symlink per selected skill in `~/.agents/skills`. It keeps the grouped checkout as the source of truth, retains skill names and invocation policies, and refuses to overwrite an existing directory or a different link. Existing correct links are left intact. All destination conflicts are checked before any links are created. Keep the checkout at a stable path while those links are installed.
+Preview an installation without creating files:
 
-Use `--skill crypto-proof-auditor` to install one skill, or `--destination /chosen/skills` to select a different discovery directory. Individual skill folders can also be copied intact, including their references, using the installation mechanism of the intended agent. Companion skills are optional and there are no required file links into another skill.
+```sh
+python3 scripts/install.py --agent claude --collection all --dry-run
+```
 
-Codex documents support for [personal skills and symlinked skill folders](https://learn.chatgpt.com/docs/build-skills). Other agents' discovery paths and metadata support should be checked against their documentation.
+An explicit `--destination` overrides the agent's personal directory. For example, install Paper Writing into a particular research project's Claude Code skills directory:
+
+```sh
+python3 scripts/install.py --agent claude --collection paper-writing \
+  --destination /path/to/research-project/.claude/skills
+```
+
+The earlier `--destination "$HOME/.claude/skills"` form also works without `--agent`. An arbitrary destination only makes skills available if the agent discovers that directory.
+
+The installer refuses to overwrite an existing directory, file, or different link, including a broken link. It checks all selected destinations before creating links, and repeating a successful installation leaves matching links intact. Resolve a reported conflict by reviewing the existing installation before moving or removing it. Selecting a smaller collection later adds any missing selected skills; it does not uninstall skills already present.
+
+Keep the checkout at a stable path while its links are installed. Updating this checkout updates the files used by both tools; start a fresh session to pick up changed skills. If you prefer copied installations, copy individual skill folders intact with their references and update those copies yourself. Companion skills are optional, and no skill requires a file from another skill folder.
 
 ## Organization and maintenance
 
@@ -79,10 +126,19 @@ Codex documents support for [personal skills and symlinked skill folders](https:
 paper-writing/                    Seven paper-writing skills
 implementation-and-artifacts/     Four implementation and artifact skills
 collections.json                  Collection membership
-scripts/install.py                Selective local installation
+scripts/install.py                Selective installation for Codex or Claude Code
+tests/test_install.py              Isolated installer regression tests
 ```
 
 Each skill retains its `SKILL.md`, selectively loaded `references/`, and optional `agents/openai.yaml`. The collection folders are navigation and installation groups, not additional catch-all skills. Installation defaults to Paper Writing when no collection is specified.
+
+Run the installer tests with:
+
+```sh
+python3 -m unittest discover -s tests -v
+```
+
+The tests isolate both personal directories in temporary homes and check selection, shared targets, repeated installation, dry-run, and conflict protection. They validate installation behavior; actual skill discovery and response quality should also be checked in each agent.
 
 Keep technical requirements distinct from editorial preferences. A preferred proof organization or label style can be adapted to the author and venue while preserving the governing definition and proof obligations. Proof validity, functional testing, analytical costs, empirical performance and publication readiness remain distinct conclusions.
 

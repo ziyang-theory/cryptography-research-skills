@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Link selected skills into a discovery directory without overwriting files."""
+"""Install shared skills for Codex or Claude Code using directory symlinks."""
 
 import argparse
 import json
@@ -9,6 +9,10 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
+AGENT_SKILL_PATHS = {
+    'codex': ('.agents', 'skills'),
+    'claude': ('.claude', 'skills'),
+}
 
 
 def load_skills(root):
@@ -70,10 +74,13 @@ def install(skills, destination, dry_run=False):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--agent', choices=AGENT_SKILL_PATHS, default='codex',
+                        help='Agent whose personal skills directory to use (default: codex)')
     selection = parser.add_mutually_exclusive_group()
     selection.add_argument('--collection', choices=['paper-writing', 'implementation-and-artifacts', 'all'])
     selection.add_argument('--skill', help='Install one skill by name')
-    parser.add_argument('--destination', type=Path, default=Path.home() / '.agents' / 'skills')
+    parser.add_argument('--destination', type=Path,
+                        help='Explicit discovery directory; overrides the --agent destination')
     parser.add_argument('--dry-run', action='store_true')
     args = parser.parse_args()
     try:
@@ -86,7 +93,8 @@ def main():
             collection = args.collection or 'paper-writing'
             skills = {name: entry for name, entry in skills.items()
                       if collection == 'all' or entry[0] == collection}
-        install(skills, args.destination, args.dry_run)
+        destination = args.destination or Path.home().joinpath(*AGENT_SKILL_PATHS[args.agent])
+        install(skills, destination, args.dry_run)
     except (OSError, ValueError) as error:
         print(f'Error: {error}', file=sys.stderr)
         return 1
