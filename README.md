@@ -5,7 +5,7 @@
 I plan for this to be a public repository that helps people do AI-assisted research in cryptography and helps people draft cryptography papers that are readable by people who work in this field. The skills are developed during my research
 in cryptography, especially in secure multiparty computation (MPC) and zero-knowledge proofs. The current version may not help too much in lattice-based (or post-quantum) cryptography, but lattice-based cryptography is definitely on my roadmap.
 
-When we ask AI to write a proof for a theorem in cryptography, the proof is usually mathematically correct, but uses terminology and styles different from those cryptography researchers would use. For example, the standard way to prove the security of a maliciously secure MPC protocol is to first describe the simulator, then write a sequence of hybrid arguments that starts with the real world and ends with the ideal world. Currently, AI does not do this. The set of skills in this repo teaches AI to follow the standard way of writing cryptography proofs as a graduate student would. During the development of the skills, I feed in classic textbooks and papers and ask AI to summarize the styles and terminology. Note that as a cryptography researcher or a PhD student, you should still think about how the simulator works and how the hybrids would go. The real learning happens when you realize the subtleties in the proofs. The purpose of the writing skills in this repo is to help you understand AI-generated cryptography proofs better, in a common language that cryptographers speak.
+When we ask AI to write a proof for a theorem in cryptography, the proof may look mathematically plausible while containing gaps or using unfamiliar terminology and styles. For example, a familiar way to present a simulation-based security proof for a maliciously secure MPC protocol is to first describe the simulator, then write a sequence of hybrid arguments that starts with the real world and ends with the ideal world. The set of skills in this repo encourages this organization where it clarifies the argument; a direct distributional proof can also be appropriate. During the development of the skills, I feed in classic textbooks and papers and ask AI to summarize the styles and terminology. Note that as a cryptography researcher or a PhD student, you should still think about how the simulator works and how the hybrids would go. The real learning happens when you realize the subtleties in the proofs. The purpose of the writing skills in this repo is to help you understand AI-generated cryptography proofs better, in a common language that cryptographers speak.
 
 I describe the three stages of cryptography paper writing:
 
@@ -30,10 +30,12 @@ Ziyang Jin
 
 The skills work with **Codex and Claude Code**. Choose either or both collections:
 
-- **Paper Writing:** seven skills for literature, definitions, proofs, comparisons, and manuscript preparation. This collection works on its own for theoretical research.
+- **Paper Writing:** eight skills for research framing, literature, definitions, proofs, comparisons, and manuscript preparation. This collection works on its own for theoretical research.
 - **Implementation & Artifacts:** four optional skills for protocol implementation, benchmarking, evaluation writing, and reproducible artifacts.
 
 You need Python 3 and your chosen agent installed. Clone this repository to a stable location; the installer creates directory symlinks to its skill folders.
+
+The [skill catalog](docs/skills.md) groups tasks into three themes: **formulate and understand**, **write and examine**, and **implement and substantiate**. Start with the skill matching your requested result; specialist references and companion skills are loaded only when needed.
 
 ```sh
 git clone https://github.com/ziyang-theory/cryptography-research-skills.git
@@ -56,7 +58,7 @@ Install Paper Writing:
 python3 scripts/install.py --agent claude --collection paper-writing
 ```
 
-Run both commands to use the same skills in both tools. Replace `paper-writing` with `all` to install all eleven skills, or with `implementation-and-artifacts` to install only that collection. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Paper Writing.
+Run both commands to use the same skills in both tools. Replace `paper-writing` with `all` to install all twelve skills, or with `implementation-and-artifacts` to install only that collection. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Paper Writing.
 
 Start a fresh agent session after installation. In Codex, mention `$crypto-proof-auditor`; in Claude Code, try:
 
@@ -86,7 +88,7 @@ The response follows the simulator description with labeled hybrids and explanat
 
 ## Further reading
 
-- [Skill catalog](docs/skills.md): all eleven skills and guidance on choosing one.
+- [Skill catalog](docs/skills.md): all twelve skills and guidance on choosing one.
 - [Installation details](docs/installation.md): how Codex and Claude Code share the skills and additional installation options.
 - [Maintenance](docs/maintenance.md): repository layout, validation, and guidance for changes.
 

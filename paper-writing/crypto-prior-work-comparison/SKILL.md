@@ -1,65 +1,32 @@
 ---
 name: crypto-prior-work-comparison
-description: Draft or revise cryptography-paper comparisons with prior results using claim-aligned baselines, explicit models and cost measures, and traceable evidence. Use for introduction, contribution, related-work, comparison-table, and discussion prose. Do not use for literature discovery alone, proof-validity auditing, benchmark execution, or implementation work.
+description: Draft or review cryptography prior-work comparisons and comparison tables by aligning models, construction variants, costs, and evidence. Use for positioning results, not literature discovery alone or benchmark execution.
 ---
 
 # Crypto Prior-Work Comparison
 
-Position a result precisely enough that a reader can tell what is improved, under which model, and at what cost. A comparison is valid only on the axes that have actually been aligned.
+Make clear what improves, under which conditions, and at what cost. Compare complete supported variants: one theorem's guarantee and another's efficiency do not form a new result.
 
-Theory-only comparisons use theorem statements, definitions, assumptions, and analytical bounds. Code, experiments, and artifacts are needed only for claims about them. Companion skills are optional; if absent, continue with the source and comparison checks here.
+## Fix what is being compared
 
-## Authorization and evidence
+Recover the target claim before selecting baselines. Identify the task and output guarantee; adversary, corruption, assumptions and setup; construction version and parameter regime; and the cost's phase, unit, aggregation, denominator, and exclusions. Include only axes that matter to this comparison. Theory-only comparisons use definitions, theorems, and analytical bounds; they need no code or benchmarks.
 
-- Treat review, explanation, or suggested wording as read-only unless the user explicitly requests edits.
-- Verify each cited theorem, table entry, parameter, and benchmark against the primary source when the task permits source access. Do not propagate an attribution merely because another paper repeats it.
-- Never turn missing, unreported, idealized, or non-comparable data into zero cost.
-- Do not strengthen a theorem, security model, implementation claim, or priority claim for rhetorical force.
-- Attribute author-maintained artifacts, independent reproductions, ports, hybrid backends, and transformed variants accurately. A local default or a shared codebase does not make a variant the authors' official implementation.
-- If concrete security is unestablished for a measured sampler or configuration, preserve the absolute measurement and parameter rationale while qualifying any comparison at matched security.
+Select the smallest baseline set that answers the claim: the closest predecessor, the strongest relevant result on each claimed axis, and other work that changes the interpretation. Use relevance, not the largest available ratio. A separate literature search is needed only if the supplied sources cannot support that choice.
 
-## Before drafting
+## Build and write the comparison
 
-Freeze the target result and the comparison contract:
+1. Map each substantive claim or table cell to a primary-source version and locator. Verify attributions against that source; distinguish unverified supplied evidence. Preserve author implementations, independent reproductions, ports, and transformed variants as different lineages.
+2. Separate theorem-level, asymptotic, concrete analytical, and empirical results. Label numbers as measured, rerun, inherited, derived, estimated, or projected as applicable. A component rate or ideal-resource proxy is not end-to-end performance.
+3. Normalize comparable axes and disclose differences affecting the conclusion next to it. Missing or unreported work is not zero. A measured configuration without established concrete security cannot support a security-matched ranking merely from its parameter width.
+4. State the result and its mechanism or tradeoff under the aligned conditions. Give absolute values before ratios; recompute totals, conversions, amortization, and break-even points. Reconcile text, headers, captions, and formulas.
+5. Use the narrowest supported conclusion. Preserve prior work's remaining advantages and state incomparability where a conversion is unsupported.
 
-- task or functionality and output guarantee;
-- adversary, corruption threshold and timing, setup or hybrid resources, assumptions, oracle model, and composition scope;
-- construction version and supported parameter regime;
-- compared cost object, phase, unit, direction or aggregation, denominator, and excluded work;
-- whether each datum is asymptotic, analytically derived, measured, rerun, inherited, estimated, or projected.
+Review or suggested wording is read-only unless edits are requested. When editing, preserve the manuscript's notation and voice. Do not strengthen security, performance, or priority claims for rhetorical effect.
 
-If a difference on one of these axes materially affects the ranking, disclose it next to the comparison. If alignment would require an unsupported conversion, state that the results are incomparable on that axis.
+## Optional detail
 
-## Working method
+- [Comparison method](references/comparison-method.md): substantial sections/tables, uncertain normalization, or mixed numerical provenance.
+- [Source patterns](references/source-patterns.md): examples of comparison structures and known table-consistency pitfalls.
+- [Theorem variant cases](references/theorem-variant-cases.md): properties drawn from incompatible variants or compressed quantitative premises.
 
-For the overall organization of an abstract or introduction, use `cryptography-writing` and its `references/abstracts-and-introductions.md` guide when available. That guide owns the narrative structure; this skill owns baseline selection, aligned comparisons, and evidence provenance. A contribution paragraph should establish the relevant gap before expanding the literature discussion.
-
-Read [references/comparison-method.md](references/comparison-method.md) in full for a new or substantially revised comparison section/table, or whenever numerical provenance, model alignment, or cost accounting is uncertain. For a narrow local sentence edit whose evidence and comparison contract are already fixed, use only the invariants in this entrypoint; load the full method if the edit exposes an uncertainty that requires it.
-
-1. Build a table of claims and supporting sources before drafting prose. Give every claim or table cell a source locator and provenance class.
-2. Choose baselines by relevance, not by whichever gives the largest ratio. Include the closest predecessor, the strongest baseline on each claimed axis, and concurrent or orthogonal work when it changes the reader's interpretation.
-3. Separate theorem-level, asymptotic, concrete analytical, and empirical comparisons. Never use a result from one layer as if it belonged to another.
-4. Normalize comparable axes and expose material differences that remain.
-5. Draft in the order: comparison contract, result, mechanism or tradeoff, scope limitation, then evidence.
-6. Recompute ratios, totals, amortization, and break-even points. Reconcile table headers, captions, prose, and source formulas.
-7. Use the narrowest supported conclusion. Prefer a conditional claim over an unqualified ranking.
-
-Read [references/source-patterns.md](references/source-patterns.md) only when examples from the eight source papers or known failure patterns would help.
-
-## Required distinctions
-
-Keep these separate whenever relevant:
-
-- security guarantee versus efficiency;
-- asymptotic improvement versus concrete improvement;
-- total, phase-specific, online-only, and setup-excluded cost;
-- one-way maximum, per-party, aggregate, broadcast, and point-to-point communication;
-- single execution, parallel amortization, sequential amortization, and reusable preprocessing;
-- logical rounds, simultaneous layers, and measured latency;
-- measured implementation results, calculated operation counts, and estimates from external throughput;
-- end-to-end protocol performance and a component or ideal-resource proxy;
-- best in one regime and best overall.
-
-## Output standard
-
-The finished section should let a skeptical reader reconstruct the comparison without reverse-engineering the paper. Report unresolved version, model, provenance, or unit ambiguities rather than smoothing them over. Preserve the manuscript's terminology, notation, citations, and voice when editing existing prose.
+Use `cryptography-writing` only when the task also requires broader narrative organization, and `crypto-literature-evidence` when additional source research is needed. The comparison itself should remain self-contained. Return reconstructible claims and material unresolved mismatches, without forcing a fixed paragraph order or evidence template onto a small edit.

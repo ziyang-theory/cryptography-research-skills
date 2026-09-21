@@ -24,4 +24,4 @@ Start a short README with purpose, requirements, quick build and the focused cor
 
 A broad developer test suite can remain available without being the first command. Do not hide checks required to interpret the headline experiment. Keep researcher-facing provenance detailed enough to reproduce results while making terminal output concise.
 
-Analysis should operate on newly generated evidence unless the release explicitly includes a historical reanalysis workflow. For multi-part commands, state whether outputs merge automatically and validate compatibility before combining them. A code path present in source, a completed correctness test, a timing run and a published result are different statuses.
+Choose fresh measurement, historical reconstruction, or both according to the selected claim and release scope; label which evidence each command uses. For multi-part commands, state whether outputs merge automatically and validate compatibility before combining them. A code path present in source, a completed correctness test, a timing run and a published result are different statuses.

@@ -48,4 +48,4 @@ When a replacement argument is supplied, check its direction: an allowed adversa
 
 Use the project's existing review or implementation notes to connect: old/new source identities; changed contract and affected dependencies; proposed equivalence, component theorem or reduction; revised parameter/bound status; focused validation and remaining obligations. Distinguish an obligation merely identified, an informal argument, a checked formal result, and a trusted assumption.
 
-For an implementation-only request, make the authorized code change and report any unresolved security support without rewriting the paper to fit it. If the requested deliverable requires preserving a guarantee that remains unsupported, report that limitation explicitly. A proof-validity audit can use `crypto-proof-auditor` when available; this reference remains usable without that companion.
+If preserving a requested guarantee remains unsupported, identify the missing security argument explicitly. This change-impact record does not itself constitute a full proof-validity audit.

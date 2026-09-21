@@ -18,6 +18,8 @@ Pin dependencies and document fetch/offline requirements. Check links and file r
 
 ## Detached validation
 
+Apply this procedure when packaging or detached validation is requested. For a plan, describe it without creating a package; for documentation-only work, check affected instructions and references without treating the edit as a new performance run.
+
 Create a fresh extraction outside Git, sibling projects and old build outputs. Follow the reviewer commands from that directory. Validate the smallest correctness example, representative experiment and analysis path, expected output/schema, and all documented required inputs; choose larger runs only when needed and feasible.
 
 Record exact commands, host/toolchain/configuration, selected variant, outcomes, time scope and limitations. Separate functional, smoke, full-performance, anonymity and offline checks. Record NOT RUN for unsupported or unexecuted checks; do not convert script syntax checks into a native benchmark pass.

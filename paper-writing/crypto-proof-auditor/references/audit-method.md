@@ -120,3 +120,11 @@ A counterexample to an intermediate step shows that step is invalid; it refutes 
 ## Evidence standard
 
 Flag a finding only when it identifies a precise failed obligation, materially affects the audited claim or its intelligibility, and is supported by a derivation, model mismatch, counterexample, or explicit missing dependency. Keep speculative concerns as questions. Separate a source omission that is derivable from existing premises from a substantive gap requiring a new idea.
+
+## Optional diagnostic examples
+
+Use only a case that illuminates the disputed inference. These examples are not additional audit requirements or evidence about an unspecified construction.
+
+- [Joint views and exact premises](diagnostic-examples.md): almost-everywhere versus exact equivalence, privacy thresholds, and matching marginals.
+- [Proof modes and quantifiers](proof-mode-and-quantifier-traps.md): unavailable simulator state, nonabort dependence, setup-dependent choices, and exposed seed components.
+- [Interfaces and concrete bounds](interface-and-concrete-bound-diagnostics.md): PRF argument roles, AE key commitment, MAC domains, reduction bounds versus attacks, and efficient event recognition.

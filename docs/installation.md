@@ -19,7 +19,7 @@ See the official [Codex skill documentation](https://learn.chatgpt.com/docs/buil
 
 To use the same Paper Writing collection in both tools, run both installation commands in the [README](../README.md#installation). Each tool's links point to the same source folders. Installing for Claude Code leaves the Codex links intact.
 
-For either agent, select only the optional implementation collection, all eleven skills, or one individual skill. These examples use Claude Code; replace `claude` with `codex` for Codex:
+For either agent, select only the optional implementation collection, all twelve skills, or one individual skill. These examples use Claude Code; replace `claude` with `codex` for Codex:
 
 ```sh
 python3 scripts/install.py --agent claude --collection implementation-and-artifacts

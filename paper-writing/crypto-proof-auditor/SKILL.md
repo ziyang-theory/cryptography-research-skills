@@ -1,91 +1,35 @@
 ---
 name: crypto-proof-auditor
-description: Audit cryptographic theorem statements, proofs, proof sketches, reductions, hybrid arguments, simulators, and extractors for concrete gaps and unsupported scope. Use when asked to verify, audit, stress-test, diagnose, or complete a cryptographic proof or claimed security theorem. Read-only and defect-first by default. Do not use for prose-only editing, code or artifact verification, PDF/build work, raw benchmark accounting, or generic non-cryptographic proofs.
+description: Audit or complete cryptographic proofs, reductions, simulators, and security theorems. Use for proof-validity questions; read-only unless completion or source edits are requested. Not for prose-only, code-conformance, or PDF reviews.
 ---
 
 # Crypto Proof Auditor
 
-Audit whether the stated conclusion follows under the stated definitions, model, and assumptions. Search for concrete defects and missing obligations; do not rewrite the proof merely because another presentation would be cleaner.
+Determine whether the conclusion follows under the stated definition, model, and assumptions. An audit is read-only unless completion or edits are requested. Never conceal a gap by silently adding an assumption, weakening the theorem, or changing the construction. Different proof organization or labels alone are not defects.
 
-For prose and reports, use precise cryptographic terms and concrete descriptions. Preserve established technical meanings and quoted or formally defined terminology. The companion `cryptography-writing` skill provides further terminology guidance when available.
+## Audit workflow
 
-## Authorization and evidence
+1. Resolve the active theorem, definitions, construction, proof, and source revision. Separate the intended target from the supplied statement and checked argument. Identify imported results you will check and those left unverified.
+2. Fix the theorem's objects, domains, parameter regime, quantifier order, and permitted dependencies. Record the adversary/corruption model, setup and oracle interfaces, compared joint outputs or success event, leakage, assumptions, bound, abort/delivery guarantee, and composition or reuse scope.
+3. Trace each part of the conclusion to the lemmas, calculations, simulators, extractors, or reductions supporting it. Check hypotheses, types, parameter substitutions, model compatibility, efficiency, and accumulated error. A dependency graph is useful for a large proof, not a required deliverable for a local question.
+4. For game or hybrid arguments, check complete experiments, endpoints, each adjacent justification, challenge embedding, the correctly correlated surrounding view, and the final advantage/runtime bound. For simulation, check that every action uses information available at that time. Inspect the actual experiment rather than importing a familiar template.
+5. Test disputed inferences with boundary parameters, adversarial choices, conditioning, schedules, reuse, or small counterexamples as relevant. A counterexample to a step need not refute the theorem; failure to find one is not a proof. Do not call a missing derivation routine until checked.
+6. Compare the established conclusion with the claimed scope. Mathematical proof support, implementation conformance, and empirical evidence are distinct conclusions; tests and builds do not establish a security theorem.
 
-A request to audit, verify, review, explain, or find gaps is read-only. Edit a manuscript or attempt a proof completion only when the user explicitly requests source changes or completion. Never hide a gap by silently adding a hypothesis, weakening a theorem, changing a construction, or replacing a proof with intuition.
+## Read only the needed detail
 
-An informal audit is not a machine-checked proof. Code, tests, benchmarks, and a successful LaTeX build can corroborate specified behavior or find counterexamples; they do not establish a cryptographic security theorem.
+- [Audit method](references/audit-method.md): dependency tracing, probability, quantifiers, counterexamples, and optional diagnostic examples.
+- [Reductions and bounds](references/reductions-hybrids-and-bounds.md): game hops, conditioning, sampler changes, concrete loss, and tightness.
+- [Simulation and composition](references/simulation-composition-and-resources.md): malicious behavior, causality, abort, sessions, and ideal-resource replacement.
+- [Extraction and oracles](references/extraction-and-oracles.md): knowledge claims, commitments, proof systems, Fiat--Shamir, ROM, and QROM.
+- [Repair and validation](references/repair-and-validation.md): authorized completion or edits.
 
-An audit of a theoretical result needs its definitions, construction, proof, and relevant mathematical dependencies, not an implementation or experiments. Companion skills are optional; if unavailable, continue using this workflow and its references rather than blocking the audit.
+A theory audit requires no implementation or experiments. These references are self-contained; optional writing or implementation skills are useful only when that additional work is requested.
 
-## Use the surrounding skill stack
+## Report findings
 
-- Use `cryptography-writing` when available for terminology and authorized prose edits. The audit workflow below is self-contained; no particular repository or protocol is required.
-- Follow applicable project-local guidance to resolve the authoritative source, notation, cited pages, construction semantics, and project invariants.
-- Use `crypto-protocol-implementation` when available, or inspect the code directly, when the request separately asks whether an implementation matches the proof. Keep proof validity and artifact conformance as distinct conclusions.
+Lead with supported findings, ordered by consequence. For each, give the claim and source anchor, failed obligation, evidence, consequence, smallest defensible repair or missing lemma, and residual uncertainty. Scale the format to the question; a fixed worksheet is unnecessary. Identify valid challenged steps as well as invalid ones when adjudicating a disputed inference.
 
-## Route the audit
+Distinguish **confirmed error** (invalid inference or counterexample), **proof gap** (missing obligation), **unstated assumption**, **scope overclaim**, **ambiguity**, **unverified dependency**, and **presentation issue**. State impact and confidence; keep speculative concerns as questions.
 
-- Read [references/audit-method.md](references/audit-method.md) for a full proof audit, dependency tracing, mathematical validity, counterexample search, or a disputed inference.
-- Read [references/reductions-hybrids-and-bounds.md](references/reductions-hybrids-and-bounds.md) for reductions, games, hybrid transitions, conditioning, bad events, concrete or asymptotic reduction loss, and tightness.
-- Read [references/simulation-composition-and-resources.md](references/simulation-composition-and-resources.md) for real/ideal simulation, malicious behavior, abort or leakage, composition, sessions, reuse, protocol schedules, and ideal-to-concrete resources.
-- Read [references/extraction-and-oracles.md](references/extraction-and-oracles.md) for proofs or arguments of knowledge, extractors, commitments, PCPs or IOPs, random oracles, Fiat--Shamir, ROM or QROM, and oracle programming.
-- Read [references/repair-and-validation.md](references/repair-and-validation.md) only when proof completion or source edits are authorized.
-- For a narrow question, read only the implicated references. For an end-to-end security-proof audit, read all four audit references.
-
-## Presentation and authorized repairs
-
-For an authorized new simulation-based security proof, substantial rewrite, or proof completion, describe the simulator first, then present separate consecutive `Hyb_0:`, `Hyb_1:`, ... definitions, justifying each adjacent transition before introducing the next hybrid. In LaTeX use `$\mathsf{Hyb}_0$:`. This organization also applies to perfect-security proofs: exact distributional equalities and conditional-distribution arguments can justify transitions. Do not omit hybrids merely because a direct equality-of-distributions argument is available.
-
-Depart from this organization only when it conflicts with the governing definition or would require vacuous or ill-defined intermediate experiments, and explain the specific reason. Never invent a simulator, assumption, or proof step to satisfy the format. For claims whose governing definition does not call for simulation, follow the appropriate proof form. Preserve existing organization during local repairs unless reorganization is authorized.
-
-During a read-only audit, retain the source's labels in findings and distinguish presentation requirements from validity: different labels or organization alone are not a technical defect, whereas an undefined intermediate experiment or an unjustified transition may be a proof gap or error.
-
-## Core workflow
-
-1. Resolve the exact theorem, governing definitions, authoritative source revision, and requested audit surface. Separate the intended target, active theorem, supplied proof, and implementation interpretation; ignore commented or superseded statements as current claims. State which imported results will or will not be independently checked.
-2. Freeze the **theorem contract**: objects and syntax; domains and parameters; quantifier order and permitted dependencies; adversary and corruption model; setup, network, oracle, or hybrid resources; target functionality or relation; prescribed outputs and leakage; assumptions; comparison or success bound; abort and delivery guarantee; composition, concurrency, session, and reuse scope.
-3. Build a claim-to-obligation graph from every conjunct of the conclusion to definitions, assumptions, local lemmas, calculations, reductions, simulators, extractors, composition theorems, and cited external results.
-4. Validate every dependency edge: hypotheses, domains, dimensions, interfaces, parameter substitution, quantifier order, model, runtime, query complexity, error bounds, and reduction loss. For a hybrid chain, also check exact endpoints or explicit bounds relating the endpoint experiments to the claimed distributions, well-defined experiments, controlled adjacent changes, challenge embedding, generation of the correctly correlated surrounding view, transition type, polynomial chain length, and the resulting bound on distinguishing advantage.
-5. Stress-test disputed edges using extreme or degenerate parameter choices, malformed messages, adversarial schedules, adaptive choices, conditioning, oracle-query collisions, session reuse, and small counterexamples. Failure to find a counterexample is not a proof.
-6. Reconcile the proof conclusion with the theorem, abstract-level claim, and any implementation or efficiency interpretation. Do not promote a proof sketch, hybrid-model theorem, one-shot theorem, or restricted adversary result beyond its established scope.
-7. Report findings first, ordered by downstream impact. Separate technical status, impact, and confidence.
-
-## Finding taxonomy
-
-Use the narrowest supported status:
-
-- **confirmed error:** a contradiction, invalid inference, violated premise, or concrete counterexample;
-- **proof gap:** a necessary obligation is absent, although the claim may still be true;
-- **unstated assumption:** the argument works only after adding a material hypothesis;
-- **scope overclaim:** the proof establishes a weaker model, guarantee, parameter regime, or composition scope than stated;
-- **ambiguity:** materially different formal readings change validity;
-- **unverified dependency:** an imported result, version, or parameter mapping was not checked;
-- **presentation issue:** no technical defect is identified, but the exposition obscures the actual argument.
-
-Do not call an omitted step routine unless the missing derivation has been checked. Do not call a theorem false merely because its proof is incomplete; distinguish an invalid intermediate step from a counterexample to the theorem itself.
-
-## Finding record
-
-For each actionable finding, give:
-
-```text
-[F-01] Impact | confidence | status
-Claim and source anchors:
-Required obligation or dependency edge:
-What the proof establishes:
-Why it is insufficient:
-Derivation, counterexample, or adversarial trace:
-Consequence for the stated theorem:
-Smallest defensible repair or missing lemma:
-Residual uncertainty:
-```
-
-Use **main-claim blocking**, **major**, **local**, or **presentation** for impact. Use **high** or **medium** confidence for findings; place lower-confidence suspicions in residual questions instead of presenting them as defects.
-
-Use the full record for substantive findings. For a narrow local audit, collapse redundant fields but retain the claim and source anchor, failed obligation, evidence, consequence, and repair. When the user asks to distinguish valid from invalid steps or disputes a particular inference, explicitly identify material challenged steps that are valid as well as those that fail.
-
-End with one evidence-calibrated overall disposition: **the theorem is refuted by a counterexample** only when a candidate satisfies its hypotheses and violates its conclusion; **the supplied proof does not establish the theorem as stated** when a blocking error or gap remains; **the argument supports only a stated narrower scope** when the checked dependencies discharge that weaker claim; or **no confirmed defect was found in the audited surface**. Keep theorem falsity, proof incompleteness, and unchecked dependencies separate.
-
-If no defect is found, say: “No confirmed defect was found in the audited surface.” Then list the inspected coverage, unverified dependencies, and residual risks. Do not say that the proof is correct without a formal verification basis.
-
-If the supplied text is only an outline and omits the dependencies that would discharge the theorem, say: “No defect was identified in the outline, but the supplied material does not by itself discharge the theorem.”
+End with the strongest supported disposition: theorem refuted by a counterexample satisfying its hypotheses; supplied proof incomplete; only a stated narrower scope established; or no confirmed defect found in the audited surface. State coverage and unchecked dependencies. An outline can contain no identified defect while still failing to discharge the theorem. An informal audit does not certify correctness or constitute machine-checked verification.

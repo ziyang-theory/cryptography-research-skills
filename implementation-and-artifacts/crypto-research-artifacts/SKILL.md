@@ -1,21 +1,24 @@
 ---
 name: crypto-research-artifacts
-description: Prepare, document, anonymize, validate, or package reproducible cryptography research artifacts for paper supplements, evaluation, or archival release. Use for claim-to-command maps and detached package validation; not for protocol proofs, benchmark execution alone, or manuscript editing.
+description: Prepare, document, anonymize, validate, or package cryptography research artifacts. Use for reviewer workflows, claim-to-command maps, and validation from a fresh extraction; not protocol proofs or benchmark execution alone.
 ---
 
 # Cryptography Research Artifacts
 
-Build a reviewer workflow around the accompanying paper and the author's requested release scope. Separate reproducibility, correctness, performance evidence and security claims.
+Build the smallest complete reviewer workflow for the selected paper claims and release scope. Reproducibility, correctness, performance evidence and security support are distinct outcomes.
 
-Read [release workflow](references/release-workflow.md) for policy, packaging and validation. Read [claims and reviewer commands](references/claims-and-commands.md) when designing the README, experiment guide or claim records.
+## Workflow
 
-## Essential decisions
+1. Resolve the exact paper version/entrypoint, selected claims and release stage. Verify current official venue rules when making compliance claims; historical guides are examples.
+2. Map each selected claim to its configuration, evidence and reproduction command. Include required source, pinned dependencies, fixtures, analysis and interpretation. Keep ideal resources, unsupported platforms and unresolved instantiation claims visible.
+3. Prepare the requested deliverable using the project's release layout and export policy. Planning, local cleanup, packaging, validation and publishing are different actions; follow the user's authorized scope. Retain attribution and licenses without inventing a license choice.
+4. For a built package, validate a fresh extraction away from the developer checkout and bind the report to the final checksum. A planning request receives a validation plan; documentation edits need checks of the affected instructions and paths. Revalidate affected commands when package contents change.
 
-- Resolve the exact paper version/entrypoint and release stage: initial supplement, artifact evaluation, or archival release. Verify applicable venue rules from current official sources when making compliance claims; historical guides are examples.
-- Honor the requested action: planning, local cleanup, package creation, validation or publishing. “Do not create the artifact yet” permits planning/cleanup in scope, not a package. Local preparation does not authorize external submission.
-- Respect the project's export policy. Retaining historical observations privately and exporting them are separate decisions. Do not impose either mandatory inclusion or blanket exclusion of old measurements on future projects.
-- Include what the selected claims require: source, pinned dependencies, required fixtures, configurations, runnable experiments, analysis and interpretation. For claims of formal verification or security preservation after optimization, also record the linked specification/proof evidence and trusted components using the local claim map. Preserve necessary attribution and licenses; do not invent a first-party license choice.
-- Give reviewers a small deterministic entrypoint and staged experiments with realistic requirements. Keep developer history and irrelevant variants out of the initial workflow without hiding limitations material to the claims.
-- Validate a fresh extraction away from the developer checkout and bind results to the final package checksum. Report PASS, FAIL and NOT RUN honestly, with scope.
+Start reviewers with a deterministic correctness example, then staged experiments with realistic requirements. Developer history and optional variants need not lead the workflow, but limitations that qualify selected claims must remain discoverable. Include historical observations only when the export policy and reproduction route call for them; required input fixtures are a separate category.
 
-Optional companions are `crypto-benchmarking` for measurement semantics, `crypto-protocol-implementation` for code changes, and `crypto-manuscript-qa` for requested manuscript correspondence or edits. Without them, record included operations, units and aggregation for measurements; map code changes to the governing specification and focused tests; and check each selected paper claim in the exact source/PDF version against its packaged configuration and evidence. The local claim map and detached-validation procedure remain the basis for the release.
+## References by task
+
+- [Release workflow](references/release-workflow.md): policy, anonymity, package construction and detached validation.
+- [Claims and reviewer commands](references/claims-and-commands.md): claim records, README structure, experiment progression and formal-evidence qualifications.
+
+Load the relevant sections. Report PASS, FAIL and NOT RUN by validation scope, the resulting package or plan, and remaining limitations. A build or smoke run does not establish publication performance or instantiate a security theorem; packaging cannot repair missing evidence.

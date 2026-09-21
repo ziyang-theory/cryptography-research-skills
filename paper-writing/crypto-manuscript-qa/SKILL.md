@@ -1,22 +1,19 @@
 ---
 name: crypto-manuscript-qa
-description: Resolve and validate cryptography manuscript sources, multi-version LaTeX builds, exact PDF locations, references, notation, and paper/code/evidence consistency. Use for source or PDF QA; not for prose-only drafting, security-proof validity, or benchmark collection alone.
+description: Check cryptography manuscript sources, LaTeX builds, PDF locations, references, layout, and requested paper/code consistency. Use for source or rendered-document QA; not for prose-only drafting, proof validity, or benchmark collection.
 ---
 
 # Cryptography Manuscript QA
 
-Resolve the authoritative manuscript, requested version and active include graph before citing pages or editing. Project paths, frozen files, terminology and selected constructions come from that project and the current request, never another paper's conventions.
+Resolve the authoritative manuscript, requested version, and active include graph before citing pages or editing. Project paths, frozen files, and construction choices come from the current project, never another paper's conventions.
 
-For theory-only work, manuscript sources, definitions, proofs, and supplied PDFs are sufficient inputs. Inspect code, experiments, or artifacts only when the requested claim or correspondence check involves them. Companion skills are optional; if unavailable, continue the requested source/PDF checks directly and state any limit on what was checked.
+## Check the requested surface
 
-Read [source and PDF validation](references/source-and-pdf-validation.md) for exact-location answers, LaTeX edits or build/layout work.
+- Distinguish review, language edits, technical repair, reorganization, and evidence updates. Follow the authorized scope and later decisions; preserve unrelated prose, notation, macros, labels, comments, and wrapping.
+- Resolve findings and annotations against their actual document/version. Reviewer suggestions are evidence to assess, not authority to change the theorem.
+- Compare implicated active definitions, construction, theorem, and evaluation. Keep intended claims, checked proof support, and implemented experiments distinct; unused or commented material establishes no live claim.
+- For code/evidence correspondence, identify the revision, variant, parameter/sampler distribution, and measurement contract. Inspect the sources directly; do not alter a theorem to rationalize code. Theory-only QA needs no implementation or experiments.
 
-## Scope and consistency
+Read [source and PDF validation](references/source-and-pdf-validation.md) for version/page resolution, affected LaTeX builds, rendered-page inspection, actual hyperlink destinations, or submission checks. Apply only the checks relevant to the change.
 
-- Distinguish review/report, language fixes, technical repairs, reorganization and evidence updates. Follow the currently authorized items, including later exceptions. Preserve unrelated prose, notation, macros, labels, comments and wrapping unless their change is needed.
-- Resolve numbered findings and annotations against the response/document they refer to and subsequent decisions. A reviewer suggestion is evidence to assess, not authority to change the paper or its theorem.
-- Compare active definitions, construction, theorem and evaluation where implicated. Separate intended security model, current theorem, checked proof support and implemented experiment. Commented-out or unused material cannot establish a live claim.
-- Use `cryptography-writing` when available for prose edits and `crypto-proof-auditor` when available for requested theorem/proof validity. Compilation, cross-reference consistency and a notation pass do not certify security.
-- When code/evidence correspondence matters, identify the implementation revision, protocol variant, parameter/sampler distribution and measurement contract. Check those sources directly, using a relevant implementation/benchmark skill if available; do not edit a theorem to rationalize code.
-
-For review, return focused findings with current locations, consequences and proposed corrections. For edits, report what changed and the checks actually completed; keep proof support, arithmetic, build and layout conclusions separate.
+For review, give focused findings with current locations, consequences, and proposed corrections. For edits, report changes and completed checks, separating arithmetic, build, and layout results from proof support. Compilation does not certify security. Use writing or proof-audit guidance when that distinct work is requested; companion skills are optional.

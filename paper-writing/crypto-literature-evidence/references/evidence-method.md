@@ -27,6 +27,10 @@ Current or priority claims require a fresh primary-source search. When local fil
 
 Before treating a construction or parameter set as a usable candidate, check the current primary version and linked errata for author warnings, withdrawals, attacks, or corrected parameters. Record the source-stated status separately from your own security assessment; a title or published venue does not establish that the current construction remains a viable candidate.
 
+When a correction or warning affects a material claim, record the affected version and claim locator, the notice's source/date and inspected coverage, and what remains usable or unresolved. State a replacement theorem or bound only after inspecting its supporting statement and premises. A reported proof flaw does not by itself establish that the theorem is false; a later repair may change its assumptions, scope, or bound. Keep a framework or expository method's role separate from the status of a particular result in the same paper.
+
+**Optional correction check.** Rogaway's author-maintained bibliography, entry `[games]` for Bellare–Rogaway's *Code-Based Game-Playing Proofs and the Security of Triple Encryption* (EUROCRYPT 2006), warns of proof bugs in the triple-encryption analysis and directs readers to Gazi and Maurer. The notice does not itself provide a replacement theorem or numerical bound. Access: relevant entry on this undated live page checked September 21, 2026; the corrective work was not inspected for this example. Treat it as a reason to trace the particular claim before reuse, not as a verdict on every game-playing argument. [Author bibliography](https://www.cs.ucdavis.edu/~rogaway/papers/).
+
 ## 3. Triage, then inspect
 
 Use text extraction and section/keyword searches to find candidates. Then inspect the section boundaries and relevant rendered pages. Classify each candidate as:

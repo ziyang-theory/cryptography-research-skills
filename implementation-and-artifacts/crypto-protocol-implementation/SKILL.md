@@ -1,33 +1,27 @@
 ---
 name: crypto-protocol-implementation
-description: Implement, optimize, reproduce, or review cryptographic research protocols and their paper-to-code correspondence, including MPC, zero-knowledge, and correlated randomness. Use for circuit, transcript, state, sampler, and adapter fidelity or identifying security obligations affected by code changes; not for proof-validity audits or benchmark interpretation alone.
+description: Implement, optimize, reproduce, or review cryptographic protocol code against its specification. Use for circuit, transcript, state, sampler, and adapter fidelity and security obligations affected by code changes; not a full proof-validity audit.
 ---
 
 # Cryptographic Protocol Implementation
 
-Identify the governing specification and its version before modifying code. Keep the formal construction, implementation choices, test fixtures, and claimed guarantees distinguishable.
+Connect the governing specification to the code and the behavior being changed. Keep formal constructions, engineering variants, test fixtures and claimed guarantees distinguishable.
 
-For a correspondence review, map the specified steps to live code and report discrepancies. For requested implementation or repairs, make scoped changes and validate the affected behavior. An implementation request does not authorize rewriting the theorem to fit the code.
+## Workflow
 
-## Select the checks
+1. Identify the specification/version, target code and exposed interface. Map the relevant algorithms and message schedule to APIs, state, randomness, serialization, checks, outputs and aborts. Mark ideal resources, trusted fixtures and omitted phases.
+2. For a correspondence review, report discrepancies. For implementation work, make scoped changes. For optimization, identify the target metric, observed or hypothesized bottleneck, replaced cost and added work before choosing a technique.
+3. Identify the contract affected by the change. Byte equivalence, algebraic output equality, distributional equivalence and realization of the same ideal functionality are different obligations. Small edits to challenges, checks, parameters or scheduling can change the protocol.
+4. Validate changed behavior with focused checks and the project's required checks; for reviews, report available evidence and gaps. Reuse a security argument only where its contract and hypotheses remain supported, without rewriting the theorem to fit the code.
 
-- Read [specification and distributions](references/specification-and-distributions.md) for reproductions, protocol variants, correlations, parameter samplers, or setup changes.
-- Read [state and validation](references/state-and-validation.md) for peer messages, lifecycle, optimizations, secret handling, or test design.
-- Read [optimization strategy and execution](references/optimization-strategy-and-execution.md) for selecting techniques from bottlenecks and tradeoffs; follow its MPC or ZK reference only when that construction is involved.
-- Read [security preservation and proof reuse](references/security-preservation.md) when optimizing or replacing a component, changing parameters or scheduling, or deciding which existing security arguments still apply.
-- Read [verification scope and trust](references/verification-scope-and-trust.md) when using formal verification evidence, modifying verified code, or choosing an implementation-verification approach.
-- Optional companions are `crypto-proof-auditor` when proof validity is requested and `crypto-benchmarking` for experimental evidence. Without them, trace the implicated theorem from its definition and assumptions through the reduction or simulation obligations, reporting unresolved gaps; for measurements, record the exact variant, timed operations, worker/topology settings, repetitions, statistic and raw evidence. Functional tests do not discharge proof obligations or establish performance.
+For MPC, track party-local views and correlation ownership. For proof systems, track statement/witness separation, setup, transcript challenges and acceptance. Functional correctness, memory/runtime safety, specification conformance, cryptographic security, leakage and measured performance require distinct evidence.
 
-## Core practice
+## References by task
 
-Map the paper's definitions, algorithms and message schedule to APIs, state transitions, serialization, randomness, checks, outputs and aborts. Resolve missing interfaces before presenting a complete reproduction; explicitly mark ideal functionalities, trusted dealers, stand-ins and omitted phases.
+- [Specification and distributions](references/specification-and-distributions.md): reproductions, variants, samplers, correlations and setup.
+- [State and validation](references/state-and-validation.md): peer messages, secret lifetimes, arithmetic preconditions and tests.
+- [Optimization strategy and execution](references/optimization-strategy-and-execution.md): bottlenecks and tradeoffs, with selective MPC and ZK routes.
+- [Security preservation and proof reuse](references/security-preservation.md): changed components, parameters or schedules and affected proof obligations.
+- [Verification scope and trust](references/verification-scope-and-trust.md): formal evidence, verified code and verification-tool selection.
 
-For MPC, track party-local views and correlation ownership. For proof systems, track statement/witness separation, setup material, transcript challenges, verification and output acceptance. Apply only the checks pertinent to the selected model and implementation.
-
-For optimization work, identify the target metric and actual or hypothesized bottleneck before choosing a technique. Explain which communication, computation, intermediate storage or repeated work is reduced, what replaces it, and whether the gain survives at the requested workload and phase scope. Respect a requested local optimization; a broader bottleneck does not authorize a protocol replacement.
-
-Classify an optimization by the contract it affects, not the size of the code diff. Preserve protocol-visible behavior unless a variant change is authorized. Byte equivalence, algebraic output equality, distributional equivalence and realization of the same ideal functionality are distinct obligations. Domain separation or an extra transcript check can change the protocol; document it rather than assuming it is merely an implementation detail.
-
-Keep the protocol theorem, executable specification when present, source implementation and compiled executable connected by explicit evidence. Reuse an existing security argument only to the extent that its required contract and hypotheses remain supported. Identifying an open obligation does not authorize a theorem rewrite or require introducing a formal-verification toolchain.
-
-Return the implemented/reviewed scope, source-to-code mapping, variant and setup qualifications, focused checks and outcomes, and unresolved dependencies. For an optimization, identify the preserved or changed contract and the status of affected proof obligations. Distinguish functional correctness, memory/runtime safety, specification conformance, cryptographic security, leakage guarantees and measured performance.
+Load only the implicated references. Return the implemented/reviewed scope, source-to-code mapping, variant/setup qualifications, validation results and unresolved dependencies. For optimizations, state the preserved or changed contract and whether the claimed gain is measured or still hypothetical.

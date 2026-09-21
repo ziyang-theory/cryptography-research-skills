@@ -2,51 +2,43 @@
 
 [Introduction and installation](../README.md)
 
-Reusable agent skills for cryptography research in **Codex and Claude Code**, organized into two independently selectable collections.
+Choose by the result needed. The skills cover three stages of research; these are navigation themes, not a required sequence.
 
-**Paper Writing** supports a theoretical project from literature and definitions through constructions, proofs, symbolic cost analysis, comparisons and manuscript preparation. It does not require an implementation, experiments or a software artifact.
+## Formulate and understand
 
-**Implementation & Artifacts** is an optional companion for translating constructions into code, running and interpreting experiments, writing the evaluation, and preparing reproducible releases.
-
-## Paper Writing
-
-| Skill | Use |
+| Result needed | Skill |
 | --- | --- |
-| [cryptography-writing](../paper-writing/cryptography-writing/SKILL.md) | Draft and edit prose, definitions, constructions, theorem statements and security arguments |
-| [crypto-literature-evidence](../paper-writing/crypto-literature-evidence/SKILL.md) | Establish what primary sources say, under which definitions, models and versions |
-| [crypto-proof-auditor](../paper-writing/crypto-proof-auditor/SKILL.md) | Review proofs, reductions, simulations and extraction arguments for concrete gaps |
-| [crypto-prior-work-comparison](../paper-writing/crypto-prior-work-comparison/SKILL.md) | Position contributions using supported, comparable claims |
-| [crypto-correlation-accounting](../paper-writing/crypto-correlation-accounting/SKILL.md) | Define algebraic correlations, party holdings, units and symbolic cost conversions |
-| [crypto-manuscript-qa](../paper-writing/crypto-manuscript-qa/SKILL.md) | Resolve live sources and check notation, references, LaTeX builds and rendered PDFs |
-| [crypto-ai-acknowledgements](../paper-writing/crypto-ai-acknowledgements/SKILL.md) | Describe AI contributions and human checks from the actual research process |
+| A candidate definition, next lemma, or counterexample to pursue | [crypto-research-framing](../paper-writing/crypto-research-framing/SKILL.md) |
+| What primary sources establish, with exact versions and locators | [crypto-literature-evidence](../paper-writing/crypto-literature-evidence/SKILL.md) |
+| An algebraic correlation interface and comparable output/cost units | [crypto-correlation-accounting](../paper-writing/crypto-correlation-accounting/SKILL.md) |
 
-Correlation accounting belongs here because definitions and analytical costs matter even when no implementation exists. Its measurement guidance is conditional on a task involving measurements.
+## Write and examine
 
-## Implementation & Artifacts
-
-| Skill | Use |
+| Result needed | Skill |
 | --- | --- |
-| [crypto-protocol-implementation](../implementation-and-artifacts/crypto-protocol-implementation/SKILL.md) | Implement, optimize or review protocol code against its specification and identify affected security contracts and proof obligations |
-| [crypto-benchmarking](../implementation-and-artifacts/crypto-benchmarking/SKILL.md) | Design, run and interpret experiments with explicit timing, communication and statistical accounting |
-| [crypto-implementation-evaluation-writing](../implementation-and-artifacts/crypto-implementation-evaluation-writing/SKILL.md) | Turn implementation and experimental evidence into a supported evaluation section |
-| [crypto-research-artifacts](../implementation-and-artifacts/crypto-research-artifacts/SKILL.md) | Prepare reviewer workflows and validate reproducible research packages |
+| Manuscript prose, definitions, constructions, or an authorized proof draft | [cryptography-writing](../paper-writing/cryptography-writing/SKILL.md) |
+| A diagnosis of whether a cryptographic proof establishes its theorem | [crypto-proof-auditor](../paper-writing/crypto-proof-auditor/SKILL.md) |
+| A supported comparison with prior work | [crypto-prior-work-comparison](../paper-writing/crypto-prior-work-comparison/SKILL.md) |
+| Consistent sources, notation, references, and rendered PDFs | [crypto-manuscript-qa](../paper-writing/crypto-manuscript-qa/SKILL.md) |
+| An accurate account of AI contributions and human checking | [crypto-ai-acknowledgements](../paper-writing/crypto-ai-acknowledgements/SKILL.md) |
 
-Evaluation writing belongs here because its methods depend on experimental design and interpretation. Skills can recommend companions from either collection when useful; a missing companion does not prevent the skill's own scoped task. Each skill has one source directory.
+## Implement and substantiate
 
-## Choose a collection or a skill
-
-| Request | Start with |
+| Result needed | Skill |
 | --- | --- |
-| Find papers providing a particular functionality or security notion | `crypto-literature-evidence` |
-| Audit this simulator and hybrid argument without editing the paper | `crypto-proof-auditor` |
-| Compare correlation requirements and symbolic communication costs | `crypto-correlation-accounting`, then `crypto-prior-work-comparison` |
-| Draft or improve the technical overview | `cryptography-writing` |
-| Check whether protocol code matches the paper | `crypto-protocol-implementation` |
-| Optimize protocol code and identify which security arguments need updating | `crypto-protocol-implementation` |
-| Choose MPC or ZK optimization techniques for a measured bottleneck | `crypto-protocol-implementation`, then `crypto-benchmarking` for measurements |
-| Measure a prover or MPC protocol and interpret its performance | `crypto-benchmarking` |
-| Write the implementation and evaluation section from supplied evidence | `crypto-implementation-evaluation-writing` |
-| Prepare a reproducible reviewer artifact | `crypto-research-artifacts` |
+| Protocol code or an optimization checked against its specification | [crypto-protocol-implementation](../implementation-and-artifacts/crypto-protocol-implementation/SKILL.md) |
+| Reproducible measurements and calculations | [crypto-benchmarking](../implementation-and-artifacts/crypto-benchmarking/SKILL.md) |
+| An evaluation section supported by experimental evidence | [crypto-implementation-evaluation-writing](../implementation-and-artifacts/crypto-implementation-evaluation-writing/SKILL.md) |
+| A reproducible package and reviewer workflow | [crypto-research-artifacts](../implementation-and-artifacts/crypto-research-artifacts/SKILL.md) |
 
-The collection applies across MPC, zero knowledge and other cryptographic research. Construction-specific references are loaded only when relevant. Retained literature examples are primarily MPC-focused and carry their own source/verification qualifications; they do not establish comprehensive coverage of every subfield.
+## Boundaries that matter
 
+Start with the skill matching the requested deliverable; add another only for a distinct part of the task. Finding a paper belongs to literature evidence; positioning a result against it belongs to prior-work comparison. Explaining a supplied proof belongs to writing; assessing its validity belongs to proof auditing. Defining a correlation unit belongs to accounting; measuring its rate belongs to benchmarking. Writing an evaluation or packaging an artifact uses existing evidence unless new experiments are part of the request.
+
+All skills follow the same principle: identify the claim, determine what evidence supports it, and keep the conclusion within that evidence. A plausible research direction, a polished proof, passing tests, measured speed, and a reproducible package establish different things.
+
+## Installation and references
+
+**Paper Writing** contains the first eight skills and works on its own for theoretical research. **Implementation & Artifacts** contains the last four. These two installation collections and the individual skill names are unchanged. Correlation accounting includes symbolic costs; it does not require measurements.
+
+Each skill is self-contained. Its entrypoint supplies the core workflow and links to detail needed only for particular tasks. Companion skills are optional; reference links do not require reading the whole library. Literature examples retain their source and verification qualifications and are mainly MPC-focused, rather than comprehensive coverage of cryptography.

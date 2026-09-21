@@ -1,6 +1,6 @@
 # Evidence for technical-overview writing
 
-Use this companion to choose examples for a particular explanatory problem. The writing guide contains the reusable instructions; this file supplies source versions and locators. IDs match the abstract/introduction evidence corpus.
+Use this companion to choose examples for a particular explanatory problem. The writing guide contains the reusable instructions; this file supplies source versions and locators. P/N IDs match the abstract/introduction evidence corpus; M IDs identify the separately selected supplemental cases below.
 
 ## Scope and method
 
@@ -155,3 +155,91 @@ PDF locators below refer to the preserved version. Author full versions and late
 **Read:** §2 Technical Overview, PDF pp9–15 before §3; §§2.1–2.3; Eqs.(3)–(6), PDF pp13–14
 
 **Use for:** Organize a nested construction from its security interface down to one representative operation.
+
+## Supplemental mechanism cases
+
+M01–M03 were selected using the user-supplied Amit Sahai research distillate and checked against primary sources on 2026-09-20. M04–M05 were selected using the Brent Waters distillate and checked on 2026-09-21. M06–M07 were selected using the Mihir Bellare distillate and checked on 2026-09-21. These are supplements to the 53-paper study, not additions to its ranking or coverage claims. Attribute mechanisms to the listed source authors. The suggested writing uses are adaptations, not attributed personal habits or reconstructions of discovery. Reading depth is recorded individually; none is a proof audit.
+
+### M01: Internal MPC views become proof objects
+
+Yuval Ishai, Eyal Kushilevitz, Rafail Ostrovsky, and Amit Sahai, [*Zero-Knowledge Proofs from Secure Multiparty Computation*](https://www.cs.ucla.edu/~sahai/work/web/2009%20Publications/SIAM-IKOS-2009.pdf), SIAM Journal on Computing 39(3), 2009; published electronically September 2, 2009. Version: 32-page author-hosted journal PDF.
+
+**Read:** §1.1, PDF pp. 3–5 / printed pp. 1123–1125, in full; Figure 3.1 and Theorem 3.1, PDF p. 10 / printed p. 1130, also visually checked. Selected passages, not the full paper.
+
+**Mechanism:** The prover shares a witness across virtual MPC inputs, commits to the resulting views, and opens a challenged pair. The overview assigns privacy to the MPC's security against two semihonest parties and soundness to detecting inconsistent views.
+
+**Use when:** A component changes roles. Explain the new exposure and the exact guarantee that survives it before listing the outer protocol's steps.
+
+**Qualification:** Theorem 3.1 assumes an MPC protocol with perfect correctness and semihonest 2-privacy, for $n\geq3$. The resulting ZK protocol uses ideal commitments and has soundness error at most $1-1/\binom{n}{2}$. More openings or merely statistical correctness require additional arguments. View privacy alone does not establish the complete ZK protocol.
+
+### M02: Preserve the statement's algebra
+
+Jens Groth and Amit Sahai, [*Efficient Non-interactive Proof Systems for Bilinear Groups*](https://web.cs.ucla.edu/~sahai/work/web/2008%20Publications/Eurocrypt_Groth2008.pdf), EUROCRYPT 2008, pp. 415–432. Version: 18-page author-hosted proceedings PDF.
+
+**Read:** §1.3, PDF pp. 6–7 / printed pp. 420–421, in full; §1.1's informal result, PDF p. 3 / printed p. 417; Figure 1, PDF p. 4 / printed p. 418, visually checked. Selected passages, not the full paper.
+
+**Mechanism:** The overview treats bilinear-group equations as equations over modules, then explains homomorphic commitments and how commitment randomness changes the equations. Figure 1 makes the supported equation language explicit.
+
+**Use when:** A representation enables the construction. Show which equations and operations it preserves, then explain why those properties help the proof. This case also counters a blanket preference for reducing every statement to Boolean circuits.
+
+**Qualification:** The informal result distinguishes NIWI from NIZK and conditions the latter on the equation type. An algebraic correctness identity does not supply zero knowledge; preserve the chosen language, reference-string distribution, and instantiation's assumption.
+
+### M03: Expose conflicting constraints through candidate repairs
+
+Aayush Jain, Huijia Lin, and Amit Sahai, [*Indistinguishability Obfuscation from Well-Founded Assumptions*](https://arxiv.org/pdf/2008.09317v1), arXiv:2008.09317v1, August 21, 2020. Version: 42-page v1 PDF; locators are not proceedings locators.
+
+**Read:** §4's opening and Technical Overview, PDF pp. 10–13 / printed pp. 8–11, through the handoff to Construction, in full; the two simple cases on printed p. 10 visually checked. Selected passages, not the complete construction or proof.
+
+**Mechanism:** For a structured-seed PRG, storing a full correction defeats expansion; selectively applying sparse corrections makes evaluation depend on sensitive error locations. The overview develops oblivious low-degree correction through matrix factorization, then bucketing to handle correlated bad outputs.
+
+**Use when:** Two requirements appear incompatible. Name what each candidate achieves and violates, then explain the extra operation that reconciles them. Keep the source's hypothetical cases labeled as such.
+
+**Qualification:** This is a component explanation, not a summary or validation of the iO theorem. The final mechanism also handles exceptional buckets by zeroizing and accounting for a public flag; the toy factorization alone does not prove pseudorandomness. The text's order is not evidence of discovery order.
+
+### M04: Explain proof-only modes through a reduction self-test
+
+Brent Waters, [*Dual System Encryption: Realizing Fully Secure IBE and HIBE under Simple Assumptions*](https://link.springer.com/content/pdf/10.1007/978-3-642-03356-8_36.pdf), CRYPTO 2009, pp. 619–636. Version: 18-page proceedings PDF.
+
+**Read:** §1's contribution and self-test discussion, PDF pp. 3–4 / printed pp. 621–622; §3 opening and §§3.1–3.2, PDF pp. 6–9 / printed pp. 624–627. Selected passages; self-test page visually checked.
+
+**Mechanism:** The proof changes the challenge ciphertext, then keys individually, to semi-functional forms. The overview asks whether the reduction could identify a key's form by testing decryption itself. Its embedding forces equal tags for the same identity, so that test fails regardless of the key's form.
+
+**Use when:** Auxiliary modes drive the security argument. Explain their semantics, the apparent distinguishing test, and why the reduction's available interface prevents it. Keep the experiment sequence separate from real execution.
+
+**Qualification:** Semi-functional generation is explicitly excluded from the actual system. Decryption compatibility presupposes matching identities and unequal tags. Explaining the failed self-test does not establish the complete hybrid-view distribution or prove an arbitrary mode-changing construction secure.
+
+### M05: Restore the noise and the rounding margin
+
+Brent Waters, [*A New Approach for Non-Interactive Zero Knowledge from Learning with Errors*](https://simons.berkeley.edu/sites/default/files/2025-07/CRY25-2%20Brent%20Waters_slides.pdf), Simons Institute [talk](https://simons.berkeley.edu/talks/brent-waters-ut-austin-ntt-research-2025-07-15), July 15, 2025. Version: official 28-page slide deck.
+
+**Read:** Slides 11–14, including the construction and the oversimplified/actual binding analyses, in full and visually. Selected slides only; video not watched and the associated paper's proof not reviewed for this case.
+
+**Mechanism:** The idealized derivation makes the rounded bit depend only on the commitment and parameters. The actual expression includes $e_i^T\pi_i$; different short openings can change rounding. The next slide bounds this perturbation and rejects values near rounding boundaries.
+
+**Use when:** A clean identity explains the idea but omits an error term. Put the actual expression beside it and supply the norm bound and margin needed for the inference. Small error alone does not preserve a threshold decision.
+
+**Qualification:** Rejection needs its own accounting: slide 14 identifies a correctness-error option or an alternative accounting through hiding error. This is an exposition example, not a complete NIZK theorem, parameter prescription, or verification of either repair.
+
+### M06: Let the reduction loss motivate the change
+
+Mihir Bellare and Phillip Rogaway, [*The Exact Security of Digital Signatures: How to Sign with RSA and Rabin*](https://cseweb.ucsd.edu/~mihir/papers/exactsigs.pdf), EUROCRYPT 1996. Version: 17-page author-hosted PDF dated March 14, 1996.
+
+**Read:** §§1.2–1.4, PDF/printed pp. 4–6; §4.2 opening, Theorem 4.1, and signing-query simulation, pp. 11–12. Selected passages; theorem page visually checked.
+
+**Mechanism:** The introduction quantifies its FDH reduction's multiplicative loss before motivating PSS's randomized encoding. Theorem 4.1 instead gives additive error terms and explicit runtime overhead. The signing simulation chooses a prospective signature and programs hash answers to make it valid, while accounting for prior-query conflicts.
+
+**Use when:** The contribution improves a quantitative guarantee. Start with the term that obstructs the target bound and explain how the proof or construction removes it. For reanalysis alone, keep the construction fixed in the explanation; this PSS example changes it.
+
+**Qualification:** This is a historical comparison with the paper's FDH analysis in the random-oracle model, not a claim about today's best FDH bounds or recommended RSA parameters. Reduction slack is not evidence of an attack achieving that loss.
+
+### M07: Motivate a definition through its consuming argument
+
+Mihir Bellare and Oded Goldreich, [*On Defining Proofs of Knowledge*](https://cseweb.ucsd.edu/~mihir/papers/pok.pdf), CRYPTO 1992; 28-page author PDF, August 26, 1992.
+
+**Read:** §§1.1–1.3, pp. 3–6; §§2–3, pp. 7–9 (PDF/printed). Selected passages; Definition 3.1 visually checked.
+
+**Mechanism:** Definition 3.1 addresses a consuming protocol's needs with a universal extractor and constant $c>0$. Its validity clause, for $x\in L_R$ and $p(x)>\kappa(x)$, bounds expected witness-extraction work by $|x|^c/(p(x)-\kappa(x))$, given $x$ and oracle $P_x$ under §2's convention.
+
+**Use when:** Explain a consumer's failed inference before the definition repairing it.
+
+**Qualification:** Preserve expected-time and oracle qualifications. This excerpt omits the definition's non-triviality clause and does not establish a general composition theorem.

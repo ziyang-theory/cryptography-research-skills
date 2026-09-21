@@ -21,6 +21,8 @@ Resolve the current authorized findings against the user's subsequent decisions 
 
 Use `cryptography-writing` and its conservative-editing reference when available. In all cases, preserve the author's notation, terminology, macros, equations, citations, labels, comments, qualifiers, and line wrapping except where the verified repair requires a change.
 
+For an authorized new simulation proof or substantial rewrite, prefer describing the simulator before meaningful game or hybrid transitions, with each transition justified. Use a direct distributional argument when it expresses the proof more clearly; do not manufacture hybrids or require particular labels. Preserve existing organization for a local repair unless changing it is needed or requested.
+
 When a missing derivation is genuinely obtainable, supply all steps needed to discharge the obligation and propagate its exact error or reduction loss. When the core idea remains missing, state a precise lemma or proof obligation instead of writing prose that implies completion.
 
 If the theorem's supported scope changes and the user authorizes the broader repair, update dependent theorem statements and affected abstract, introduction, comparison, and conclusion claims consistently. Do not perform unrelated polishing.

@@ -4,7 +4,7 @@ Use this reference when organizing a substantial section, planning evidence for 
 
 ## Connect claims to observations
 
-For each important claim, identify the question, useful controlled comparison, observed result, plausible confounds, and supported conclusion. Ask what observation would require narrowing the claim. Record missing evidence as a proposed follow-up rather than inventing results or automatically expanding the task.
+Connect each important claim to an observation and a useful controlled comparison. Identify plausible confounds and what would require narrowing the claim.
 
 | Proposed claim | Informative evidence | Interpretation to avoid |
 | --- | --- | --- |
@@ -19,7 +19,7 @@ Choose the smallest informative set of experiments. A relevant startup regime, u
 
 ## Compare like with like
 
-Align functionality, input/output ownership, security and trust, parameters/precision, workload, included phases, and machine/thread budgets. A contextual comparison across different guarantees can still be useful if stratified clearly; it does not establish a win under identical guarantees.
+Compare under the contract recorded in [evaluation method](evaluation-method.md). Comparisons across different guarantees can be useful when stratified clearly; they do not establish a win under identical guarantees.
 
 Prefer matched reruns when available and authorized. Record baseline revision, patches, dependencies, tuning range/objective, and effort. When isolating protocol novelty, consider a baseline that receives applicable engineering improvements too. Otherwise disclose the combined effect instead of assigning the entire gain to the new construction.
 
@@ -28,17 +28,17 @@ Separate two comparison questions:
 - **Protocol on a common workload:** Hold the circuit or arithmetic computation and other relevant conditions fixed to compare protocol implementations.
 - **Whole system on the same application:** Allow each compiler/framework to optimize the application while preserving semantics and quality. This measures the integrated system and does not isolate the cryptographic protocol.
 
-Quoted, formula-derived, and estimated baselines retain their source conditions and evidence class. CPU-frequency rescaling is a model, not proof of hardware equivalence. An unavailable implementation is not evidence that a competitor is slower. Unknown cost differs from zero cost.
+CPU-frequency rescaling is a model, not proof of hardware equivalence. Preserve source conditions for quoted and estimated baselines.
 
 ## Explain mechanisms with evidence
 
 Connect an optimization to the operation it changes and then to the affected metric. A controlled ablation can isolate its effect; a profile can identify a dominant component but may leave competing explanations. Use “is consistent with” for a supported but non-isolated mechanism and “we hypothesize” for an untested explanation; name the missing test when material.
 
-Vary axes implicated by the claim: input/output sizes, circuit size/depth, representation, field width, batch size, parties/threshold, bandwidth, and RTT. Hold other factors fixed where possible. Distinguish measured link properties from configured shaping limits, and report confounds when a deployment changes more than one variable.
+Vary axes implicated by the claim while controlling other factors: workload size/depth, representation, field, batch, parties/threshold or network. Disclose deployment changes that confound these axes.
 
 A model such as local computation plus transfer time plus sequential latency assumes a particular schedule and bottleneck. Overlap, pipelines, and heterogeneous links can invalidate simple addition. Validate predictions against observed executions where possible, report prediction error, and keep subsequent predictions labeled as estimates. If validation is absent, state that limitation.
 
-For service claims involving batching, distinguish a preloaded batch from sustained arrivals, and report queueing/batch-fill delay and request completion times alongside throughput. State the arrival/concurrency regime and whether backlog grows; throughput alone does not establish acceptable request latency. For accelerator gains, expose preparation and host-device transfers before attributing a kernel improvement to the full pipeline.
+For services, pair throughput with request completion including queueing/batch-fill delay, arrival/concurrency regime and backlog behavior. A preloaded batch does not demonstrate sustained service. For accelerators, include preparation and transfers when claiming a pipeline gain.
 
 For distributed scaling, distinguish fixed total workload with more resources from workload growth with more resources. Explain coordinator work and imbalance when they limit completion, and pair elapsed-time claims with the aggregate resource budget. More capacity, lower elapsed time and lower total work are distinct conclusions.
 
@@ -51,18 +51,6 @@ For distributed scaling, distinguish fixed total workload with more resources fr
 - **Concrete estimate:** Separate measured kernels, exact operation counts, modeling assumptions, and unimplemented construction/application costs. Do not force an empirical narrative onto an analytical result.
 
 These are ordering options. Keep the main result and its material qualifications in the main text; detailed configuration matrices and commands may go in an appendix or artifact.
-
-## Paragraph and caption patterns
-
-Adapt the logic, not a fixed template or number of questions:
-
-- **Opening:** Identify the evaluated contribution, functionality/security setting, central question, and included phases, then state the main supported finding.
-- **Implementation:** Name the implemented variant, concrete primitives and optimizations, and omissions that affect interpretation.
-- **Result:** Give the absolute costs and matched comparison, explain the mechanism to the degree supported by evidence, and delimit the conclusion using observed regimes or acknowledged gaps.
-- **Limitation:** Identify the omitted phase, changed assumption, unmeasured integration, or confound and state how it restricts the claim.
-- **Caption:** Make the metric, conditions, statistic, exclusions, evidence labels, and failure codes discoverable; reference shared setup when that keeps the caption readable.
-
-Replace unqualified “practical,” “scalable,” “optimal,” and “negligible overhead” with the measured quantity and conditions. Preserve established technical uses such as negligible distinguishing advantage when the surrounding formal statement justifies them.
 
 ## Source examples
 
