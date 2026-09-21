@@ -8,6 +8,8 @@ If the protocol requires a one-use terminal attempt, consume or poison pending s
 
 Document secret ownership through copies, moves, worker failures and early returns. Redact secrets from debug/log/serialization paths. If erasure is claimed or part of the corruption/measurement model, check all relevant owned allocations; wiping a destination does not prove the source was erased. Scope erasure claims to what is actually controlled, and do not imply constant-time or side-channel security from functional tests.
 
+For arithmetic or representation optimizations, connect the caller's actual invariant to the callee's preconditions: canonical versus unreduced residues, limb/carry and intermediate integer ranges, alignment, aliasing, scratch ownership, and exceptional behavior. Check tails and fallback paths as well as the fast path. Preserving the final field value is insufficient if a wider intermediate overflows or the next operation requires a canonical input.
+
 ## Meaningful validation
 
 Choose tests from the changed obligation rather than a fixed universal suite:
@@ -18,6 +20,7 @@ Choose tests from the changed obligation rather than a fixed universal suite:
 - Relevant zero/empty/small instances, constants, repeated outputs, fan-out, padding, non-power-of-two tails, field widths or truncated values.
 - Scalar/reference versus streaming/parallel/SIMD equivalence, including stripe boundaries, counters, scratch reuse and error paths. A small full-reference oracle is useful even when the production layout cannot materialize the full object.
 - For prover/verifier code, valid and invalid statements/proofs and the relation's public-input/witness encoding; functional rejection tests alone do not establish soundness or zero knowledge.
+- For circuit/gadget changes, adversarial witness assignments that violate the intended relation and the mapping of valid statements across representations. An honest witness generator satisfying a removed constraint does not show that the remaining constraints imply it.
 
 Check selectors against live source and confirm tests executed. A changed wrapper must exercise the exact built binary even with custom target directories or profiles. A smoke result covers its selected configuration; broad test counts do not imply ignored performance or alternate-platform tests ran.
 

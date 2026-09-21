@@ -22,6 +22,8 @@ Create a fresh extraction outside Git, sibling projects and old build outputs. F
 
 Record exact commands, host/toolchain/configuration, selected variant, outcomes, time scope and limitations. Separate functional, smoke, full-performance, anonymity and offline checks. Record NOT RUN for unsupported or unexecuted checks; do not convert script syntax checks into a native benchmark pass.
 
+When the release claims machine-checked verification, include the pinned prover/backend, dependencies, build flags and exact proof build target, then run the documented verification route from the extraction when feasible. Record which proof targets were rerun, failed or not run, and any changed axioms or admitted obligations; distinguish a local proof rerun from a clean build of the full development. Bind these results to the packaged source/specification/proof revisions and the claim map's proved/trusted connections. A successful proof build checks the stated theorem under its assumptions; it does not itself validate the model or certify unverified compilation stages or executable leakage.
+
 If package contents change after validation, revalidate the affected commands and bind the report to the final archive checksum. Keep a manifest to identify the exact shipped files. Do not claim bitwise reproducibility unless checked under a defined build/environment contract.
 
 When paper/configuration/evidence mismatch remains, state it separately; packaging cannot repair a theorem gap or retroactively recreate an old binary. Apply paper edits only within their authorized scope.

@@ -22,6 +22,8 @@ Record detected/process-visible CPUs, requested/configured workers, and observed
 
 Build before measurement. Choose repetitions/warmups and a statistic appropriate to the task and expected variability; do not carry a fixed count from an earlier project. Retain run order and all observations, including failures and justified exclusions.
 
+For an optimization comparison, record whether the old and new versions use the same security-relevant contract: protocol checks and challenge timing, joint randomness distribution, setup and state reuse, admissible parameters, and execution/corruption model as applicable. Label changes to these contracts and cite the supporting security argument or mark it unresolved; benchmark work alone need not supply a new proof. Report updated concrete bounds when supported. Faster execution and matching honest outputs do not establish security preservation, and equal parameter widths do not establish equal security levels.
+
 For optimization claims, pair or interleave alternatives where feasible and account for thermal/frequency/cache drift and competing load. Rotate multi-configuration order when order effects matter. The median paired ratio and the ratio of separate medians are different estimators; state which is used, with uncertainty when a speedup claim depends on it. Do not call a noisy difference an established improvement.
 
 Fresh-process repetitions repeat process-local initialization. Discarding warmup processes does not warm later new processes; repeated execution in one process is a different experiment. Reusing buffers, keys, SRS data, compiled circuits, or worker pools requires both a matching harness and a permitted reuse model.

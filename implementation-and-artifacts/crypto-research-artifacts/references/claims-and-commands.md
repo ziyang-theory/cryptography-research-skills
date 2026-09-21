@@ -7,7 +7,7 @@ For each selected claim, record only useful fields:
 | Field | Purpose |
 | --- | --- |
 | Stable claim/experiment ID and paper label | Resolve the correct version without relying on printed numbering |
-| Evidence type | Measurement, derivation, cited result, functional check, or open obligation |
+| Evidence type | Measurement, derivation, cited result, functional check, written argument, checked formal result, or open obligation |
 | Component/configuration | Variant, parameters, workload and supplied setup |
 | Command and prerequisites | Produce the evidence from the extracted package |
 | Output and analysis | Identify raw results, parser/aggregation and displayed metric |
@@ -15,6 +15,8 @@ For each selected claim, record only useful fields:
 | Exclusions/status | Omitted costs, ideal resources, platform limits and validation scope |
 
 Use deterministic acceptance for correctness and logical counts where appropriate. Performance varies with hardware and noise; do not invent a universal percentage tolerance. A cited result may have a source/derivation route instead of a claimed local reproduction.
+
+When a selected claim concerns formal verification or security preservation after an optimization, identify the exact source, executable specification and proof revisions that exist, the theorem/property and its adversary model, and the assumptions, axioms or admitted obligations. Record which connections from protocol to specification, implementation and executable are proved, trusted or missing; functional correctness, cryptographic security and leakage properties require distinct evidence. Include the relevant local equivalence, component theorem or reduction when proof reuse is claimed. A project without mechanization may use a traceable written argument; do not invent a formal artifact or require one for unrelated release claims.
 
 ## Reviewer progression
 

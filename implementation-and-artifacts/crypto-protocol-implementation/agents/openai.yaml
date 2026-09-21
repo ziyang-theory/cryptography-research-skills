@@ -1,4 +1,4 @@
 interface:
   display_name: "Cryptographic Protocol Implementation"
   short_description: "Implement protocols with paper-to-code fidelity"
-  default_prompt: "Use $crypto-protocol-implementation to implement or review a cryptographic protocol against its specified transcript, distributions, and state machine."
+  default_prompt: "Use $crypto-protocol-implementation to implement, optimize, or review a cryptographic protocol against its specification and identify the security contracts and proof obligations affected by any changes."

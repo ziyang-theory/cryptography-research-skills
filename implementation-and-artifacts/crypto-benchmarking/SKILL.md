@@ -10,6 +10,7 @@ Define what the experiment measures before running it. Resolve the actual protoc
 ## Select the work
 
 - For collecting measurements or evaluating an optimization, read [experiments and timing](references/experiments-and-timing.md).
+- For bottleneck diagnosis, optimization attribution, batched services, accelerators or distributed scaling, also read [optimization experiments](references/optimization-experiments.md).
 - For communication, rounds, workload alignment, or correlation-supply estimates, read [costs and interfaces](references/costs-and-interfaces.md).
 - For deriving a table from existing evidence or reconciling paper values, read [evidence and tables](references/evidence-and-tables.md). Source-only arithmetic does not require an expensive rerun.
 

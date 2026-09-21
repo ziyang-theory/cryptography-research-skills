@@ -43,6 +43,8 @@ Classify setup as universal or relation-specific, and state updateability or tru
 
 Report setup, witness generation, proving, and verification separately when they answer different questions. For amortized proving or batch verification, state the batch shape, public-input treatment, reused work, accepted proof count, and soundness target. Proof bytes do not automatically include public statements, commitments supplied separately, setup material, or protocol transport.
 
+For aggregation or folding claims, identify the output object and any final compression required by the application's proof interface. Compare total proof production and aggregation work, verification cost and required public data; a smaller final proof can trade increased production work for cheaper verification without reducing publication or data-availability costs.
+
 ## Reconcile logical and measured costs
 
 For theoretical communication, retain fixed/input/output terms, domain assumptions, and the message direction or aggregation. State whether a per-gate value is an asymptotic coefficient, an exact normalized formula, or an amortized measured quantity.

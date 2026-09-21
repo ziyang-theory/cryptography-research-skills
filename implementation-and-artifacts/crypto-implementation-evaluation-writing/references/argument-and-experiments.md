@@ -38,6 +38,10 @@ Vary axes implicated by the claim: input/output sizes, circuit size/depth, repre
 
 A model such as local computation plus transfer time plus sequential latency assumes a particular schedule and bottleneck. Overlap, pipelines, and heterogeneous links can invalidate simple addition. Validate predictions against observed executions where possible, report prediction error, and keep subsequent predictions labeled as estimates. If validation is absent, state that limitation.
 
+For service claims involving batching, distinguish a preloaded batch from sustained arrivals, and report queueing/batch-fill delay and request completion times alongside throughput. State the arrival/concurrency regime and whether backlog grows; throughput alone does not establish acceptable request latency. For accelerator gains, expose preparation and host-device transfers before attributing a kernel improvement to the full pipeline.
+
+For distributed scaling, distinguish fixed total workload with more resources from workload growth with more resources. Explain coordinator work and imbalance when they limit completion, and pair elapsed-time claims with the aggregate resource budget. More capacity, lower elapsed time and lower total work are distinct conclusions.
+
 ## Adapt the section to the contribution
 
 - **Protocol or primitive:** Establish implemented scope and security parameters, present the central measured or analytical result, then use phases, ablations, scaling, and tradeoffs to explain it. Integration is needed for an application-performance claim; a precisely scoped primitive result can stand on its own.

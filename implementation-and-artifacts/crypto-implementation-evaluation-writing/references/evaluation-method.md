@@ -139,6 +139,8 @@ A failed native build, unsupported instruction set, or resource limit can explai
 
 An estimate that combines component rates from different machines is not a wall-clock result. A measured proxy supports an upper bound for the intended construction only when a justified cost-dominance mapping holds under aligned conditions; otherwise report it only as a labeled proxy or sensitivity estimate.
 
+Label hardware simulation and synthesis explicitly, retaining target/frequency, memory and transfer assumptions. Simulated cycles, synthesized area and modeled power are distinct from measurements on a physical device; publication or artifact availability does not change that evidence class.
+
 Use full words if a manuscript has conflicting legends. In this guide `P` means projected, not published; inherited publication values use `I`. Mark individual cells or columns when one row combines measured online time with estimated preprocessing. Preserve the exact source version, locator, original conditions, and conversion formula for reused values.
 
 ## 8. Organize results

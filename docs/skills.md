@@ -26,7 +26,7 @@ Correlation accounting belongs here because definitions and analytical costs mat
 
 | Skill | Use |
 | --- | --- |
-| [crypto-protocol-implementation](../implementation-and-artifacts/crypto-protocol-implementation/SKILL.md) | Implement or review protocol code against its specification, distributions and state machine |
+| [crypto-protocol-implementation](../implementation-and-artifacts/crypto-protocol-implementation/SKILL.md) | Implement, optimize or review protocol code against its specification and identify affected security contracts and proof obligations |
 | [crypto-benchmarking](../implementation-and-artifacts/crypto-benchmarking/SKILL.md) | Design, run and interpret experiments with explicit timing, communication and statistical accounting |
 | [crypto-implementation-evaluation-writing](../implementation-and-artifacts/crypto-implementation-evaluation-writing/SKILL.md) | Turn implementation and experimental evidence into a supported evaluation section |
 | [crypto-research-artifacts](../implementation-and-artifacts/crypto-research-artifacts/SKILL.md) | Prepare reviewer workflows and validate reproducible research packages |
@@ -42,6 +42,8 @@ Evaluation writing belongs here because its methods depend on experimental desig
 | Compare correlation requirements and symbolic communication costs | `crypto-correlation-accounting`, then `crypto-prior-work-comparison` |
 | Draft or improve the technical overview | `cryptography-writing` |
 | Check whether protocol code matches the paper | `crypto-protocol-implementation` |
+| Optimize protocol code and identify which security arguments need updating | `crypto-protocol-implementation` |
+| Choose MPC or ZK optimization techniques for a measured bottleneck | `crypto-protocol-implementation`, then `crypto-benchmarking` for measurements |
 | Measure a prover or MPC protocol and interpret its performance | `crypto-benchmarking` |
 | Write the implementation and evaluation section from supplied evidence | `crypto-implementation-evaluation-writing` |
 | Prepare a reproducible reviewer artifact | `crypto-research-artifacts` |
