@@ -91,6 +91,7 @@ The response follows the simulator description with labeled hybrids and explanat
 - [Skill catalog](docs/skills.md): all twelve skills and guidance on choosing one.
 - [Installation details](docs/installation.md): how Codex and Claude Code share the skills and additional installation options.
 - [Maintenance](docs/maintenance.md): repository layout, validation, and guidance for changes.
+- [OpenAI plugin submission](submission/README.md): build the skills-only plugin package and reproduce its review cases.
 
 ## License and citation
 

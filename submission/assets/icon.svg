@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>Cryptography Research Skills</title>
+  <desc>An open book with a connected three-node research diagram.</desc>
+  <rect width="512" height="512" rx="104" fill="#173B52"/>
+  <path d="M96 156 Q176 132 256 170 Q336 132 416 156 L416 362 Q336 338 256 376 Q176 338 96 362 Z" fill="#F4F1E8"/>
+  <path d="M256 176 L256 374" fill="none" stroke="#173B52" stroke-width="10"/>
+  <path d="M129 204 L219 204 M129 236 L219 236 M129 268 L196 268" fill="none" stroke="#173B52" stroke-width="12" stroke-linecap="round"/>
+  <path d="M298 216 L372 266 L306 314" fill="none" stroke="#2B7A78" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="298" cy="216" r="17" fill="#2B7A78"/>
+  <circle cx="372" cy="266" r="17" fill="#2B7A78"/>
+  <circle cx="306" cy="314" r="17" fill="#2B7A78"/>
+</svg>

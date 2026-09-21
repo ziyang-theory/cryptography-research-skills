@@ -1,0 +1,36 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "crypto-research-skills",
+  "version": "0.1.0",
+  "description": "Twelve focused workflows for cryptography research, proof review, manuscript writing, protocol implementation, benchmarking, and reproducible artifacts.",
+  "author": {
+    "name": "Ziyang Jin",
+    "email": "ziyang@cs.toronto.edu",
+    "url": "https://github.com/ziyang-theory"
+  },
+  "homepage": "https://github.com/ziyang-theory/cryptography-research-skills",
+  "repository": "https://github.com/ziyang-theory/cryptography-research-skills",
+  "license": "MIT",
+  "keywords": ["cryptography", "research", "MPC", "zero-knowledge", "proofs", "scientific-writing"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "Cryptography Research Skills",
+        "shortDescription": "Research workflows for crypto",
+        "longDescription": "Twelve focused skills for researchers working on cryptographic constructions and papers, especially secure multiparty computation and zero-knowledge proofs.\n\nFormulate research questions, trace literature claims to primary sources, draft and minimally edit technical prose, and examine security arguments under their stated definitions and assumptions. For implementation work, use separate workflows for protocol correspondence, benchmark accounting, evaluation writing, and reproducible artifacts.\n\nThe skills emphasize precise models, evidence provenance, conservative claims, and keeping the requested scope small. Proof audits distinguish confirmed errors, proof gaps, unstated assumptions, and unverified dependencies. They are read-only unless edits or proof completion are requested.\n\nThis package provides workflow instructions and references. It does not certify security, replace expert review, or supply a proof assistant. The host agent's available tools determine which searches, file edits, builds, and experiments can actually run.",
+        "developerName": "Ziyang Jin",
+        "category": "Education & Research",
+        "capabilities": ["Research framing and literature evidence", "Cryptographic proof review", "Technical writing and manuscript checks", "Protocol implementation and benchmark accounting", "Reproducible research artifacts"],
+        "websiteURL": "https://github.com/ziyang-theory/cryptography-research-skills",
+        "defaultPrompt": [
+          "Audit this cryptographic proof under its stated model. Report gaps without editing the source.",
+          "Improve this cryptography paragraph with the smallest edit that preserves its claim and notation.",
+          "Check whether these benchmark measurements support the comparison and its stated cost boundaries."
+        ],
+        "brandColor": "#173B52",
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      }
+    }
+  }
+}

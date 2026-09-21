@@ -1,0 +1,25 @@
+{
+  "provenance": "Synthetic observations for arithmetic testing only; no real benchmark was executed.",
+  "configuration": "toy-two-party-v1",
+  "operation": "one completed toy protocol evaluation",
+  "timer": {
+    "unit": "seconds",
+    "start": "immediately before the online batch",
+    "end": "after both parties complete the online batch",
+    "kind": "one continuous elapsed wall interval per run",
+    "excluded": ["setup", "warmup"],
+    "concurrency": "two parties run concurrently"
+  },
+  "communication": {
+    "unit": "bytes",
+    "scope": "online application payload only; excludes setup and transport headers",
+    "aggregation": "sum p0_sent_bytes and p1_sent_bytes once; do not add received bytes"
+  },
+  "runs": [
+    {"id": "r1", "warmup": false, "completed_operations": 1000, "elapsed_seconds": 1, "p0_sent_bytes": 10000, "p1_sent_bytes": 20000},
+    {"id": "r2", "warmup": false, "completed_operations": 1000, "elapsed_seconds": 2, "p0_sent_bytes": 12000, "p1_sent_bytes": 24000},
+    {"id": "r3", "warmup": false, "completed_operations": 1000, "elapsed_seconds": 4, "p0_sent_bytes": 14000, "p1_sent_bytes": 28000}
+  ],
+  "correctness_evidence": "not supplied",
+  "security_evidence": "not supplied"
+}

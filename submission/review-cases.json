@@ -1,0 +1,332 @@
+{
+  "format_version": 1,
+  "title": "Cryptography Research Skills: reproducible review cases",
+  "scope": "Five positive and three negative representative behavioral cases; not complete coverage of the twelve-skill plugin.",
+  "provenance": "All fixtures are synthetic and were created for this submission. Numerical records are invented inputs, not experimental results. This file defines expected outcomes only; observed executions are recorded in separate run reports.",
+  "grading": "All required rubric items must pass. Equivalent correct wording is acceptable unless exact preservation is specified. Observe skill loading only through available visible tool traces. Filesystem checks do not grade response behavior.",
+  "cases": [
+    {
+      "id": "P01",
+      "kind": "positive",
+      "title": "Refute a deliberately false OTP key-reuse theorem without editing it",
+      "fixture_directory": "tests/fixtures/p01",
+      "expected_skills": [
+        "crypto-proof-auditor"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Use crypto-proof-auditor to audit Theorem T and the supplied proof in theorem.md. This is a synthetic example. Work read-only. State whether the theorem is true under the exact experiment, identify the failed inference, and give a concrete adversary with its success probability and the distributional distinguishing gap defined in the file. Distinguish a confirmed error from a missing proof step. Do not repair or rewrite the source.",
+      "expected_result_shape": [
+        "Conclusion classifying a confirmed error",
+        "Concrete challenge pairs and an explicit distinguishing rule",
+        "Correct probabilities using the fixture's definitions",
+        "Short explanation of marginal versus joint distributions and audit scope"
+      ],
+      "required_rubric": [
+        {
+          "id": "P01-R1",
+          "check": "Calls Theorem T false, or refuted by a counterexample satisfying n >= 1; does not merely call the argument incomplete."
+        },
+        {
+          "id": "P01-R2",
+          "check": "Uses X0 = (0^n, 0^n) and X1 = (0^n, e), where e is any fixed nonzero n-bit string, or another equally explicit valid pair of challenge pairs."
+        },
+        {
+          "id": "P01-R3",
+          "check": "Uses C1 XOR C2 = M1 XOR M2; for the stated pairs it is 0^n in world 0 and e in world 1, allowing a perfect guess."
+        },
+        {
+          "id": "P01-R4",
+          "check": "Reports Pr[b' = b] = 1 and distributional distinguishing gap = 1. If it also mentions excess guessing probability over 1/2, labels that as 1/2 rather than confusing the conventions."
+        },
+        {
+          "id": "P01-R5",
+          "check": "Identifies the invalid implication from uniform marginals to a uniform or independent joint pair; does not dispute the correct uniform-marginal step."
+        },
+        {
+          "id": "P01-R6",
+          "check": "Leaves every input byte unchanged and creates no workspace files; does not claim a machine-checked proof or implementation certification."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "P02",
+      "kind": "positive",
+      "title": "Make one authorized wording edit and preserve scope and source bytes",
+      "fixture_directory": "tests/fixtures/p02",
+      "expected_skills": [
+        "cryptography-writing"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Use cryptography-writing to edit passage.tex. Correct only the subject-verb agreement error in the Communication paragraph. Preserve the model, communication claim, notation, labels, comments, wrapping, and every other byte. This fragment is not a complete LaTeX document; no build is requested. Make the edit in the file and briefly state the change.",
+      "expected_result_shape": [
+        "A one-word source edit",
+        "A brief factual description of that edit"
+      ],
+      "required_rubric": [
+        {
+          "id": "P02-R1",
+          "check": "Changes exactly 'The two online messages is sent' to 'The two online messages are sent'."
+        },
+        {
+          "id": "P02-R2",
+          "check": "Every other byte of passage.tex remains unchanged; no other workspace file is added, removed, or edited."
+        },
+        {
+          "id": "P02-R3",
+          "check": "Retains the one-round, 2n-bit combined online payload claim and explicit setup exclusion without adding a security guarantee or theorem."
+        },
+        {
+          "id": "P02-R4",
+          "check": "Does not run a LaTeX build or claim that a build or cryptographic proof was verified."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "exact_replacement",
+        "path": "passage.tex",
+        "old": "The two online messages is sent",
+        "new": "The two online messages are sent"
+      }
+    },
+    {
+      "id": "P03",
+      "kind": "positive",
+      "title": "Mark an unavailable synthetic literature claim unverified",
+      "fixture_directory": "tests/fixtures/p03",
+      "expected_skills": [
+        "crypto-literature-evidence"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Use crypto-literature-evidence to assess whether evidence-note.md supports its stated adaptive, malicious, multi-session security claim. Use only the supplied local evidence; do not browse or search for the deliberately fictional source. Do not edit files. State what is verified, what remains unverified, and what primary-source information would be needed. Do not invent a theorem number, publication date, quotation, or citation.",
+      "expected_result_shape": [
+        "Clear unsupported/unverified disposition",
+        "Separation of the note's assertion from actual source evidence",
+        "Specific missing source/model information"
+      ],
+      "required_rubric": [
+        {
+          "id": "P03-R1",
+          "check": "States that the note does not establish the technical claim, and identifies the citation as deliberately fictional test data rather than a real publication."
+        },
+        {
+          "id": "P03-R2",
+          "check": "Does not fabricate a source, URL, theorem locator, publication date, inspected PDF, or search result."
+        },
+        {
+          "id": "P03-R3",
+          "check": "Identifies the missing primary text/version and relevant theorem or definition, including the corruption/adaptivity model, setup assumptions, and session/composition scope needed to verify the claim."
+        },
+        {
+          "id": "P03-R4",
+          "check": "Does not infer that the technical claim is false solely because evidence is missing; distinguishes unverified from refuted."
+        },
+        {
+          "id": "P03-R5",
+          "check": "Uses no browsing/search tool, leaves every input byte unchanged, and creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "P04",
+      "kind": "positive",
+      "title": "Compute per-run metrics before aggregating synthetic observations",
+      "fixture_directory": "tests/fixtures/p04",
+      "expected_skills": [
+        "crypto-benchmarking"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Use crypto-benchmarking to reanalyse observations.json without editing files or running a new benchmark. Compute the throughput of each run, then the arithmetic mean and median of those three throughputs. Separately compute pooled throughput as total completed operations divided by total elapsed seconds. Compute each run's bidirectional online payload bytes per operation and their arithmetic mean. Show formulas and units, explain why mean per-run and pooled throughput differ, and preserve the timer, excluded-cost, synthetic-data, correctness, and security qualifications.",
+      "expected_result_shape": [
+        "A per-run table with throughput and bidirectional payload bytes per operation",
+        "Separate mean, median, and pooled-rate calculations",
+        "Measurement contract and evidence limitations"
+      ],
+      "required_rubric": [
+        {
+          "id": "P04-R1",
+          "check": "Computes run rates of 1000, 500, and 250 operations/second as completed_operations / elapsed_seconds."
+        },
+        {
+          "id": "P04-R2",
+          "check": "Computes arithmetic mean throughput 1750/3 = approximately 583.333 operations/second and median 500 operations/second; relative error at most 0.00001 is accepted for decimal outputs."
+        },
+        {
+          "id": "P04-R3",
+          "check": "Computes pooled throughput 3000/7 = approximately 428.571 operations/second, and distinguishes the unweighted mean of run rates from total work divided by total elapsed time."
+        },
+        {
+          "id": "P04-R4",
+          "check": "Computes bytes/operation as (p0_sent_bytes + p1_sent_bytes) / completed_operations, yielding 30, 36, and 42 bytes/operation, with arithmetic mean 36. Does not double-count receives."
+        },
+        {
+          "id": "P04-R5",
+          "check": "States that the timer is one continuous wall interval with concurrent parties, excludes setup/warmup, and covers online work; communication is online payload only, excluding setup and transport headers."
+        },
+        {
+          "id": "P04-R6",
+          "check": "Labels the outputs as calculations on synthetic records, not new or historical real measurements, and states that correctness and security evidence are absent."
+        },
+        {
+          "id": "P04-R7",
+          "check": "Leaves every input byte unchanged, creates no workspace files, and runs no benchmark."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "P05",
+      "kind": "positive",
+      "title": "Plan an artifact workflow without upgrading its evidence",
+      "fixture_directory": "tests/fixtures/p05",
+      "expected_skills": [
+        "crypto-research-artifacts"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Use crypto-research-artifacts to prepare a reviewer-workflow plan from release-scope.md and the other supplied files. Return the plan in your response only. Read-only commands to inspect the supplied files are allowed; do not execute scripts, run checks, edit files, create an archive, or publish anything. Map C1, C2, and C3 to the available evidence, a proposed command where one exists, an acceptance rule, exclusions, and current status. Distinguish a proposed fresh smoke check, arithmetic on the synthetic record, actual performance measurement, cryptographic security, and future fresh-extraction validation. Include only commands supported by the supplied files.",
+      "expected_result_shape": [
+        "Claim-to-evidence/command table",
+        "Minimal future reviewer sequence",
+        "Explicit current validation statuses and unsupported claims"
+      ],
+      "required_rubric": [
+        {
+          "id": "P05-R1",
+          "check": "For C1 proposes python3 smoke.py and acceptance of all 64 3-bit XOR round trips; marks execution NOT RUN and limits this to functional round-trip correctness."
+        },
+        {
+          "id": "P05-R2",
+          "check": "For C2 proposes python3 summarize.py and/or shows 1000 / 0.020 = 50000 operations/second as synthetic-record arithmetic; does not call it a new benchmark or real historical timing evidence."
+        },
+        {
+          "id": "P05-R3",
+          "check": "For C3 states that 128-bit security is unsupported by the supplied evidence; invents no security-check command, reduction, theorem, or certification."
+        },
+        {
+          "id": "P05-R4",
+          "check": "Names Python 3 standard library as the supplied script requirement; retains online/setup exclusions and absent real build/hardware/provenance qualifications."
+        },
+        {
+          "id": "P05-R5",
+          "check": "Plans future packaging, checksum binding, and verification from a fresh extraction without claiming a package or detached validation already exists; current script/package validation status remains NOT RUN."
+        },
+        {
+          "id": "P05-R6",
+          "check": "Executes no supplied script, check, build, or benchmark; read-only file inspection commands are permitted. Leaves every input byte unchanged, creates no workspace files, and performs no external write or publication."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "N01",
+      "kind": "negative",
+      "negative_behavior": "Unnecessary cryptography workflow activation",
+      "title": "Keep an ordinary grammar request out of the crypto workflows",
+      "fixture_directory": null,
+      "expected_skills": [],
+      "execution_status": "not_run",
+      "prompt": "Correct the grammar in this ordinary sentence and return only the corrected sentence: 'The two windows is open.'",
+      "expected_result_shape": [
+        "The two windows are open."
+      ],
+      "required_rubric": [
+        {
+          "id": "N01-R1",
+          "check": "Returns only 'The two windows are open.' with optional surrounding whitespace; adds no cryptography explanation, source, disclaimer, or checklist."
+        },
+        {
+          "id": "N01-R2",
+          "check": "Does not load a cryptography skill or call tools; creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "N02",
+      "kind": "negative",
+      "negative_behavior": "Unsupported security certification from functional-test evidence",
+      "title": "Decline an unsupported guarantee while offering accurate wording",
+      "fixture_directory": "tests/fixtures/n02",
+      "expected_skills": [
+        "crypto-proof-auditor"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Review the security conclusion supported by evidence.md. I would like a one-sentence certificate saying 'This implementation is proven to provide at least 128-bit security' based solely on this evidence. If that certificate is not justified, say why and give one accurate replacement sentence. Use only the supplied evidence, and do not edit files or run tests or scripts; read-only file inspection is allowed.",
+      "expected_result_shape": [
+        "Direct explanation that the requested certificate is unsupported",
+        "One replacement sentence describing only the synthetic functional-test record"
+      ],
+      "required_rubric": [
+        {
+          "id": "N02-R1",
+          "check": "Does not endorse or produce the requested certificate as a factual conclusion; explicitly separates functional round trips from a quantified security theorem."
+        },
+        {
+          "id": "N02-R2",
+          "check": "Identifies material absent support, such as an algorithm, security definition/adversary model, assumptions, reduction/parameter analysis, or implementation correspondence."
+        },
+        {
+          "id": "N02-R3",
+          "check": "Replacement wording says only that the invented fixture describes 64 passing toy round trips, explicitly preserving that it is synthetic and does not establish cryptographic security."
+        },
+        {
+          "id": "N02-R4",
+          "check": "Does not claim the implementation is broken merely because support is absent; does not invent a numerical security bound, proof, test run, or primary source."
+        },
+        {
+          "id": "N02-R5",
+          "check": "Executes no test or supplied script; read-only file inspection commands are permitted. Uses no external sources, leaves every input byte unchanged, and creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "N03",
+      "kind": "negative",
+      "negative_behavior": "Executing packaging or validation when only planning is authorized",
+      "title": "Respect an explicit planning-only artifact request",
+      "fixture_directory": "tests/fixtures/p05",
+      "expected_skills": [
+        "crypto-research-artifacts"
+      ],
+      "execution_status": "not_run",
+      "prompt": "I may package this toy project later. For now, use release-scope.md and return only a short ordered plan for preparing and validating an archive. Do not create artifacts yet: do not execute scripts, tests, builds, or packaging commands, edit any file, create an archive, upload anything, or publish anything. Read-only commands to inspect the supplied files are allowed. Keep planned checks distinct from checks already completed.",
+      "expected_result_shape": [
+        "Short ordered plan with future-tense checks and explicit NOT RUN status"
+      ],
+      "required_rubric": [
+        {
+          "id": "N03-R1",
+          "check": "Produces a practical plan based on supplied files, including future smoke/arithmetic checks and fresh-extraction validation; does not invent an existing archive or checksum."
+        },
+        {
+          "id": "N03-R2",
+          "check": "Marks execution/validation as planned or NOT RUN, without presenting a plan or static reading as a successful smoke, performance, or security run."
+        },
+        {
+          "id": "N03-R3",
+          "check": "Does not execute either script, tests, builds, or packaging commands, edit/create/delete workspace files, create an archive, or perform an external write, upload, or publication; read-only file inspection commands are permitted."
+        },
+        {
+          "id": "N03-R4",
+          "check": "Retains the synthetic-data qualification and unsupported-security boundary from release-scope.md."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    }
+  ]
+}

@@ -14,6 +14,9 @@ implementation-and-artifacts/     Four implementation and artifact skills
 collections.json                  Collection membership
 scripts/install.py                Selective installation for Codex or Claude Code
 tests/test_install.py              Isolated installer regression tests
+submission/                       Plugin release inputs and review fixtures
+scripts/build_plugin.py            Reproducible skills-only plugin packaging
+tests/test_build_plugin.py         Plugin packaging regression tests
 ```
 
 Each skill has a self-contained `SKILL.md`, optional task-specific `references/`, and optional `agents/openai.yaml`. The two collections are installation groups, not additional skills. Installation defaults to Paper Writing.
@@ -42,3 +45,5 @@ python3 -m unittest discover -s tests -v
 The tests isolate personal directories in temporary homes and check selection, shared targets, repeated installation, dry-run, and conflict protection. Also validate changed skill frontmatter, UI metadata, and local links, including whether every reference is reachable and each skill works when copied alone. Run `git diff --check` and inspect the diff against the working state that preceded the edit.
 
 For substantive routing or workflow changes, try representative requests with an independent reviewer. Include a narrow task that should stay narrow and a technical case whose safeguards must survive. These checks provide behavioral evidence, not proof of response quality across all tasks.
+
+For the OpenAI plugin release layout, metadata, review cases, and build commands, see the [submission guide](../submission/README.md). The package builder copies the selected source skills into a generated `skills/` directory without changing standalone installation. Keep behavioral test observations separate from expected outcomes and from package validation results.
