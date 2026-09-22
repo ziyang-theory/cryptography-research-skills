@@ -17,12 +17,13 @@ See the official [Codex skill documentation](https://learn.chatgpt.com/docs/buil
 
 ## Both tools and other selections
 
-To use the same Paper Writing collection in both tools, run both installation commands in the [README](../README.md#installation). Each tool's links point to the same source folders. Installing for Claude Code leaves the Codex links intact.
+To use the same Research collection in both tools, run both installation commands in the [README](../README.md#installation). Each tool's links point to the same source folders. Installing for Claude Code leaves the Codex links intact.
 
-For either agent, select only the optional implementation collection, all twelve skills, or one individual skill. These examples use Claude Code; replace `claude` with `codex` for Codex:
+For either agent, select `research`, `writing`, `implementation`, all twelve skills, or one individual skill. The default collection is Research. These examples use Claude Code; replace `claude` with `codex` for Codex:
 
 ```sh
-python3 scripts/install.py --agent claude --collection implementation-and-artifacts
+python3 scripts/install.py --agent claude --collection writing
+python3 scripts/install.py --agent claude --collection implementation
 python3 scripts/install.py --agent claude --collection all
 python3 scripts/install.py --agent claude --skill crypto-proof-auditor
 ```
@@ -33,15 +34,21 @@ Preview an installation without creating files:
 python3 scripts/install.py --agent claude --collection all --dry-run
 ```
 
-An explicit `--destination` overrides the agent's personal directory. For example, install Paper Writing into a particular research project's Claude Code skills directory:
+An explicit `--destination` overrides the agent's personal directory. For example, install Research into a particular research project's Claude Code skills directory:
 
 ```sh
-python3 scripts/install.py --agent claude --collection paper-writing \
+python3 scripts/install.py --agent claude --collection research \
   --destination /path/to/research-project/.claude/skills
 ```
 
 The earlier `--destination "$HOME/.claude/skills"` form also works without `--agent`. An arbitrary destination only makes skills available if the agent discovers that directory.
 
-The installer refuses to overwrite an existing directory, file, or different link, including a broken link. It checks all selected destinations before creating links, and repeating a successful installation leaves matching links intact. Resolve a reported conflict by reviewing the existing installation before moving or removing it. Selecting a smaller collection later adds any missing selected skills; it does not uninstall skills already present.
+The installer refuses to overwrite an existing directory, file, or unrelated link, including an unrelated broken link. It checks all selected destinations before creating or migrating links, and repeating a successful installation leaves matching links intact. Resolve a reported conflict by reviewing the existing installation before moving or removing it. Selecting a smaller collection later adds any missing selected skills; it does not uninstall skills already present.
+
+## Migrating from the two-collection layout
+
+The source folders moved from `paper-writing/` and `implementation-and-artifacts/` into the three collections. Rerun the installer for the skills you already use; it recognizes links to this checkout's exact former path for the same skill and retargets them. Other links and copied installations remain protected. `--dry-run` previews migrations without changing links.
+
+The former `--collection paper-writing` and `--collection implementation-and-artifacts` selections remain compatibility options with their original eight and four skills, respectively. They are not aliases for only the new Writing and Implementation collections: proof auditing now belongs to Research, and evaluation writing belongs to Writing. New commands should use the three current names. The no-argument default is now Research.
 
 Keep the checkout at a stable path while its links are installed. Updating this checkout updates the files used by both tools; start a fresh session to pick up changed skills. If you prefer copied installations, copy individual skill folders intact with their references and update those copies yourself. When copying or redistributing an individual skill, include a copy of the repository-root [LICENSE](../LICENSE) with the skill. Companion skills are optional, and no skill requires a file from another skill folder.

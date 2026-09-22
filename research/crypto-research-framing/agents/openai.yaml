@@ -1,0 +1,4 @@
+interface:
+  display_name: "Cryptography Research Framing"
+  short_description: "Clarify research questions, assumptions, and next steps"
+  default_prompt: "Use $crypto-research-framing to organize this cryptography research idea into a clear question, explicit assumptions, and a useful next mathematical step."

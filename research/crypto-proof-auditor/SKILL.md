@@ -20,6 +20,7 @@ Determine whether the conclusion follows under the stated definition, model, and
 
 - [Audit method](references/audit-method.md): dependency tracing, probability, quantifiers, counterexamples, and optional diagnostic examples.
 - [Reductions and bounds](references/reductions-hybrids-and-bounds.md): game hops, conditioning, sampler changes, concrete loss, and tightness.
+- [Batching and release order](references/batching-and-release-order.md): conditional field checks, powers of one challenge, ring counterexamples, and delayed verification.
 - [Simulation and composition](references/simulation-composition-and-resources.md): malicious behavior, causality, abort, sessions, and ideal-resource replacement.
 - [Extraction and oracles](references/extraction-and-oracles.md): knowledge claims, commitments, proof systems, Fiat--Shamir, ROM, and QROM.
 - [Repair and validation](references/repair-and-validation.md): authorized completion or edits.

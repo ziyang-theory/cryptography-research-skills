@@ -8,7 +8,7 @@ The 2026-09-06 study reused the previous 53-paper corpus: 50 citation-ranked pap
 
 The classification distinguishes named explanatory units from explanations embedded in results, construction, or proof text. A named unit need not be titled Technical Overview or lie in the introduction. A paper may use both forms; an overview of a prior protocol is background, not its new contribution. Classification describes section purpose and is a reader judgment. The source selection is biased toward older, highly cited papers and the chosen MPC-related topics; citation prominence is not evidence of writing quality or proof validity.
 
-PDF locators below refer to the preserved version. Author full versions and later revisions may differ from conference proceedings. In particular, preserve the version corrections recorded for P43 and P44 in the [abstract/introduction evidence](abstract-introduction-evidence.md); historical explanatory prose cannot establish current security. The local study retains all 53 per-paper notes and SHA-256 source hashes. This portable companion includes 18 examples with direct primary-source links and does not depend on that local directory.
+PDF locators below refer to the preserved version. Author full versions and later revisions may differ from conference proceedings. In particular, preserve the version corrections recorded for P43 and P44 in the [abstract/introduction evidence](abstract-introduction-evidence.md); historical explanatory prose cannot establish current security. The local study retains all 53 per-paper notes and SHA-256 source hashes. This portable companion includes selected examples with direct primary-source links and does not depend on that local directory.
 
 ## Examples by explanatory purpose
 
@@ -27,6 +27,18 @@ PDF locators below refer to the preserved version. Author full versions and late
 **Read:** §3 Bit-Decomposition, PDF pp7–9 before §3.1; Fig.1, PDF p7; §1.3, PDF p4
 
 **Use for:** Give component interfaces before their implementations; separate privacy, correctness, and cost.
+
+### P12: Multiparty Computation with Low Communication, Computation and Interaction via Threshold FHE
+
+Gilad Asharov, Abhishek Jain, Adriana López-Alt, Eran Tromer, Vinod Vaikuntanathan, and Daniel Wichs, [primary source](https://www.iacr.org/archive/eurocrypt2012/72370479/72370479.pdf), EUROCRYPT 2012. Version: 18-page merged proceedings PDF, matching the existing P12 corpus source.
+
+**Read:** §1.1, PDF pp. 3–4, checked 2026-09-22 following the supplied MPC writing guide. Selected introduction passages, not the proofs.
+
+**Mechanism:** The encryption key is available after round I, although the evaluation key is not. Parties can therefore encrypt inputs while generating the evaluation key in round II, then evaluate locally and send decryption messages in round III.
+
+**Use for:** Justify overlap through information available before each message. Separate a valid schedule from correctness and security arguments.
+
+**Qualification:** The malicious-security conversion preserves rounds through semi-malicious security and UC NIZKs; generic coin-flipping would add rounds. The stated three-round result assumes LWE and UC NIZKs in the CRS model with static malicious corruptions. Communication independent of circuit size additionally assumes circular security. Scheduling alone proves none of these security claims.
 
 ### P13: Keyword Search and Oblivious Pseudorandom Functions
 
@@ -158,7 +170,7 @@ PDF locators below refer to the preserved version. Author full versions and late
 
 ## Supplemental mechanism cases
 
-M01–M03 were selected using the user-supplied Amit Sahai research distillate and checked against primary sources on 2026-09-20. M04–M05 were selected using the Brent Waters distillate and checked on 2026-09-21. M06–M07 were selected using the Mihir Bellare distillate and checked on 2026-09-21. These are supplements to the 53-paper study, not additions to its ranking or coverage claims. Attribute mechanisms to the listed source authors. The suggested writing uses are adaptations, not attributed personal habits or reconstructions of discovery. Reading depth is recorded individually; none is a proof audit.
+M01–M03 were selected using the user-supplied Amit Sahai research distillate and checked against primary sources on 2026-09-20. M04–M05 were selected using the Brent Waters distillate and checked on 2026-09-21. M06–M07 were selected using the Mihir Bellare distillate and checked on 2026-09-21. M08 was selected using the supplied MPC writing guide and checked on 2026-09-22. These are supplements to the 53-paper study, not additions to its ranking or coverage claims. Attribute mechanisms to the listed source authors. The suggested writing uses are adaptations, not attributed personal habits or reconstructions of discovery. Reading depth is recorded individually; none is a proof audit.
 
 ### M01: Internal MPC views become proof objects
 
@@ -243,3 +255,15 @@ Mihir Bellare and Oded Goldreich, [*On Defining Proofs of Knowledge*](https://cs
 **Use when:** Explain a consumer's failed inference before the definition repairing it.
 
 **Qualification:** Preserve expected-time and oracle qualifications. This excerpt omits the definition's non-triviality clause and does not establish a general composition theorem.
+
+### M08: Maintain the representation between gates
+
+Elette Boyle, Niv Gilboa, and Yuval Ishai, [*Secure Computation with Preprocessing via Function Secret Sharing*](https://ntt-research.com/wp-content/uploads/2022/07/Secure-computation-with-preprocessing-via-function-secret-sharing.pdf), TCC 2019. Version: 32-page author/employer-hosted full version, identified by its first-page footnote; not proceedings pagination.
+
+**Read:** §1 opening and “The idea in a nutshell,” PDF pp. 2–3 / printed pp. 1–2, through the variants. Selected passages, not the security proof.
+
+**Mechanism:** Both parties maintain a common masked wire value $\widetilde w_j=w_j+r_j$. The dealer supplies FSS keys for offset gates $h(x)=g(x-r_{\mathrm{in}})+r_{\mathrm{out}}$. Evaluating the keys on a masked input gives additive shares whose exchange reconstructs the next masked value. In the circuit-dependent variant, adjacent gates share the corresponding wire mask.
+
+**Use when:** A representation connects repeated local procedures. State the invariant, show one transition, then explain what the next component consumes.
+
+**Qualification:** This explanation concerns the semihonest two-party protocol with trusted-dealer preprocessing over finite Abelian groups. Correct propagation does not establish privacy of joint views, malicious security, or a concrete dealer realization. Generating preprocessing remains a separate obligation; efficient FSS must support the required offset-function family.

@@ -1,6 +1,6 @@
 # Comparing complete theorem variants
 
-Use these cases to diagnose a specific comparison error, not as a general survey. Selected from §9.2 of the user-supplied *Learning from Brent Waters: A Cryptography Research Distillate* (research cutoff September 21, 2026), then checked against primary sources that day. Only the cited passages were inspected; proofs were not audited. The diagnostic prompts are original adaptations. Preserve the target manuscript's scope when applying them.
+Use these cases to diagnose a specific comparison error, not as a general survey. The first two were selected from §9.2 of the user-supplied *Learning from Brent Waters: A Cryptography Research Distillate* (research cutoff September 21, 2026), then checked against primary sources that day. The final case comes from the Damgård distillate and has its own verification date below. Only the cited passages were inspected; proofs were not audited. The diagnostic prompts are original adaptations. Preserve the target manuscript's scope when applying them.
 
 ## Registered ABE: keep the properties in the same row
 
@@ -27,6 +27,12 @@ Here `(1, epsilon)` bounds advantage by `epsilon(lambda) * negl(lambda)` against
 
 **Original diagnostic.** Test “any polynomially secure NIZK gives a ZAP.” Identify the missing component, setup distribution, advantage bounds, and adversary class; check the cited implication before asserting a stronger conversion.
 
+## SPDZ2k: a correction changes the opening cost
+
+**Source.** Ronald Cramer, Ivan Damgård, Daniel Escudero, Peter Scholl, and Chaoping Xing, *SPDZ2k: Efficient MPC mod 2^k for Dishonest Majority*, CRYPTO 2018; [ePrint 2018/482](https://eprint.iacr.org/2018/482), revised March 31, 2022. Its revision notice reports a batch-MAC-check correction, points to §3.4, and changes online communication from `O(k)` to `O(k+s)` bits per opening. The record and notice were checked on September 22, 2026; the corrected proof was not inspected.
+
+**Diagnostic.** A table pairing the corrected protocol with the old `O(k)` claim needs repair or a justified parameter restriction under which that asymptotic bound still follows. Preserve the source's `k,s` notation and opening denominator; consult the corrected text for parameter definitions and detailed accounting before normalizing against another protocol. The notice supplies neither measured overhead nor a concrete speedup ratio. This case adapts §3, Move 10, of the user-supplied *Learning from Ivan Damgård: A Cryptography Research Distillate* (research cutoff September 22, 2026).
+
 ## Reuse
 
-The URLs are mutable. Match a future source to the recorded snapshot or recheck its theorem statements and locators. When adapting either case, retain the complete supported variant or list the unresolved premises; do not fill them with desirable features from another row.
+The URLs are mutable. Match a future source to the recorded snapshot or recheck its theorem statements and locators. When adapting a case, retain the complete supported variant or list the unresolved premises; do not fill them with desirable features from another row.

@@ -2,21 +2,35 @@
 
 Twelve focused workflows for cryptography research by Ziyang Jin.
 
-Choose a skill for the requested deliverable. The plugin bundles eight paper-writing skills and four implementation and artifact skills. Instructions and references are loaded as needed; no account, credential, MCP server, or external service is bundled.
+Choose a skill for the requested deliverable. The source collection has four research skills, five writing skills, and three implementation skills; the plugin bundles all twelve. Instructions and references are loaded as needed; no account, credential, MCP server, or external service is bundled.
 
 ## Included workflows
 
+### Research
+
+Formulate thoughts clearly by making questions, definitions, assumptions, evidence, and proof obligations explicit.
+
 - `crypto-research-framing`: formulate and refine a research question.
-- `cryptography-writing`: draft or minimally edit technical prose.
 - `crypto-literature-evidence`: trace claims to primary sources.
 - `crypto-proof-auditor`: examine proofs under their stated model.
-- `crypto-prior-work-comparison`: compare results using compatible claims and costs.
 - `crypto-correlation-accounting`: define and normalize correlation units.
+
+### Writing
+
+Communicate supported claims and prepare clear, consistent manuscripts.
+
+- `cryptography-writing`: draft or minimally edit technical prose.
+- `crypto-prior-work-comparison`: compare results using compatible claims and costs.
+- `crypto-implementation-evaluation-writing`: write claims supported by experimental evidence.
 - `crypto-manuscript-qa`: check manuscript sources, builds, and references.
 - `crypto-ai-acknowledgements`: describe AI assistance and human checking.
+
+### Implementation
+
+Implement protocols, measure their behavior, and package reproducible artifacts.
+
 - `crypto-protocol-implementation`: relate protocol interfaces and code.
 - `crypto-benchmarking`: design and audit reproducible measurements.
-- `crypto-implementation-evaluation-writing`: write claims supported by experimental evidence.
 - `crypto-research-artifacts`: prepare and validate reproducible artifact packages.
 
 ## Example requests

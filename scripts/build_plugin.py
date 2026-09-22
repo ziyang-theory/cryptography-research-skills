@@ -19,7 +19,7 @@ import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
-COLLECTIONS = {'paper-writing', 'implementation-and-artifacts'}
+COLLECTIONS = {'research', 'writing', 'implementation'}
 NAME = 'crypto-research-skills'
 MANIFEST_SCHEMA = 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json'
 FIXED_TIME = (2020, 1, 1, 0, 0, 0)
@@ -75,7 +75,7 @@ def tree_files(directory, root, exclude_caches=True):
 def load_catalog(root):
     catalog = json.loads(read_regular(root / 'collections.json', root))
     if not isinstance(catalog, dict) or set(catalog) != COLLECTIONS:
-        raise ValueError('The catalog must contain exactly the two documented collections')
+        raise ValueError('The catalog must contain exactly research, writing, and implementation')
     skills = {}
     for collection, names in sorted(catalog.items()):
         collection_path = root / collection

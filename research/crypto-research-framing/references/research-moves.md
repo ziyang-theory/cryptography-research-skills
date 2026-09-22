@@ -36,9 +36,17 @@ Use when a protocol's executions, internal views, or guarantee could supply a sp
 
 List what the verifier or adversary jointly sees: openings, commitments, indices, messages, previous challenges, and auxiliary state. Match that exposure to the component's privacy premise. Assign soundness or detection to a separate argument; privacy alone does not enforce consistency. Opening an extra view can cross a privacy threshold, and virtual honest-majority assumptions do not establish an honest majority among real participants.
 
+## Let a failed component certify progress
+
+Use when the consumer can tolerate a retry while preserving its final guarantee. Specify two admissible outcomes: a valid result, or a sound certificate enabling a particular state change. An arbitrary failure bit supplies no progress. Identify a nonnegative potential, the decrease caused by each certified failure, and why other transitions cannot replenish it. Check that certificates neither accuse honest participants nor reveal forbidden information, and that the surviving state still satisfies the next invocation's threshold and setup premises.
+
+For a hypothetical retry loop, if the initial integer potential is at most `t`, every failed attempt decreases it by at least one, and no transition increases it, there are at most `t` failures. If each attempt terminates in success or certified failure within `R` rounds, including certificate validation and state updates, success takes at most `(t+1)R` rounds. Without these premises, the counting argument does not establish termination or guaranteed output delivery. Bound work before failure as well as successful-attempt cost; an optimistic bound is not the adversarial worst case.
+
 ## Preserve native algebra or separate conflicting requirements
 
 Use native algebra when generic encoding discards structure relevant to cost. Compare direct relations with their encoded version, including setup, field conversion, representation size, and required security properties. Preserve the target adversarial view, not only honest outputs. A specialized construction may need a different proof and need not inherit the generic compiler's composition guarantee.
+
+Separate linear reconstruction from multiplication and robust reconstruction. For additive shares, `x0*y0 + x1*y1` omits the cross terms of `(x0+x1)*(y0+y1)`. For degree-`t` polynomial shares, local products have degree at most `2t`; they need not be valid degree-`t` output shares. List the products actually available within each participant's holdings, the reconstruction coefficients, and what remains possible after excluding corrupt holdings. The [double-sharing exercise](mpc-worked-example.md#double-sharing-a-complete-view-masking-argument) shows one restricted interface that resolves the degree change.
 
 When no candidate satisfies all requirements, state those requirements separately: correctness, size, locality, degree in each class of variable, hidden support, and distributions the reduction can sample. Explain which condition each candidate violates. For example, compressing a table by publishing secret-dependent occupied indices can reduce size while invalidating privacy. Check those indices jointly with the rest of the view.
 
@@ -55,3 +63,5 @@ For efficiency comparisons, use a common security parameterization and include r
 Adapted from the user-supplied *Learning from Amit Sahai: A Cryptography Research Distillate* (research cutoff September 20, 2026), especially §§3 and 7–8. These instructions are repository adaptations of its proposed research actions. They do not attribute a personal method, endorsement, or discovery sequence to Sahai or his coauthors. The full report is not bundled; its claims of source access are not records of this repository's verification. Consult primary sources before making paper-specific claims. No improvement in agent research quality is established by adopting these instructions.
 
 The responsibility mapping also draws on the proposed action in §3, Move 9, of *Learning from Brent Waters: A Cryptography Research Distillate* (research cutoff September 21, 2026), under the same attribution and validation limits.
+
+The controlled-failure and multiplication diagnostics adapt §§3–4 of *Learning from Ivan Damgård: A Cryptography Research Distillate* (research cutoff September 22, 2026). The retry bound and sharing calculations are self-contained exercises, not claims about a cited protocol's theorem or the researcher's personal procedure.

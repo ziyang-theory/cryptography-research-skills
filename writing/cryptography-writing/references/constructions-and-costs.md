@@ -49,6 +49,8 @@ State the security and assumptions of each phase and the composition used for th
 
 State whether preprocessing is trusted, ideal, distributed, semi-honest-secure, or malicious-secure; whether it is single-use or reusable; and what accept/reject or abort feedback it exposes. One-time material such as a Beaver triple must not be silently reused.
 
+An additive communication decomposition such as `C_total = C_setup + C_pre + C_online` requires disjoint charged traffic covering the claimed total. If setup is already included in preprocessing, split it out or identify the inclusion rather than adding it twice. Distinct phase names do not establish disjoint costs.
+
 ## Garbling, FSS, and NISC
 
 Preserve construction-local role and object names: garbler or generator, evaluator, wire value, wire label, active label, garbled gate or table, and decoding information are not universal synonyms. For authenticated garbling, name what is authenticated and the mechanism. Keep garbling correctness, privacy, obliviousness, authenticity, and the final malicious-2PC theorem separate.

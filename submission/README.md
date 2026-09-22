@@ -1,6 +1,6 @@
 # OpenAI plugin submission
 
-This directory contains release inputs and review materials for the skills-only **Cryptography Research Skills** plugin. The source skills remain in the two existing collections; the build creates a separate distributable layout.
+This directory contains release inputs and review materials for the skills-only **Cryptography Research Skills** plugin. Source skills are organized into Research, Writing, and Implementation; the build creates a separate distributable layout with the same twelve skill names.
 
 Version **0.1.0** was submitted, approved, and published on **2026-09-21**. See the [publication record](publication-20260921.md) for the directory link, submitted package checksum, and validation evidence.
 

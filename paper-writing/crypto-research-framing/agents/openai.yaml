@@ -1,4 +1,0 @@
-interface:
-  display_name: "Cryptography Research Framing"
-  short_description: "Turn research ideas into lemmas and counterexamples"
-  default_prompt: "Use $crypto-research-framing to identify the next lemma or obstruction for this cryptography research idea."

@@ -28,14 +28,15 @@ Ziyang Jin
 
 ## Installation
 
-The skills work with **Codex and Claude Code**. Choose either or both collections:
+The skills work with **Codex and Claude Code**. Choose among three collections:
 
-- **Paper Writing:** eight skills for research framing, literature, definitions, proofs, comparisons, and manuscript preparation. This collection works on its own for theoretical research.
-- **Implementation & Artifacts:** four optional skills for protocol implementation, benchmarking, evaluation writing, and reproducible artifacts.
+- **Research:** four skills to formulate thoughts clearly: turn an idea into a precise question, separate assumptions from claims, check reasoning and literature, and define the interfaces and costs that matter.
+- **Writing:** five skills to express established ideas and evidence in manuscript prose, prior-work comparisons, evaluation sections, and publication materials.
+- **Implementation:** three skills for protocol code, reproducible benchmarks, and research artifacts.
 
 You need Python 3 and your chosen agent installed. Clone this repository to a stable location; the installer creates directory symlinks to its skill folders.
 
-The [skill catalog](docs/skills.md) groups tasks into three themes: **formulate and understand**, **write and examine**, and **implement and substantiate**. Start with the skill matching your requested result; specialist references and companion skills are loaded only when needed.
+The [skill catalog](docs/skills.md) lists the skills in each collection. Start with the skill matching your requested result; specialist references and companion skills are loaded only when needed. The collections can be used independently and do not prescribe a sequence.
 
 ```sh
 git clone https://github.com/ziyang-theory/cryptography-research-skills.git
@@ -44,21 +45,21 @@ cd cryptography-research-skills
 
 ### Codex
 
-Install Paper Writing:
+Install Research:
 
 ```sh
-python3 scripts/install.py --agent codex --collection paper-writing
+python3 scripts/install.py --agent codex --collection research
 ```
 
 ### Claude Code
 
-Install Paper Writing:
+Install Research:
 
 ```sh
-python3 scripts/install.py --agent claude --collection paper-writing
+python3 scripts/install.py --agent claude --collection research
 ```
 
-Run both commands to use the same skills in both tools. Replace `paper-writing` with `all` to install all twelve skills, or with `implementation-and-artifacts` to install only that collection. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Paper Writing.
+Run both commands to use the same skills in both tools. Replace `research` with `writing` or `implementation` to install that collection, or with `all` to install all twelve skills. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Research.
 
 Start a fresh agent session after installation. In Codex, mention `$crypto-proof-auditor`; in Claude Code, try:
 
@@ -66,7 +67,7 @@ Start a fresh agent session after installation. In Codex, mention `$crypto-proof
 /crypto-proof-auditor Audit the security proof in this manuscript.
 ```
 
-The installer preserves existing files and matching links. Keep the checkout in place while the skills are installed. See the [installation details](docs/installation.md) for personal directories, individual skills, custom destinations, previews, updates, and conflict handling.
+The installer preserves existing files and matching links, and migrates recognized links to this checkout's former collection paths. Keep the checkout in place while the skills are installed. See the [installation details](docs/installation.md) for migration, personal directories, individual skills, custom destinations, previews, updates, and conflict handling.
 
 ## Showcase: a short MPC security proof
 

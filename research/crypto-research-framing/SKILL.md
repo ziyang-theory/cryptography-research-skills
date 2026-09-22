@@ -1,11 +1,11 @@
 ---
 name: crypto-research-framing
-description: Turn an exploratory cryptography idea into a candidate lemma, construction approach, counterexample, or precise obstruction. Use for choosing the next mathematical step, not local prose edits or auditing an existing proof.
+description: Clarify exploratory cryptography ideas into precise questions, definitions, candidate lemmas, construction approaches, counterexamples, or obstructions. Use to organize research reasoning and choose the next mathematical step, not polish manuscript prose or audit an existing proof.
 ---
 
 # Cryptography Research Framing
 
-Find a useful next mathematical step. A precise obstruction can be as useful as a candidate construction; a modest question needs no grand unifying objective.
+Organize rough ideas into a clear research question and a useful next mathematical step. Separate established facts, assumptions, conjectures, and unresolved choices before developing a candidate. If the idea is not ready for a construction, a precise formulation of the question and obstacle is a useful result; a modest question needs no grand unifying objective.
 
 ## Keep the target fixed
 
@@ -25,7 +25,7 @@ Select additional guidance by the obstacle:
 - [Research moves](references/research-moves.md): change a definition, representation, component role, or assumption.
 - [Proof representations](references/proof-representations.md): missing reduction capabilities, proof-only modes, or adaptive timing.
 - [Definition and interface gaps](references/definition-and-interface-gaps.md): intended use exceeds the available theorem or quantitative bound; includes an optional simulation example.
-- [MPC worked example](references/mpc-worked-example.md): isolate a preprocessing interface and communication calculation.
+- [MPC worked examples](references/mpc-worked-example.md): isolate preprocessing and communication, or prove a double-sharing masking claim for a collector's complete view.
 
 These are optional methods and hypothetical exercises, not a sequence every project must complete.
 

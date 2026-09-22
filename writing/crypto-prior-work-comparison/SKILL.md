@@ -27,6 +27,6 @@ Review or suggested wording is read-only unless edits are requested. When editin
 
 - [Comparison method](references/comparison-method.md): substantial sections/tables, uncertain normalization, or mixed numerical provenance.
 - [Source patterns](references/source-patterns.md): examples of comparison structures and known table-consistency pitfalls.
-- [Theorem variant cases](references/theorem-variant-cases.md): properties drawn from incompatible variants or compressed quantitative premises.
+- [Theorem variant cases](references/theorem-variant-cases.md): incompatible variants, compressed quantitative premises, or a correction that changes a comparison's cost.
 
 Use `cryptography-writing` only when the task also requires broader narrative organization, and `crypto-literature-evidence` when additional source research is needed. The comparison itself should remain self-contained. Return reconstructible claims and material unresolved mismatches, without forcing a fixed paragraph order or evidence template onto a small edit.

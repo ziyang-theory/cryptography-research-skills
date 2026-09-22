@@ -23,7 +23,7 @@ Use the entrypoint alone for a straightforward edit with fixed meaning. Read the
 
 | Task | Reference |
 | --- | --- |
-| Abstract or introduction structure | [Abstracts and introductions](references/abstracts-and-introductions.md) |
+| Abstract/introduction structure or consistency with a technical overview | [Abstracts and introductions](references/abstracts-and-introductions.md) |
 | Explain a construction or proof idea | [Technical overviews](references/technical-overviews.md) |
 | Ambiguous cryptographic word or claim verb | [Terminology](references/terminology.md) |
 | Security statements, experiments, reductions, or full proofs | [Security claims](references/security-claims.md) |

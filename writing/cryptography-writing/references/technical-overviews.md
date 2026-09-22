@@ -25,6 +25,8 @@ A useful progression is **target → obstacle → observation → mechanism → 
 | Approximation or rounding | Actual error term and needed bound/margin/rejection | M05 |
 | Quantitative security | Expensive reduction term and whether proof or construction changes | M06 |
 | Definition for a consumer | Failed inference and the quantified interface that repairs it | M07 |
+| Maintained representation | One component's output has exactly the form the next consumes | M08 |
+| Round overlap | Identify which messages can be formed before the other task finishes | P12, P39 |
 
 These are options, not a template. Use a direct explanation when no failed approach is documented. A long paper may combine a global map with local component overviews (P29, P48). Mark a prior-protocol explanation as background before explaining the new contribution.
 
@@ -34,7 +36,11 @@ The [supplemental cases](technical-overview-evidence.md#supplemental-mechanism-c
 
 **Use a small case for a reason.** A gate, two parties, tree, correlation, or idealized primitive may isolate the invariant. State what was simplified—adversary, function class, arithmetic, setup, or hypothetical assumption—and how the formal treatment restores the actual setting. A teaching construction need not be a usable special case; label it when it is only an expository device. Do not promote passive intuition to malicious security.
 
+Specify the toy functionality's output recipients and any intermediate values it intentionally reveals. Do not describe that functionality as revealing only the final answer. If these values reveal more than the target permits, identify the changed privacy obligation and explain which dependency the toy still preserves; this is a relaxation, not merely a smaller instance.
+
 **Expose interfaces.** State who holds what, what is public or hidden, who computes/learns an output, and what the operation preserves. Explain why the next component needs its guarantee. Retain state and lifetime where preprocessing or reuse affects that reasoning.
+
+For a repeated gate or stage, state the representation invariant once, then show how a representative step preserves it and how input encoding and output recovery connect it to the intended computation (M08). Separate preservation of the algebraic representation from preservation of the adversary's joint-view distribution. This can replace a long list of similar gate procedures.
 
 **Let equations explain.** An identity or short calculation should reveal the invariant or enabled operation. Distinguish algebraic correctness from security. A mask's uniform marginal need not hide its secret given the joint view; show the relevant correlations. A formula copied from the construction without explaining its next implication adds little.
 
@@ -42,7 +48,7 @@ The [supplemental cases](technical-overview-evidence.md#supplemental-mechanism-c
 
 **Show dependencies accurately.** A figure can explain ownership, interfaces, or parallelism. Label whether arrows mean runtime messages, construction reductions, or exposition dependencies; these differ. Cite and explain the figure in the prose. Teaching order must not create fictitious protocol rounds.
 
-**Explain the saving.** Identify the operation removed, shared, batched, or shifted, with its dominant parameter and compensating cost. For round savings, track when values are fixed, known, and revealed (P39). Distinguish analytical estimates from measured performance, and component costs from generating their ideal inputs.
+**Explain the saving.** Identify the operation removed, shared, batched, or shifted, with its dominant parameter and compensating cost. For round savings, track when values are fixed, known, and revealed (P12, P39). If overlap is the key step, show which input to each concurrent operation is already available; an unfinished evaluation key may or may not block input encryption. Distinguish analytical estimates from measured performance, and component costs from generating their ideal inputs. Use [construction and cost accounting](constructions-and-costs.md) when phase totals or round conventions need clarification.
 
 ## Security intuition and formal handoff
 

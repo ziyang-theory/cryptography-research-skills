@@ -1,18 +1,20 @@
 {
-  "paper-writing": [
+  "research": [
     "crypto-research-framing",
-    "cryptography-writing",
     "crypto-literature-evidence",
     "crypto-proof-auditor",
+    "crypto-correlation-accounting"
+  ],
+  "writing": [
+    "cryptography-writing",
     "crypto-prior-work-comparison",
-    "crypto-correlation-accounting",
+    "crypto-implementation-evaluation-writing",
     "crypto-manuscript-qa",
     "crypto-ai-acknowledgements"
   ],
-  "implementation-and-artifacts": [
+  "implementation": [
     "crypto-protocol-implementation",
     "crypto-benchmarking",
-    "crypto-implementation-evaluation-writing",
     "crypto-research-artifacts"
   ]
 }

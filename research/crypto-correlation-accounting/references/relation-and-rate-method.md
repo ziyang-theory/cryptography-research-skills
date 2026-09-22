@@ -14,6 +14,7 @@ Complete one sheet per primitive or benchmark row:
 | Dimensions | Coordinates, vector lengths, block widths, edge set, padding |
 | Invocation shape | Calls, batches, multiplicity, requested versus generated outputs |
 | Consumption | Downstream functionality, protocol step, or workload served by the outputs |
+| Validity state | Candidate, checked, authenticated, usable for which consumer/key/epoch, or consumed |
 | Setup | Seed establishment, trusted/ideal resources, programmability, reuse |
 | Timed work | Exact included expansion/programming/audit/consumption phases |
 | Evidence | Author-measured, inherited/cited measurement, source-reported analytical, local measurement, rerun, derived, estimated, projected, N/R |
@@ -52,11 +53,40 @@ Distinguish one ideal invocation from its concrete provider calls. Co-batching s
 
 For a protocol consuming several primitive families, keep a vector of counts `(c_1,...,c_k)` until a concrete cost model is fixed. Adding unlike counts produces no meaningful “total correlations.”
 
+### From raw generation to usable inventory
+
+Use this ledger when comparing a generator with a consumer. Define the counted relation and grouping first; these are overlapping stages, not quantities to add:
+
+| Count | Meaning to fix |
+| --- | --- |
+| Raw | All generated units, including padding or test material if generated in the same unit |
+| Candidate | Units eligible for the intended validation or conversion after initial filtering |
+| Checked | Retained outputs after the specified completed checks; identify the acceptance and authentication guarantees |
+| Usable | Units admitted to the specified consumer interface, including required checks, key/epoch, grouping, and timing |
+| Discarded | Units permanently unavailable, with padding, failed checks, and destructive test/sacrifice use separated |
+| Consumed | Units irreversibly spent by the downstream workload; keep validation consumption separate |
+
+State whether counters are cumulative or current inventory. Some interfaces require no checks or authentication, while others release a whole batch only after one check; do not invent independent per-entry acceptance. A tag being present is different from the required verification having completed. Record the authentication key context, sharing, pending checks, and permitted reuse.
+
+Algebraic relation satisfaction alone does not establish compatibility. Point to the generator guarantee and the consumer's required joint distribution, adversarial interface, and release time. Key coupling, auxiliary generator state, or a static-versus-adaptive corruption mismatch can prevent substitution even when every equation holds. Accounting should expose an unresolved compatibility premise rather than certify it. Count further authentication, conversion, checking, and coordination resources needed to reach the claimed usable state.
+
+**Hypothetical inventory example, not a security construction or measurement.** Count one triple as one shared relation `c = ab` over a fixed field, together with the consumer's authentication data; do not count its elements or parties' shares as separate triples. Suppose a pipeline generates 1,024 raw triple units, removes 64 padding units, and spends 192 of the 960 candidates as destructive test material. Assume a separate argument establishes consumer compatibility, and its checks admit the remaining 768 authenticated triples: 512 under key context `K` and 256 under `K'`. A workload needs blocks of 128 triples under `K`. It can use four blocks, not six; the `K'` inventory cannot simply be merged into a `K` call. After consuming three blocks:
+
+```text
+raw = 1,024; candidates = 960; checked = 768
+usable produced for this workload = 512; consumed = 384
+discarded = 64 + 192 = 256
+remaining inventory = 128 under K + 256 under K' = 384
+raw = discarded + consumed + remaining inventory = 1,024
+```
+
+The `K'` items are retained inventory, not discarded failures. If the complete preparation of this batch takes a hypothetical two seconds, raw throughput is 512 units/s and usable preparation throughput for the `K` workload is 256 triples/s. This is not an online consumption rate. The time must include the expansion, filtering, authentication, checks, and coordination used to produce those usable outputs; report setup inclusion and amortization explicitly. Crediting the `K'` inventory to a second workload changes the denominator and requires stating that workload.
+
 ## 3. Expansion ratios
 
 State the ratio explicitly, for example `logical output-share bits / private seed-key bits`, and say whether both roles are summed or one role is reported. Public matrices/seeds, authentication keys, serialized metadata, and setup communication may be different objects with different inclusion rules. A compressed seed length is not the total cost of establishing it.
 
-Count fixed schedule entries and padded or zero-payload slots when they are part of the represented keys; do not omit them merely because their algebraic contribution vanishes. Use the implementation's actual representation for storage claims and the defined representation for logical-bit claims. Keep raw generated, accepted/usable, and consumed output counts distinct.
+Count fixed schedule entries and padded or zero-payload slots when they are part of the represented keys; do not omit them merely because their algebraic contribution vanishes. Use the implementation's actual representation for storage claims and the defined representation for logical-bit claims.
 
 ## 4. Throughput definitions
 

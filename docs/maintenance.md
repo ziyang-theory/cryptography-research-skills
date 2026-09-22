@@ -9,8 +9,9 @@ CITATION.cff                      Optional academic citation metadata
 docs/skills.md                    Skill catalog and selection guide
 docs/installation.md              Agent compatibility and installation options
 docs/maintenance.md               Repository layout and validation
-paper-writing/                    Eight research-framing and paper-writing skills
-implementation-and-artifacts/     Four implementation and artifact skills
+research/                         Four skills for clarifying ideas and reasoning
+writing/                          Five manuscript and exposition skills
+implementation/                   Three protocol, benchmark, and artifact skills
 collections.json                  Collection membership
 scripts/install.py                Selective installation for Codex or Claude Code
 tests/test_install.py              Isolated installer regression tests
@@ -19,7 +20,7 @@ scripts/build_plugin.py            Reproducible skills-only plugin packaging
 tests/test_build_plugin.py         Plugin packaging regression tests
 ```
 
-Each skill has a self-contained `SKILL.md`, optional task-specific `references/`, and optional `agents/openai.yaml`. The two collections are installation groups, not additional skills. Installation defaults to Paper Writing.
+Each skill has a self-contained `SKILL.md`, optional task-specific `references/`, and optional `agents/openai.yaml`. The three collections are installation groups, not additional skills. Installation defaults to Research. Keep each skill in one collection according to its main deliverable; companion skills can belong to another collection without becoming mandatory dependencies.
 
 ## Keep the collection small
 

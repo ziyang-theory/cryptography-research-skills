@@ -27,7 +27,7 @@ class BuildPluginTests(unittest.TestCase):
         for name in ('collections.json', 'LICENSE', 'CITATION.cff'):
             shutil.copyfile(ROOT / name, self.root / name)
         self.catalog = json.loads((self.root / 'collections.json').read_text(encoding='utf-8'))
-        self.skill = self.root / 'paper-writing' / self.catalog['paper-writing'][0]
+        self.skill = self.root / 'research' / self.catalog['research'][0]
         submission = self.root / 'submission'
         (submission / 'assets').mkdir(parents=True)
         (submission / 'assets' / 'logo.png').write_bytes(b'fixture asset')
@@ -56,6 +56,22 @@ class BuildPluginTests(unittest.TestCase):
         self.manifest_path.write_text(json.dumps(self.manifest), encoding='utf-8')
 
     def test_archive_contains_exact_catalog_and_explicit_release_inputs(self):
+        expected_catalog = {
+            'research': {
+                'crypto-research-framing', 'crypto-literature-evidence',
+                'crypto-proof-auditor', 'crypto-correlation-accounting',
+            },
+            'writing': {
+                'cryptography-writing', 'crypto-prior-work-comparison',
+                'crypto-implementation-evaluation-writing', 'crypto-manuscript-qa',
+                'crypto-ai-acknowledgements',
+            },
+            'implementation': {
+                'crypto-protocol-implementation', 'crypto-benchmarking',
+                'crypto-research-artifacts',
+            },
+        }
+        self.assertEqual({group: set(names) for group, names in self.catalog.items()}, expected_catalog)
         (self.root / 'private-notes.md').write_text('must not be published', encoding='utf-8')
         (self.root / '.env').write_text('NOT_A_REAL_SECRET=test', encoding='utf-8')
         (self.skill / '__pycache__').mkdir(exist_ok=True)
@@ -64,6 +80,10 @@ class BuildPluginTests(unittest.TestCase):
         result = BUILDER.build(self.root)
         expected_skills = {name for names in self.catalog.values() for name in names}
         self.assertEqual(result['skills'], len(expected_skills))
+        inventory = json.loads((self.root / 'dist' / f'{BUILDER.NAME}-build.json').read_text(encoding='utf-8'))
+        self.assertEqual(inventory['skills'], {
+            name: f'{group}/{name}' for group, names in expected_catalog.items() for name in names
+        })
         with zipfile.ZipFile(result['archive']) as archive:
             members = archive.namelist()
             self.assertEqual(members, sorted(members))
@@ -108,7 +128,7 @@ class BuildPluginTests(unittest.TestCase):
         self.assertFalse((self.root / 'dist').exists())
 
     def test_symlink_parent_directory_is_rejected(self):
-        collection = self.root / 'paper-writing'
+        collection = self.root / 'research'
         moved = self.root / 'moved'
         collection.rename(moved)
         collection.symlink_to(moved, target_is_directory=True)
@@ -116,10 +136,10 @@ class BuildPluginTests(unittest.TestCase):
             BUILDER.build(self.root)
 
     def test_catalog_rejects_unsafe_unknown_and_duplicate_entries(self):
-        for name in ('../outside', 'no-such-skill', self.catalog['paper-writing'][0]):
+        for name in ('../outside', 'no-such-skill', self.catalog['research'][0]):
             with self.subTest(name=name):
                 catalog = json.loads(json.dumps(self.catalog))
-                catalog['paper-writing'].append(name)
+                catalog['research'].append(name)
                 (self.root / 'collections.json').write_text(json.dumps(catalog), encoding='utf-8')
                 with self.assertRaises(ValueError):
                     BUILDER.build(self.root)
@@ -138,8 +158,8 @@ class BuildPluginTests(unittest.TestCase):
         for length in (64, 65):
             name = 'x' * (length - len(BUILDER.NAME) - 1)
             catalog = json.loads(json.dumps(self.catalog))
-            catalog['paper-writing'].append(name)
-            source = self.root / 'paper-writing' / name
+            catalog['research'].append(name)
+            source = self.root / 'research' / name
             source.mkdir()
             (source / 'SKILL.md').write_text(
                 f'---\nname: {name}\ndescription: A boundary fixture.\n---\n', encoding='utf-8',
