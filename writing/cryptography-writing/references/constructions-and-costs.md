@@ -15,6 +15,14 @@ These are different black-box or non-black-box interfaces. Use **fully black-box
 
 State whether a resource is one-shot, bounded-use, reusable, or reactive; whether it shares state across sessions; and whether it depends on the circuit, relation, parties, identities, inputs, session, or previous transcript. Preserve whether the construction is generic, special-purpose, or mixed; these are design choices, not quality rankings.
 
+## Write an operational protocol description
+
+When drafting or reorganizing a protocol, make its schedule executable from the description and the definitions it explicitly adopts. For each step, identify the acting parties, relevant index ranges, sampled or computed values, available inputs and state, messages and recipients, and retained outputs. Display a defining formula where a chain of equation references would obscure the operation; continue to reference already defined primitives instead of duplicating their algorithms. Boxing, headings, and the amount of repeated notation remain manuscript choices.
+
+Separate initialization, communication, intervening local computation, and output reconstruction according to the actual execution. Trace when every quantity becomes available: a coefficient learned from a broadcast can be used afterward, but not to construct that same round's simultaneous messages. A local-computation step is not another communication round. Distinguish the definition of a value from the correctness derivation that establishes its use; keep the operational rule in the protocol and place longer derivations in the argument that needs them.
+
+When moving operations out of surrounding prose into the protocol, check that each operation still has its inputs, actors, sampling rule, and order of use. Preserve labels referenced by the proof or update their consumers; remove duplicated prose only within the authorized reorganization. Do not turn a self-contained-description request into a new construction or silently supply an unspecified operation.
+
 ## Name a correlation algebraically
 
 When introducing or comparing OLE, VOLE, ROT, COT, a multiplication triple, or an authenticated correlation whose convention is not already fixed locally, state the defining equation, domain or field, scalar or vector dimensions, randomness, and the values held by each party. Sender/receiver and additive-share conventions vary across sources.
@@ -70,11 +78,11 @@ For communication, state:
 - honest-party-only versus all-party, per-party versus aggregate, and point-to-point versus broadcast;
 - logical payload versus observed transport bytes.
 
-Report hashes, correlation instances, primitive calls, oracle queries, and ideal-functionality calls as separate resource counts unless a concrete instantiation maps them to communication. Do not sum endpoint sent-and-received counters without checking whether this counts each transmission twice. Do not form rankings or ratios until units, aggregation rules, phase boundaries, and excluded resources are aligned.
+Report hashes, correlation instances, primitive calls, oracle queries, and ideal-functionality calls as separate resource counts unless a concrete instantiation maps them to communication. Do not sum the parties' sent-and-received counters without checking whether this counts each transmission twice. Do not form rankings or ratios until units, aggregation rules, phase boundaries, and excluded resources are aligned.
 
 A directional byte metric is not itself a latency bound. State full- or half-duplex operation, directional bandwidth, overlap, and the causal critical path before translating directional communication into wall-clock time.
 
-For rounds, state the speaking and delivery pattern, topology, and whether messages are simultaneous. Separate messages, simultaneous-message layers, back-and-forth exchanges, causal protocol steps, ideal-resource calls, and concrete network rounds. Say which calls execute in parallel and whether setup generation, preprocessing, expected-round subprotocols, broadcast realization, or hybrid-resource instantiation is excluded.
+For rounds, state the speaking and delivery pattern, topology, and whether messages are simultaneous. Separate messages, simultaneous message exchanges, back-and-forth exchanges, causal protocol steps, ideal-resource calls, and concrete network rounds. Say which calls execute in parallel and whether setup generation, preprocessing, expected-round subprotocols, broadcast realization, or hybrid-resource instantiation is excluded.
 
 ## Asymptotic and amortized costs
 

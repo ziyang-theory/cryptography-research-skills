@@ -19,7 +19,7 @@ These retained reading notes summarize writing patterns, not authoritative curre
 
 ### Landscape then close comparison
 
-Use a compact feature/asymptotic table to define the design space, then a separate concrete table for aligned configurations. WRK17, HKNOS25, and LXYY25 illustrate this two-layer structure.
+Use a compact feature/asymptotic table to define the design space, then a separate concrete table for aligned configurations. WRK17, HKNOS25, and LXYY25 illustrate this separation of comparison tables.
 
 ### Split winners
 
@@ -27,7 +27,7 @@ Name the winner per axis and regime. KRRW18 and MMST25 are useful models: they c
 
 ### Crossover analysis
 
-Report where a scaling advantage becomes concrete rather than showing only a favorable endpoint. ASHIV20 and HKNOS25 organize result prose around such ranges.
+Report where a scaling advantage becomes concrete rather than showing only a favorable parameter choice. ASHIV20 and HKNOS25 organize result prose around such ranges.
 
 ### Honest non-comparison
 

@@ -53,6 +53,32 @@ Distinguish one ideal invocation from its concrete provider calls. Co-batching s
 
 For a protocol consuming several primitive families, keep a vector of counts `(c_1,...,c_k)` until a concrete cost model is fixed. Adding unlike counts produces no meaningful “total correlations.”
 
+### Separate protocol consumption from message costs
+
+When a protocol consumes several pools of the same correlation, identify
+each pool's purpose, party roles, index range, width, and lifetime before
+summing its instances. Record whether pools are disjoint and independent,
+or which joint guarantee justifies shared material. Reusing a computed
+product share in several formulas does not consume the underlying
+correlation again; a new primitive invocation may require fresh instances.
+Equal algebraic relations alone do not justify reusing the same instance
+for a different purpose after correction messages have been exposed.
+
+Derive communication separately from the actual message families and
+payload lengths, with senders, recipients, phase, and multiplicity. A
+correlation count becomes a bit cost only through a specified generation
+or conversion protocol. Supplied setup may be excluded from an online
+bound while its correction messages are still charged. State whether
+broadcast payloads are counted once or by recipient deliveries, and charge
+each message exactly once under that convention.
+
+Keep input/output, setup, and circuit-independent terms until the
+representation assumptions justify absorbing them into a per-gate bound.
+If a circuit transformation supplies those assumptions, count its added
+gates and express the bound for the transformed circuit. The consumption
+count, communication count, and compatibility of the resources are
+separate conclusions.
+
 ### From raw generation to usable inventory
 
 Use this ledger when comparing a generator with a consumer. Define the counted relation and grouping first; these are overlapping stages, not quantities to add:

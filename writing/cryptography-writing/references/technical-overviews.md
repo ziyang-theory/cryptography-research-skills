@@ -54,7 +54,7 @@ For a repeated gate or stage, state the representation invariant once, then show
 
 Correctness intuition explains honest outputs. Security intuition identifies adversarial choices, why they do not help, and the invariant or assumption supporting that claim. If simulation clarifies the mechanism, explain what must be extracted or kept consistent and why the interface permits it. Label any single-corruption or simplified case.
 
-An overview need not contain the full simulator and every hybrid. If it includes selected transitions, retain their endpoints and justification without claiming to prove omitted steps. Follow the native argument for algebraic, game-based, combinatorial, or lower-bound results; an intuitive assertion that the adversary learns nothing is not a replacement definition.
+An overview need not contain the full simulator and every hybrid. If it includes selected transitions, identify the experiments or distributions being compared and justify each transition without claiming to prove omitted steps. Follow the native argument for algebraic, game-based, combinatorial, or lower-bound results; an intuitive assertion that the adversary learns nothing is not a replacement definition.
 
 Connect each major thread to an existing construction, lemma, theorem, or section supplying the deferred details. Make the reason understandable before that handoff. For an authorized draft with missing reasoning, leave the gap visible. A requested proof completion or validity audit requires substantive proof work, not a smoother overview.
 

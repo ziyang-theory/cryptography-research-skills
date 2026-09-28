@@ -47,7 +47,7 @@ Define throughput as completed useful units divided by the included interval. `B
 
 Specify logical bits/field elements, framed bytes or transport bytes; included phases; direction; party aggregation; and broadcast convention. For aggregate sent traffic, `C_total = sum_{i != j} C_{i->j}` counts each directed transmission once. Adding matching receive counters counts it twice. State broadcast realization and retransmission policy when relevant, and distinguish decimal KB/MB from binary KiB/MiB.
 
-Retain fixed/input/output terms in finite-instance formulas. Explain differences between logical counts and wire counters; unavailable transport data is not zero overhead. Logical rounds, simultaneous layers, messages, primitive calls and network round trips are different quantities.
+Retain fixed/input/output terms in finite-instance formulas. Explain differences between logical counts and wire counters; unavailable transport data is not zero overhead. Logical rounds, simultaneous message exchanges, messages, primitive calls and network round trips are different quantities.
 
 ### Memory and failures
 

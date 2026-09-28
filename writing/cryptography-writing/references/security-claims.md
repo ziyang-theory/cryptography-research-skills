@@ -31,16 +31,26 @@ For simulation, a useful default is to describe the simulator's inputs, interfac
 When hybrids clarify the argument:
 
 1. Define experiments or indexed distributions over the observation space in the security definition, with enough setup, randomness, interaction, output, and retained state to make them unambiguous.
-2. Identify the endpoints. Prefer exact endpoint distributions; explicitly justify and bound any gap to the claimed real or ideal execution.
+2. Identify the initial and final experiments or distributions. Prefer exact matches to the claimed real or ideal execution; explicitly justify and bound any difference.
 3. For each transition, state the controlled change and update its causal consequences. Classify it as identical distribution, bounded statistical distance, or computational indistinguishability under a named premise. Justify the complete surrounding view, including conditioning and adaptive choices.
 4. For repeated families, give a rule for each consecutive member and a uniform transition argument covering its index-dependent state and error. Identify the first and last members and their connections. A family name or ellipsis alone is insufficient.
-5. Accumulate all statistical, computational, bad-event, and guessing terms. Each computational edge or justified family needs an applicable assumption, theorem, or closure lemma; the number of reductions need not equal the number of distinct assumptions.
+5. Accumulate all statistical, computational, bad-event, and guessing terms. Each computational transition or justified family needs an applicable assumption, theorem, or closure lemma; the number of reductions need not equal the number of distinct assumptions.
 
 For `p_i = Pr[D(H_i)=1]`, the telescoping bound is
 
 `|p_0-p_m| <= sum_{i=0}^{m-1} |p_i-p_{i+1}|`.
 
-A standard asymptotic argument uses polynomially many transitions with appropriately uniform negligible bounds. Turning endpoint gap `epsilon` into an adjacent gap of at least `epsilon/m` must account for how the reduction selects or is advised of the edge and any guessing loss. Exact conditional-distribution arguments can discharge zero-error transitions; they still need to match the full view.
+A standard asymptotic argument uses polynomially many transitions with appropriately uniform negligible bounds. Turning distinguishing advantage `epsilon` between `H_0` and `H_m` into advantage of at least `epsilon/m` between adjacent hybrids must account for how the reduction selects or is advised of the transition and any guessing loss. Exact conditional-distribution arguments can discharge zero-error transitions; they still need to match the full view.
+
+## Shorten or reorganize without weakening the argument
+
+For an authorized simplification, separate the algorithm that samples the view from the argument that its distribution is correct. Describe the simulator once, using only its permitted information; justify its joint sampling in the relevant transitions. The simulator's return value and the full observation compared by the security definition need not coincide: state how the security experiment forms that observation. Preserve that distinction when matching the final hybrid, including any abort output.
+
+Before removing a supporting lemma or merging its proof into a hybrid, identify its consumers and the premises they need. Place the argument after those premises are established and before its conclusion is used. Preserve constraints on jointly sampled setup, corrupted state, honest shares, and public messages where present, as well as the order needed to simulate an embedded primitive challenge's surrounding view. Uniform individual components do not justify independently resampling their joint distribution. Shorten repeated explanations or move details; do not replace these dependencies with an unsupported assertion that the view is unchanged.
+
+Keep a statement focused on its hypotheses and conclusion when sampling mechanics can be given in the simulator or proof. Explain a bounded sampler's failure event and its probability where the comparison first introduces that abort; retain the runtime and approximation guarantees needed by every reduction using the sampler. If an author requests an asymptotic presentation, a short computational-indistinguishability conclusion may replace detailed final advantage accounting once the existing uniform negligible bounds and polynomial resource bounds justify it. Keep necessary statistical comparisons and reduction guarantees, and do not extend that local presentation choice to quantitative definitions or other sections.
+
+After reorganization, trace the initial and final distributions, the order of sampling premises and reductions, and all consumers of moved labels or statements. This verifies preservation of the supplied argument; substantive proof gaps still require separate proof work.
 
 ## Retain the theorem's limits
 

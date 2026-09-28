@@ -7,7 +7,17 @@ description: Draft or minimally edit cryptography manuscripts, including definit
 
 Make the contribution and argument precise and readable. Use established terms when they express the intended formal meaning; otherwise name the object or relationship plainly. Theory-only writing needs no implementation or experiments.
 
+Prefer concrete cryptographic nouns and operations over generic labels such as “endpoints,” “layer,” “interface,” “publish,” or “pad.” Name the parties, OT roles, protocol phase, primitive, PRF outputs, messages, broadcast, or reconstruction actually meant. Prefer “corrupted parties” to “coalition” when describing the corrupted set, and name supplied correlations rather than calling them “scalar correlations” or “OT state.” Explain what is sampled or causes an abort instead of relying on “marginal” or “cutoff” alone.
+
+For drafting or terminology revision, use the wording defaults in [terminology](references/terminology.md). They express preferred prose, not claims that the avoided words are unknown in cryptography. Preserve exact mathematical distinctions, formal interfaces, complete retained state, source-defined terms, and technically meaningful uses such as “one-time pad.” Local author instructions can override these defaults.
+
 ## Work from the active claim
+
+Check project guidance for the author's explicit wording corrections and
+accepted replacements. Preserve their scope and later reverts. When an
+existing term already names the intended object, prefer it to inventing and
+defining another label; a terminology question alone does not authorize
+manuscript edits.
 
 1. Resolve the requested source version and active text. Read the relevant definitions, notation, theorem, and nearby argument before changing a technical claim.
 2. Identify what the sentence relies on: the experiment or functionality, adversary and corruption, setup and oracle access, quantifiers and bounds, assumptions, composition, leakage, and output guarantee. State the material conditions or point to a definition fixing them; do not repeat the whole model in every sentence.
@@ -19,13 +29,13 @@ Local definitions take precedence over generic terminology. Keep correctness, se
 
 ## Load details only for the current task
 
-Use the entrypoint alone for a straightforward edit with fixed meaning. Read the relevant reference when drafting substantial material or resolving an uncertainty:
+Use the entrypoint alone for a straightforward grammar edit with fixed meaning. For drafting or terminology changes, use the terminology reference above; read other references only for the relevant task:
 
 | Task | Reference |
 | --- | --- |
 | Abstract/introduction structure or consistency with a technical overview | [Abstracts and introductions](references/abstracts-and-introductions.md) |
 | Explain a construction or proof idea | [Technical overviews](references/technical-overviews.md) |
-| Ambiguous cryptographic word or claim verb | [Terminology](references/terminology.md) |
+| Preferred wording, an ambiguous cryptographic word, or a claim verb | [Terminology](references/terminology.md) |
 | Security statements, experiments, reductions, or full proofs | [Security claims](references/security-claims.md) |
 | MPC, simulation, corruption, composition, or output guarantees | [Secure computation](references/secure-computation.md) |
 | Proof systems, extraction, commitments, or oracle models | [Proof systems and oracles](references/proof-systems-and-oracles.md) |

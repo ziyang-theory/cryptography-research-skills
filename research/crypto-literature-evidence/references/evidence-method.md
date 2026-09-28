@@ -17,6 +17,14 @@ This prevents an incidental keyword mention from becoming a false strict match.
 
 When a request uses an ambiguous capability name such as “batched,” “shared,” “compact,” or “distributed,” write the desired input/output relation and cost target before interpreting the name. Identify which parameters are public, private, or secret-shared; whether outputs preserve instance identity or only an aggregate; and whether the required output is compact keys or expanded correlations. For a compression question, make the requested scaling explicit, for example `k*d + w` rather than `k*(d+w)`. A paper with matching terminology may provide a different interface or optimize a different term.
 
+### Scoped novelty and predecessor searches
+
+For “has this already been done?”, test the conjunction of the target's material properties in one supported construction variant. Search both for that combination and for its components under alternate terminology; follow citation chains from the closest candidates. Separate established component ideas from the proposed combination or mechanism. A different assumption, setup, or phase boundary may prevent a strict match without making the candidate irrelevant to a broader priority claim.
+
+Combine broad title/abstract screening with theorem and protocol inspection of plausible matches. Record the search date, repositories and queries, date or result limits, and access depth. Report metadata records screened separately from full papers or selected sections inspected; overlapping query results are not distinct-paper counts. A metadata screen can miss an efficient corollary, an unadvertised instantiation, or a later revision. For generic frameworks, leave an unresolved quantitative implication open until the relevant instantiation and costs are checked.
+
+Phrase a negative finding as “no matching result was identified within this dated search and coverage,” with the nearest candidates and decisive mismatches. Distinguish that observation from a lower bound, a proof of novelty, and a security audit. Refresh material gaps before a current priority claim; preserve stronger nearby results that would defeat a less qualified claim. A wording task that assumes a best-known premise does not independently verify it.
+
 ## 2. Inventory and version the corpus
 
 Record the denominator: files or records considered, files successfully opened, failures, duplicates, supplements, and versions excluded. When the user says “each paper,” report coverage explicitly.

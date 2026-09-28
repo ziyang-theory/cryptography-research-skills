@@ -19,7 +19,7 @@ For a single claim, give the conclusion, source/version, exact locator, and deci
 
 ## Further detail
 
-- [Evidence method](references/evidence-method.md): multi-paper reviews, version conflicts, numerical attribution, and completeness claims.
+- [Evidence method](references/evidence-method.md): multi-paper reviews, scoped novelty searches, version conflicts, numerical attribution, and completeness claims.
 - [Researcher studies](references/researcher-studies.md): attribution, reading depth, and conditional lessons from a researcher's or collaboration's work.
 
 Literature review does not itself authorize manuscript edits. Source verification does not establish proof validity; use the proof-audit workflow when that is requested. Writing and implementation skills are optional follow-on help, not prerequisites. Theory-only research needs no code or experiments.

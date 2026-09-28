@@ -19,6 +19,14 @@ For a UC claim, check the actual environment quantification and online interacti
 
 Matching individual output marginals does not match a randomized functionality's joint output distribution. Check correlations among honest outputs, adversarial output, abort, and any later session feedback.
 
+## Conditional sampling of broadcast shares
+
+When a proof replaces local share generation by sampling shares subject to an aggregate, identify exactly what is fixed first: the preceding view, corrupted state and broadcast shares, and any underlying contributions. Do not also fix the honest broadcast shares whose randomness the argument is meant to establish. The aggregate constraint must subtract the corrupted shares actually exposed after any transformations, not their earlier local values.
+
+For a useful sufficient condition, suppose a connected graph on the honest parties carries independent uniform masks in a finite abelian group, still uniform after this conditioning. Orient each edge and add its mask at one endpoint and its negative at the other. The vector of per-party additions is uniform over all vectors with sum zero: the incidence map is onto that set (a spanning tree suffices), and every fiber of a group homomorphism has the same size. Thus the resulting shares are uniform subject to their fixed sum. The zero sharing is the vector of per-party totals, not the list of edge masks. With one honest party the sole share is determined; with a disconnected graph, each component's sum is fixed separately. A single global sum constraint then generally describes too much randomness.
+
+Use this argument only after establishing the conditional mask law and all correlations retained by the security definition. It permits efficient sampling of all but one share and solving for the last in the connected case; it does not itself prove that the aggregate or preceding view hides the inputs. If the masks are PRF outputs, their replacement must first cover their joint occurrences in the view.
+
 ## State, adaptivity, and causality
 
 Construct a trace or happens-before table when timing matters:
@@ -39,6 +47,8 @@ Use it to detect:
 - reuse of one-time randomness, correlations, keys, or receiver messages.
 
 Name what **adaptive** modifies. Adaptive corruption, input selection, statement selection, queries, and programming create different proof obligations.
+
+For a proposed extension from static to adaptive corruption, ask for an incremental state-completion argument: after every allowed corruption history, can the simulator generate the newly exposed input-dependent state and random tape with the required conditional joint distribution, consistently with earlier messages, setup correlations, and previous openings, using only information available then? A static simulator may sample public shares correctly while discarding the seeds or computations that a later corruption must explain. Test the resulting consistency equations on a small admissible instance. Failure can refute that simulator-extension strategy without refuting adaptive security of the protocol. Broadcast-only communication does not discharge state opening; an erasure-based argument must identify the state erased, its timing, and every retained value that still constrains an opening.
 
 ## Abort, leakage, and delivery
 

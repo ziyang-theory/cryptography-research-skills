@@ -17,7 +17,7 @@ These notes distinguish the evidence modes represented by the source set. Page r
 | LXYY25 | Tables 2-3 p.6; Section 9.3 p.59 | Implementation based on a baseline codebase, same-machine rerun, same parameters, CPU/RAM, and code link. It explicitly gives formulas that extrapolate a measured small run and estimated seed communication to `10^9` triples. The displayed large-workload results are therefore mixed measured/derived evidence. |
 | MMST25 | Section 5 pp.21-26; Tables 1-2 p.25 | Strong section decomposition: implementation/optimizations, parameters, analytical cost, then performance. Names libraries, two AWS machines, LAN, resources assumed pre-sampled, phase-specific metrics, asymmetric seed sizes, operation counts, measured runtimes, starred estimates, and OOM cells. Missing revision, compiler, network details, repetitions, and dispersion remain useful reminders. |
 
-## Strong combined architecture
+## Organizing the evaluation section
 
 The sample supports this adaptable sequence:
 

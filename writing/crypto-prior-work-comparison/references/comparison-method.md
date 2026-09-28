@@ -8,9 +8,9 @@ A useful internal contract is: compare **object/version**, under **model and set
 
 For each substantive claim or cell, retain its primary-source locator, guarantee and setup, parameters, units, provenance, and material caveat. Omit empirical fields for theorem-only work. Track artifact lineage separately from paper version: author implementation, independent reproduction, port, adapter, or transformed variant. Preserve historical variant identities when a local default changes.
 
-## Choose the comparison layer
+## Choose the type of comparison
 
-| Layer | What must align |
+| Comparison type | What must align |
 | --- | --- |
 | Theorem or feature | Functionality, assumptions, corruption, output/leakage, setup, oracle, composition, reuse |
 | Asymptotic | Variables and scaling regime, including additive terms and what is held fixed |
@@ -31,6 +31,10 @@ For `Adv_scheme(A) <= L * Adv_primitive(B) + delta`, compare `B`'s resources, us
 
 **Communication and rounds.** Specify units, direction/aggregation, logical payload versus transport, speaking topology, and excluded ideal calls or setup. Single execution, parallel amortization, sequential reuse, and per-party totals are not interchangeable.
 
+An oracle or subprotocol call count is not a bit-communication bound. Inspect each call's input/output lengths, internal loops, nested calls, and transmitted state before assigning a cost; a pairwise interface can hide work over other parties. Derive communication by summing the instantiated calls' costs and any additional messages, retaining setup exclusions and parameter dependence. If the source gives only polynomial efficiency or leaves the oracle opaque, preserve that limitation rather than inferring a desired exponent from the number of calls.
+
+When a comparison changes a protocol's schedule, distinguish the published round count from the derived variant. Check which values each message depends on and when they become available before overlapping phases or moving setup outside the counted rounds. Parallel calls alone do not establish simultaneous-message rounds. Include the phases required by the target's input/output boundary and label any piggybacking, rescheduling, or channel-accounting change as a derivation. A valid dependency schedule or lower payload count does not by itself establish security of the modified transcript; nor is a displayed implementation's round count a lower bound on other instantiations.
+
 **Time.** Distinguish wall time, CPU time, a sum of phase maxima, a maximum of party totals, and estimates from component rates. Retain critical-path overlap, network, initialization/check/cleanup, and setup exclusions. A localhost ranking does not establish performance under another network.
 
 If an unsupported conversion is needed to align an axis, compare conditionally or state incomparability. Preserve a baseline's advantage on other axes. Unavailable reruns retain the original source conditions; they are neither zero costs nor negative results.
@@ -43,6 +47,6 @@ Rows should identify construction variants. Metric headers need units and denomi
 
 ## Explain and verify the result
 
-Organize around the scientific distinction, such as setup/online, single/amortized, model, or regime, rather than chronology. Distinguish coauthored earlier work from external baselines when relevant. Give both absolute values and the ratio's direction; explain the operation removed, shared, or shifted and its compensating cost. A crossover calculation can be more informative than a favorable endpoint.
+Organize around the scientific distinction, such as setup/online, single/amortized, model, or regime, rather than chronology. Distinguish coauthored earlier work from external baselines when relevant. Give both absolute values and the ratio's direction; explain the operation removed, shared, or shifted and its compensating cost. A crossover calculation can be more informative than a favorable parameter choice.
 
 Recompute totals, ratios, conversions, amortization, and break-even values. Reconcile row/column labels, captions, formulas, and prose against the source. Published tables can contain arithmetic or labeling errors. Scope first/best/optimal/practical/free claims to the evidence actually established; missing phases or implementations cannot support an unqualified end-to-end winner.

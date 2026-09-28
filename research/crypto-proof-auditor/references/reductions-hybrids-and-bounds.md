@@ -92,6 +92,14 @@ For many-instance privacy from a single-instance theorem, check the challenge in
 
 If an adversary receives an actual seed or key, retain it in the compared view. Showing security of the expansion outputs after dropping that seed does not prove the exposed-seed statement. Likewise, a public matrix's marginal distribution cannot be substituted for its joint distribution with the public seed or certificate that describes it.
 
+### Hidden challenge keys and bounded rejection
+
+A PRF reduction given only an evaluation oracle cannot ordinarily test whether its hidden challenge key equals another sampled key. If the construction conditions key pairs on distinctness, first justify any statistical transition to independent keys that makes the challenge embedding implementable. For `m` independently sampled pairs of uniform `kappa`-bit keys, the probability of any equality is at most `m 2^(-kappa)`. This bounds the conditioning change only for a correctly coupled joint view; it does not authorize changing exposed key pairs or dropping their rejected sampling draws. Preserve such state or supply a separate comparison that covers it.
+
+Trace every use of the challenge key, including as a payload rather than a PRF key. For a circuit-based hybrid, a topological order can remove earlier payload occurrences before the challenge key is embedded, but verify this against the actual dependency graph. Use the same oracle at every remaining occurrence of that key. Claims of independent outputs from one random-function oracle require distinct encoded queries; repeated inputs can require position tags as well as gate, row, component, or session tags.
+
+To replace rejection-until-success by a strict polynomial-time algorithm, couple both executions on their trial sequences and abort after a stated polynomial bound. If each attempt rejects with probability at most `delta` conditional on any preceding failures and supported history, then at most `M` calls capped at `t` attempts contribute distance at most `M delta^t`. Establish the conditional bound rather than assuming independent calls. Preserve rejected draws and the accepted draw whenever the random tape is included in the view. The terminal hybrid must match the simulator's specified output on both success and abort, including any honest output paired externally with it. Account separately for capped samplers used inside computational reductions and for the final simulator comparison; they can affect different transitions.
+
 ## Tightness and theorem matching
 
 Call a reduction tight only after comparing the relevant time, query, and advantage functions. A polynomial loss can preserve an asymptotic theorem while materially changing a concrete claim. Compare the final derived bound with the theorem statement, abstract, parameter table, and claimed security level; preserve every additive term and parameter restriction that affects the result.

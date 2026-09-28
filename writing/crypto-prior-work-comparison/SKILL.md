@@ -7,6 +7,8 @@ description: Draft or review cryptography prior-work comparisons and comparison 
 
 Make clear what improves, under which conditions, and at what cost. Compare complete supported variants: one theorem's guarantee and another's efficiency do not form a new result.
 
+Use established cryptographic terms for the objects compared. Prefer “corrupted parties” when that is the set meant; name the supplied correlations, protocol phases, subprotocols, and comparison criteria instead of generic “endpoints,” “layers,” or “scalar” modifiers. Describe the actual communication operation and the specific overhead or parameter dependence that improves. Preserve precise technical uses and source-defined terms; wording does not establish a stronger comparison.
+
 ## Fix what is being compared
 
 Recover the target claim before selecting baselines. Identify the task and output guarantee; adversary, corruption, assumptions and setup; construction version and parameter regime; and the cost's phase, unit, aggregation, denominator, and exclusions. Include only axes that matter to this comparison. Theory-only comparisons use definitions, theorems, and analytical bounds; they need no code or benchmarks.

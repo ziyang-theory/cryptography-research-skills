@@ -7,6 +7,8 @@ description: Draft, revise, or review cryptography implementation and evaluation
 
 Make clear what was implemented, measured and inferred, and which conclusions the evidence supports. Build the section around its empirical argument rather than a mandatory sequence of headings.
 
+Use established cryptographic terms: name the parties, protocol phases, subprotocols, primitives, or measured operations instead of generic “endpoints” or “layers.” Say whether a measured message is sent or broadcast rather than merely “published”; name PRF outputs, OT messages, and supplied correlations when those are the objects meant. Distinguish supplied correlations from complete retained state. Retain precise implementation terms, such as network endpoints, interfaces, or pipelining, and preserve source-defined usage.
+
 ## Workflow
 
 1. Identify the evaluated construction/configuration and the evidence for each result. Fix workload, guarantees, included phases, prepared state/reuse, metric, aggregation and provenance. A compact working table is enough when useful; a local edit need not create planning documents.
