@@ -1,10 +1,12 @@
-# Abstracts and introductions
+# Abstracts, introductions, and conclusions
 
 Use for new writing or authorized structural revision. Local edits keep the manuscript's organization. The optional corpus is MPC-focused; transfer its choices according to the contribution, not as universal conventions.
 
 ## Find the central contribution
 
 Recover the task, closest baseline, unresolved obstacle, main result, enabling idea, and material qualifications from the manuscript. Attach existing theorem/definition/table locators where useful. This is drafting scaffolding, not a required form in the paper. A feasibility result, cost improvement, new model, compiler, and specialized application need different openings; subordinate secondary results to one intelligible thread.
+
+Let the evidence determine the headline. If it does not support the original claim, narrow or replace that claim within the authorized revision scope.
 
 When drafting or revising the abstract, introduction, and technical overview together, keep one contribution statement with its supporting sources for each variant. Give the sections complementary jobs:
 
@@ -47,6 +49,10 @@ Meet the reader's needs: what is the task, what remained unresolved, what is ach
 - **Position and qualify.** Compare aligned baselines and preserve their remaining advantages. Put limitations where they change the interpretation. Related work and roadmaps are useful when they help the reader, not compulsory closing sections.
 
 Repetition of the abstract should add motivation, scope, a mechanism, or a tradeoff. Avoid expanding it sentence by sentence.
+
+## Conclusion
+
+Close with the established result, its meaning, and the scope needed to interpret it. Avoid a fresh round of apologies or an unsupported generalization. A material limitation discovered during revision must still be reflected in the affected claims.
 
 ## Conditional details that change the story
 

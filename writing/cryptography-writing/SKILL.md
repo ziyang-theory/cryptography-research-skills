@@ -7,9 +7,15 @@ description: Draft or minimally edit cryptography manuscripts, including definit
 
 Make the contribution and argument precise and readable. Use established terms when they express the intended formal meaning; otherwise name the object or relationship plainly. Theory-only writing needs no implementation or experiments.
 
+Aim to follow the writing rules of [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/STE_faq.html): prefer short, clear sentences, one topic per sentence, and active voice where appropriate. Apply these as style guidance, without imposing the standard's restricted vocabulary or dictionary-based word-use restrictions. Preserve mathematical precision, established cryptographic terminology, notation, and the author's explicit instructions.
+
 Prefer concrete cryptographic nouns and operations over generic labels such as “endpoints,” “layer,” “interface,” “publish,” or “pad.” Name the parties, OT roles, protocol phase, primitive, PRF outputs, messages, broadcast, or reconstruction actually meant. Prefer “corrupted parties” to “coalition” when describing the corrupted set, and name supplied correlations rather than calling them “scalar correlations” or “OT state.” Explain what is sampled or causes an abort instead of relying on “marginal” or “cutoff” alone.
 
 For drafting or terminology revision, use the wording defaults in [terminology](references/terminology.md). They express preferred prose, not claims that the avoided words are unknown in cryptography. Preserve exact mathematical distinctions, formal interfaces, complete retained state, source-defined terms, and technically meaningful uses such as “one-time pad.” Local author instructions can override these defaults.
+
+## State results directly
+
+State the strongest supported contribution directly. Remove apologies, repeated caveats, and imagined reviewer objections that add no information. Express limitations as precise scope conditions or tradeoffs, without turning a local negative result into a judgment on the whole construction. Keep qualifications that change the claim, including the corruption model, setup, leakage, abort guarantee, and unresolved proof obligations. Do not ban words mechanically: “only the output is revealed” can state an essential guarantee.
 
 ## Work from the active claim
 
@@ -33,7 +39,7 @@ Use the entrypoint alone for a straightforward grammar edit with fixed meaning. 
 
 | Task | Reference |
 | --- | --- |
-| Abstract/introduction structure or consistency with a technical overview | [Abstracts and introductions](references/abstracts-and-introductions.md) |
+| Abstract, introduction, or conclusion structure; consistency with a technical overview | [Abstracts, introductions, and conclusions](references/abstracts-and-introductions.md) |
 | Explain a construction or proof idea | [Technical overviews](references/technical-overviews.md) |
 | Preferred wording, an ambiguous cryptographic word, or a claim verb | [Terminology](references/terminology.md) |
 | Security statements, experiments, reductions, or full proofs | [Security claims](references/security-claims.md) |

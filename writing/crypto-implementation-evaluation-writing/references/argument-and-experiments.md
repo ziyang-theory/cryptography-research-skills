@@ -6,6 +6,8 @@ Use this reference when organizing a substantial section, planning evidence for 
 
 Connect each important claim to an observation and a useful controlled comparison. Identify plausible confounds and what would require narrowing the claim.
 
+Give each experiment a question about the claim, mechanism, applicable regime, or competing explanation. Select material for relevance, not favorable outcomes: retain evidence that changes the conclusion, and narrow the claim when needed. Measurements cannot establish a cryptographic security theorem.
+
 | Proposed claim | Informative evidence | Interpretation to avoid |
 | --- | --- | --- |
 | Lower communication improves runtime | Bytes and latency under controlled network settings, with computation profiled | Fewer bytes imply faster execution in every regime |
