@@ -1,6 +1,23 @@
 # Source patterns from eight cryptography papers
 
-These retained reading notes summarize writing patterns, not authoritative current rankings or newly verified paper claims. They are optional examples; using the method requires neither these papers nor local copies of them. Page references are PDF pages; they also match printed pages except ASHIV20, whose printed proceedings pages are 1592-1603. Recheck the exact paper version before reusing a number or attribution.
+These retained reading notes summarize writing patterns, not authoritative current rankings or newly verified paper claims. They are optional examples; using the method requires neither these papers nor local copies of them. The retained locators use version-dependent PDF pages, which may differ from printed proceedings pages. Recheck the exact paper version before reusing a number or attribution.
+
+## Source identities and retrieval
+
+The exact historically reviewed revision is unknown for each of these eight entries. The primary records below identify the papers and provide retrieval routes; their dates identify the linked records, not the earlier reviewed PDFs. Titles and record dates were checked on 2026-10-22; the historical page locators and technical observations below were not reverified. A later or corrected edition does not inherit an earlier defect report.
+
+| ID | Primary retrieval route | Linked record or edition |
+| --- | --- | --- |
+| WRK17 | [Authenticated Garbling and Efficient Maliciously Secure Two-Party Computation](https://eprint.iacr.org/2017/030) | ePrint 2017/030; last revision listed 2017-05-22 |
+| KRRW18 | [Optimizing Authenticated Garbling for Faster Secure Two-Party Computation](https://eprint.iacr.org/2018/578) | ePrint 2018/578; last revision listed 2018-10-11 |
+| DPSZ12 | [Multiparty Computation from Somewhat Homomorphic Encryption](https://eprint.iacr.org/2011/535) | ePrint 2011/535; last revision listed 2012-11-06 |
+| ASHIV20 | [Is the Classical GMW Paradigm Practical? The Case of Non-Interactive Actively Secure 2PC](https://doi.org/10.1145/3372297.3423366); [author bibliography](https://www.cs.rochester.edu/users/grads/mfaghihi/) | CCS 2020; author bibliography lists October 2020, pp. 1591–1605. Publisher PDF was not retrieved. |
+| BCGI18 | [Compressing Vector OLE](https://eprint.iacr.org/2019/273) | ePrint 2019/273, received 2019-03-12; identifies a major revision of CCS 2018 |
+| HKNOS25 | [Multiparty Garbling from OT with Linear Scaling and RAM Support](https://eprint.iacr.org/2025/444) | ePrint 2025/444; received 2025-03-07 |
+| LXYY25 | [Efficient Pseudorandom Correlation Generators for Any Finite Field](https://eprint.iacr.org/2025/169) | ePrint 2025/169; last revision listed 2025-05-20 |
+| MMST25 | [Pseudorandom Correlation Generators for Multiparty Beaver Triples over F2](https://eprint.iacr.org/2025/1182) | ePrint 2025/1182; received 2025-06-24 |
+
+Match a retrieved edition to its own section and page numbering before using the retained locators. No historical file hash is available here to establish that match.
 
 ## Paper-by-paper patterns
 
@@ -35,11 +52,11 @@ If a baseline omits a phase or lacks an implementation, give an analytical count
 
 ## Source-derived consistency warnings
 
-These examples motivate verification; they are not templates to imitate.
+These inherited observations remain unverified because the exact reviewed revisions are unknown. They motivate checks, not claims that the linked editions contain the reported defects.
 
-- WRK17's abstract AES totals differ from Tables 1/6 and Section 1.1 in the reviewed PDF. Always reconcile abstract, body, and final table values.
-- HKNOS25 Table 2's two rightmost garbled-circuit headers appear swapped: the prose ratios and Appendix H formula identify the displayed `200` value as the authors' construction, not the labeled GLM column. A total-cost ratio sentence labeled `n=512` instead matches the `n=1024` row. Check headers, ratios, row labels, and formulas together.
-- BCGI18 contains at least one derived-total arithmetic mismatch in its setup estimate. Machine-check every displayed derivation.
+- Earlier notes report that WRK17's abstract AES totals differ from Tables 1/6 and Section 1.1. Always reconcile abstract, body, and final table values.
+- Earlier notes report that HKNOS25 Table 2's two rightmost garbled-circuit headers appear swapped: the prose ratios and Appendix H formula reportedly identify the displayed `200` value as the authors' construction, not the labeled GLM column. They also report that a total-cost ratio sentence labeled `n=512` instead matches the `n=1024` row. Check headers, ratios, row labels, and formulas together.
+- Earlier notes report a derived-total arithmetic mismatch in BCGI18's setup estimate. Machine-check every displayed derivation.
 - A table that mixes broadcast and point-to-point channels, honest- and dishonest-majority thresholds, or MB and MiB can still be useful, but only with adjacent qualifications and no unscoped winner claim.
 
 ## What the sample does not justify

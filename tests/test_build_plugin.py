@@ -178,6 +178,100 @@ class BuildPluginTests(unittest.TestCase):
             BUILDER.build(self.root)
         self.assertFalse((self.root / 'dist').exists())
 
+    def test_frontmatter_requires_mapping_and_nonempty_string_fields(self):
+        name = self.skill.name
+        cases = [
+            ('[]', 'must be a YAML mapping'),
+            ('null', 'must be a YAML mapping'),
+            ('42', 'must be a YAML mapping'),
+            ('name: []\ndescription: text', 'name must be a nonempty string'),
+            ('name: null\ndescription: text', 'name must be a nonempty string'),
+            ('name: 42\ndescription: text', 'name must be a nonempty string'),
+            ('name: true\ndescription: text', 'name must be a nonempty string'),
+            ('name: ""\ndescription: text', 'name must be a nonempty string'),
+            ('name: different-skill\ndescription: text', 'name differs from catalog'),
+            (f'name: {name}', 'description must be a nonempty string'),
+        ]
+        for description in ('[]', '{}', 'null', '42', 'true', '""', '"   "', '|\n  '):
+            cases.append((f'name: {name}\ndescription: {description}',
+                          'description must be a nonempty string'))
+        for frontmatter, error in cases:
+            with self.subTest(frontmatter=frontmatter):
+                (self.skill / 'SKILL.md').write_text(
+                    f'---\n{frontmatter}\n---\n# Fixture\n', encoding='utf-8',
+                )
+                with self.assertRaisesRegex(ValueError, error):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
+
+    def test_frontmatter_accepts_quoted_and_multiline_yaml_without_rewriting(self):
+        for description in ('"A description: with punctuation."',
+                            '>\n  A folded description\n  spanning two lines.',
+                            '|\n  A literal description.\n  A second line.'):
+            with self.subTest(description=description):
+                source = (f'---\nname: "{self.skill.name}" # inline comment\n'
+                          f'description: {description}\n'
+                          'custom_metadata: {enabled: true}\n---\n# Fixture\n')
+                (self.skill / 'SKILL.md').write_text(source, encoding='utf-8')
+                _, _, files = BUILDER.collect_package(self.root)
+                self.assertEqual(files[f'skills/{self.skill.name}/SKILL.md'], source.encode())
+
+    def test_metadata_rejects_malformed_yaml_and_python_object_tags(self):
+        original = (self.skill / 'SKILL.md').read_bytes()
+        ui = self.skill / 'agents' / 'openai.yaml'
+        ui.parent.mkdir(exist_ok=True)
+        for content in ('description: [unterminated',
+                        'description: !!python/object/apply:builtins.str [unsafe]'):
+            with self.subTest(frontmatter=content):
+                (self.skill / 'SKILL.md').write_text(
+                    f'---\nname: {self.skill.name}\n{content}\n---\n', encoding='utf-8',
+                )
+                with self.assertRaisesRegex(ValueError, 'Invalid YAML.*SKILL.md frontmatter'):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
+        (self.skill / 'SKILL.md').write_bytes(original)
+        for content in ('interface: [unterminated',
+                        'interface: !!python/object/apply:builtins.dict []'):
+            with self.subTest(ui=content):
+                ui.write_text(content, encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'Invalid YAML.*agents/openai.yaml'):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
+
+    def test_optional_ui_metadata_checks_mapping_and_known_field_types(self):
+        ui = self.skill / 'agents' / 'openai.yaml'
+        ui.parent.mkdir(exist_ok=True)
+        for content in ('', 'null', '[]', '42', 'interface: null',
+                        'interface: []', 'interface: text'):
+            with self.subTest(content=content):
+                ui.write_text(content, encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'must be a (?:YAML )?mapping'):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
+        for field in ('display_name', 'short_description', 'default_prompt',
+                      'brand_color', 'icon_small', 'icon_large'):
+            for value in ('[]', 'null', '42', 'true', '""'):
+                with self.subTest(field=field, value=value):
+                    ui.write_text(f'interface:\n  {field}: {value}\n', encoding='utf-8')
+                    with self.assertRaisesRegex(ValueError, f'{field} must be a nonempty string'):
+                        BUILDER.build(self.root)
+                    self.assertFalse((self.root / 'dist').exists())
+
+    def test_ui_metadata_is_optional_and_unknown_fields_are_preserved(self):
+        ui = self.skill / 'agents' / 'openai.yaml'
+        ui.unlink(missing_ok=True)
+        self.assertEqual(BUILDER.build(self.root, check=True)['skills'], 12)
+        ui.parent.mkdir(exist_ok=True)
+        for source in ('{}\n', 'custom_metadata: {enabled: true}\n',
+                       'interface:\n  display_name: "Fixture"\n'
+                       '  default_prompt: >\n    Read this\n    supplied fixture.\n'
+                       '  future_field: [one, two]\n'):
+            with self.subTest(source=source):
+                ui.write_text(source, encoding='utf-8')
+                _, _, files = BUILDER.collect_package(self.root)
+                self.assertEqual(files[f'skills/{self.skill.name}/agents/openai.yaml'], source.encode())
+        self.assertFalse((self.root / 'dist').exists())
+
     def test_yaml_icon_reference_is_checked_from_skill_root(self):
         agents = self.skill / 'agents'
         agents.mkdir(exist_ok=True)
@@ -188,6 +282,23 @@ class BuildPluginTests(unittest.TestCase):
         (self.skill / 'assets' / 'missing.png').write_bytes(b'fixture')
         self.assertGreater(BUILDER.build(self.root, check=True)['files'], 0)
         self.assertFalse((self.root / 'dist').exists())
+
+    def test_yaml_icons_support_flow_mappings_and_reject_non_file_paths(self):
+        ui = self.skill / 'agents' / 'openai.yaml'
+        ui.parent.mkdir(exist_ok=True)
+        assets = self.skill / 'assets'
+        assets.mkdir()
+        (assets / 'icon.png').write_bytes(b'fixture')
+        ui.write_text('interface: {icon_small: "./assets/icon.png"} # a YAML comment\n',
+                      encoding='utf-8')
+        self.assertGreater(BUILDER.build(self.root, check=True)['files'], 0)
+        for target in ('./assets/', '../other-skill/icon.png', '/tmp/icon.png',
+                       'https://example.org/icon.png', '#icon', './assets/icon.png?raw=1'):
+            with self.subTest(target=target):
+                ui.write_text(f'interface: {{icon_large: {json.dumps(target)}}}\n', encoding='utf-8')
+                with self.assertRaises(ValueError):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
 
     def test_manifest_limits_paths_and_semver_are_validated(self):
         for version in ('1', '01.0.0', '1.0.0-01'):

@@ -1,6 +1,6 @@
 # Proof repair and validation
 
-Read this reference only when the user explicitly authorizes proof completion or manuscript edits.
+Read this reference when proof completion or manuscript edits are requested. Completion authorizes developing the argument; return it in the response unless the requested deliverable or existing session authorization calls for source edits. Existing edit authorization needs no reconfirmation.
 
 ## Classify the repair before editing
 

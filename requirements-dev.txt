@@ -1,0 +1,2 @@
+# Packaging metadata validation and packaging tests only; not needed by install.py.
+PyYAML>=6.0.3,<7

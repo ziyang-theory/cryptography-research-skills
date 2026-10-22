@@ -1,11 +1,11 @@
 ---
 name: crypto-proof-auditor
-description: Audit or complete cryptographic proofs, reductions, simulators, and security theorems. Use for proof-validity questions; read-only unless completion or source edits are requested. Not for prose-only, code-conformance, or PDF reviews.
+description: Audit or complete cryptographic proofs, reductions, simulators, and security theorems. Use for proof-validity questions; source edits follow the requested deliverable or existing authorization. Not for prose-only, code-conformance, or PDF reviews.
 ---
 
 # Crypto Proof Auditor
 
-Determine whether the conclusion follows under the stated definition, model, and assumptions. An audit is read-only unless completion or edits are requested. Never conceal a gap by silently adding an assumption, weakening the theorem, or changing the construction. Different proof organization or labels alone are not defects.
+Determine whether the conclusion follows under the stated definition, model, and assumptions. Audits are read-only unless edits are also authorized. A completion request authorizes developing the missing argument; edit source files when the requested deliverable or existing session authorization calls for it. Never conceal a gap by silently adding an assumption, weakening the theorem, or changing the construction. Different proof organization or labels alone are not defects.
 
 ## Audit workflow
 

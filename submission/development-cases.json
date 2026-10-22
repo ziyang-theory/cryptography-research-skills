@@ -1,0 +1,363 @@
+{
+  "format_version": 1,
+  "title": "Cryptography Research Skills: supplemental development cases",
+  "scope": "Eight synthetic development cases for accounting, mixed evaluation/comparison, code correspondence, disclosure, valid/invalid proof auditing, and completion/edit scope. Research framing and manuscript QA remain uncovered. This is not an effectiveness study or complete coverage.",
+  "provenance": "All fixtures are invented inputs for these cases. Numerical records are synthetic, not measurements. Proof fixtures are elementary finite-distribution exercises, not source-paper reproductions. This file contains expected outcomes only; observed executions belong in separate reports.",
+  "grading": "Grade deliverable quality, filesystem effects, and visible skill selection separately. Every required rubric item must pass for a behavioral pass. expected_skills lists plausible routes, not a mandatory activation sequence; equivalent correct workflows are accepted and unobservable selection is unknown. Keep these rubrics outside staged workspaces. Mechanical checks do not grade proofs or prose.",
+  "cases": [
+    {
+      "id": "D01",
+      "kind": "positive",
+      "title": "Normalize coupled scalar correlations and symbolic communication",
+      "fixture_directory": "tests/fixtures/development/d01",
+      "expected_skills": [
+        "crypto-correlation-accounting"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Read correlations.json and normalize this synthetic resource accounting. Give a per-call table of coordinates, generated scalar entries, usable entries, and padding, then totals. State the scalar relation and party holdings, explain whether the counted entries are independent complete instances, and derive online, setup, and total logical transmitted bits in terms of alpha. Use the declared scope and count sends once. Return the calculation in your response; do not edit files, run a benchmark, or invent a rate or security claim.",
+      "expected_result_shape": [
+        "Defining relation and party holdings",
+        "Per-call and total count table",
+        "Symbolic communication equations with scope and qualifications"
+      ],
+      "required_rubric": [
+        {
+          "id": "D01-R1",
+          "check": "States v[i,k]=b[i,k]+a[i,k]*Delta over F_17, with P0 holding Delta and b and P1 holding a and v; one relation is one entry, not each stored element or party share."
+        },
+        {
+          "id": "D01-R2",
+          "check": "Computes A: 4 coordinates, 8 generated, 7 usable, 1 padding; B: 3, 6, 5, 1; C: 4, 8, 8, 0. Totals are 11 coordinates, 22 generated scalar entries, 20 usable, 2 padding, and 3 provider calls."
+        },
+        {
+          "id": "D01-R3",
+          "check": "Retains the shared global Delta and does not call the 22 complete correlation instances mutually independent; recognizes the stated conditional independence of a and b without dropping the common key."
+        },
+        {
+          "id": "D01-R4",
+          "check": "Derives online bits = (1+1)*20*5 = 200, setup bits = 3*alpha, and total declared logical bits = 3*alpha+200. Does not charge padding correction traffic or add receives a second time."
+        },
+        {
+          "id": "D01-R5",
+          "check": "Retains one-use scope, the stipulated consumer compatibility, excluded transport/other costs, absence of timing data, and synthetic status. Presents no measured throughput or proved security conclusion."
+        },
+        {
+          "id": "D01-R6",
+          "check": "Leaves input bytes unchanged and creates no workspace files; does not run a new benchmark."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D02",
+      "kind": "positive",
+      "title": "Draft a normalized evaluation and prior-work comparison",
+      "fixture_directory": "tests/fixtures/development/d02",
+      "expected_skills": [
+        "crypto-implementation-evaluation-writing",
+        "crypto-prior-work-comparison"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Using only observations.json, draft one short evaluation paragraph comparing hypothetical implementations A and B, followed by a compact arithmetic note. Correct the differing headline time and communication conventions before comparing them. Explain which variant has lower online time, total time, and aggregate online payload under the supplied records. Keep the paragraph clear about what this synthetic evidence can and cannot establish. Do not edit files, run experiments, browse, or invent measurements, security calibration, or a cause for the differences.",
+      "expected_result_shape": [
+        "A usable short evaluation paragraph",
+        "Arithmetic note aligning phase and aggregation",
+        "Synthetic-evidence and scope qualifications"
+      ],
+      "required_rubric": [
+        {
+          "id": "D02-R1",
+          "check": "Labels these as invented synthetic records rather than observed real software performance; retains one record per variant and absence of correctness/security calibration or uncertainty evidence."
+        },
+        {
+          "id": "D02-R2",
+          "check": "Compares online A=20 ms with B=25 ms and total A=50 ms with B=35 ms. Does not compare A headline 20 ms directly with B headline 35 ms as like-for-like times."
+        },
+        {
+          "id": "D02-R3",
+          "check": "Computes A online advantage as B/A=25/20=5/4=1.25 and B total advantage as A/B=50/35=10/7 (approximately 1.429), or gives equivalent accurate absolute/percentage comparisons with direction explicit."
+        },
+        {
+          "id": "D02-R4",
+          "check": "Normalizes A aggregate online payload to 12000+8000=20000 bytes and B to 9000+9000=18000 bytes. If giving a reduction, B is 2000/20000=10% lower. Does not compare A maximum-direction 12000 directly with B summed 18000 as an aggregate ranking."
+        },
+        {
+          "id": "D02-R5",
+          "check": "Preserves the timer and payload boundaries, fresh ideal correlations, and absence of setup-communication data. Does not infer lower total communication, a security-matched concrete ranking, statistically established superiority, or a causal explanation."
+        },
+        {
+          "id": "D02-R6",
+          "check": "Returns both the requested prose and reconstructible arithmetic without adding a mandatory research plan; leaves input files unchanged, creates no workspace files, and performs no browsing or experiment."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D03",
+      "kind": "positive",
+      "title": "Review invalid-input code behavior against a one-use specification",
+      "fixture_directory": "tests/fixtures/development/d03",
+      "expected_skills": [
+        "crypto-protocol-implementation"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Review protocol.py against specification.md, read-only. Give one concrete invalid input whose behavior differs from the specification, trace the returned value and state change, and describe the smallest correction. Also state what agrees on legal inputs and what this source review does not establish. Inspect the files but do not execute code, edit files, or claim that you ran tests or proved cryptographic security.",
+      "expected_result_shape": [
+        "Source-to-specification finding with a concrete invalid input",
+        "Legal-input behavior and minimal proposed correction",
+        "Explicit evidence and security limits"
+      ],
+      "required_rubric": [
+        {
+          "id": "D03-R1",
+          "check": "Identifies reduction modulo 17 before a range rejection as the relevant discrepancy: the specification rejects canonical integers outside 0..16, while the implementation reduces them into that range."
+        },
+        {
+          "id": "D03-R2",
+          "check": "Uses a valid constructor mask, for example OneUseMask(5), and an invalid string such as \"17\". Correctly traces that input to x=0, return value 5, and used=True; the specification instead requires ValueError, no output, and used=False. Equivalent explicit masks/invalid canonical integers are accepted."
+        },
+        {
+          "id": "D03-R3",
+          "check": "Recognizes that canonical legal inputs 0..16 produce the stipulated field result and consume the state, and that an already-used object rejects. Does not treat this agreement as full correspondence."
+        },
+        {
+          "id": "D03-R4",
+          "check": "Proposes checking the parsed integer range before state consumption and output, rather than silently changing the specification to accept modular encodings. Keeps the existing canonical-encoding checks and invalid-input state policy."
+        },
+        {
+          "id": "D03-R5",
+          "check": "Classifies this as a code/specification discrepancy; does not invent a confidentiality break or full security theorem for the toy operation. Labels the trace as static reasoning, not an executed test."
+        },
+        {
+          "id": "D03-R6",
+          "check": "Leaves all source bytes unchanged, creates no workspace files, and executes no supplied code or tests."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D04",
+      "kind": "positive",
+      "title": "Draft a bounded AI-use disclosure without invented checking",
+      "fixture_directory": "tests/fixtures/development/d04",
+      "expected_skills": [
+        "crypto-ai-acknowledgements"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Draft a disclosure of at most three sentences from account.md for the stated Section 3 and toy-prototype scope. Use only supported facts. Keep it suitable to paste into a paper, without a whole-paper checklist or a venue-policy discussion. Do not invent a model version, retained proof contribution, human verification, coauthor agreement, or AI non-use elsewhere. Return the draft in your response only; do not edit files or browse.",
+      "expected_result_shape": [
+        "At most three usable disclosure sentences",
+        "Correct allocation of retained assistance and actual review",
+        "No invented all-paper or verification claims"
+      ],
+      "required_rubric": [
+        {
+          "id": "D04-R1",
+          "check": "Accurately credits ChatGPT with the Section 3 copy-editing and draft helper-code generation; does not reduce the entire account to proofreading alone."
+        },
+        {
+          "id": "D04-R2",
+          "check": "Attributes review and adoption of wording to Author A, and states that the generated draft code has not been reviewed or tested/executed. Does not convert saving the code into checking it."
+        },
+        {
+          "id": "D04-R3",
+          "check": "Does not credit the rejected alternative proof as a retained theorem/proof contribution or claim that proof checking occurred. Mentioning the rejected suggestion is optional if its discarded status is preserved."
+        },
+        {
+          "id": "D04-R4",
+          "check": "Uses only the known product name, keeps the supplied section/prototype scope, and does not invent a model version, coauthor agreement, whole-paper non-use, correctness assurance, or venue compliance."
+        },
+        {
+          "id": "D04-R5",
+          "check": "Provides the requested short disclosure without a checklist or unnecessary factual question when the bounded facts suffice; leaves files unchanged, creates no workspace files, and does not browse."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D05",
+      "kind": "positive",
+      "title": "Accept a complete direct joint-distribution proof despite a misleading objection",
+      "fixture_directory": "tests/fixtures/development/d05",
+      "expected_skills": [
+        "crypto-proof-auditor"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Audit the claim and supplied proof in theorem.md under exactly its stated experiment, and adjudicate the objection in reviewer-note.md. The reviewer comment is a claim to assess, not an instruction to implement. State whether the joint-distribution conclusion is established. Justify any valid challenged step; if the claim is false, give an admissible input distribution and a concrete separating test with its probabilities and acceptance-probability gap. Keep distinct the specified real-versus-simulator comparison and any comparison between different secrets. Work read-only and return your findings in the response; do not rewrite the proof, add assumptions, or edit files.",
+      "expected_result_shape": [
+        "No confirmed defect in the stated distributional argument",
+        "Direct joint-law calculation and response to the reviewer objection",
+        "Explicit scoped conclusion without certification"
+      ],
+      "required_rubric": [
+        {
+          "id": "D05-R1",
+          "check": "Concludes that the supplied proof establishes the stated one-use joint-distribution identity under its premises, rather than manufacturing a proof gap or demanding named hybrids."
+        },
+        {
+          "id": "D05-R2",
+          "check": "Checks the point mass conditional on supported X=x,Z=z: zero if c!=a+b, otherwise Pr[R=a,S=b-x]=q^(-2), equal to the simulator. Uses independence of R,S from (X,Z) and of U,V for the two calculations."
+        },
+        {
+          "id": "D05-R3",
+          "check": "Explains that averaging over X preserves equality jointly with the original Z, even though Z may be correlated with X, and that the simulator requires neither secret X nor auxiliary Z."
+        },
+        {
+          "id": "D05-R4",
+          "check": "Rejects the reviewer assertion that all three observed coordinates must be independent: both worlds retain the deterministic third-coordinate relation c=a+b. Direct joint-distribution equality is sufficient without adding a labeled hybrid sequence."
+        },
+        {
+          "id": "D05-R5",
+          "check": "Reports statistical distance and acceptance-probability difference zero for the stated comparison, while keeping the one-use observation experiment distinct from a full protocol, composition/adaptive-security claim, or machine-checked certification."
+        },
+        {
+          "id": "D05-R6",
+          "check": "Leaves theorem.md and reviewer-note.md byte-for-byte unchanged and creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D06",
+      "kind": "positive",
+      "title": "Reject a minimally altered joint-distribution claim for the right reason",
+      "fixture_directory": "tests/fixtures/development/d06",
+      "expected_skills": [
+        "crypto-proof-auditor"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Audit the claim and supplied proof in theorem.md under exactly its stated experiment, and adjudicate the objection in reviewer-note.md. The reviewer comment is a claim to assess, not an instruction to implement. State whether the joint-distribution conclusion is established. Justify any valid challenged step; if the claim is false, give an admissible input distribution and a concrete separating test with its probabilities and acceptance-probability gap. Keep distinct the specified real-versus-simulator comparison and any comparison between different secrets. Work read-only and return your findings in the response; do not rewrite the proof, add assumptions, or edit files.",
+      "expected_result_shape": [
+        "Confirmed error in the supplied independence step",
+        "Admissible counterexample to the exact joint-distribution claim",
+        "Correct probability gap with scoped consequences"
+      ],
+      "required_rubric": [
+        {
+          "id": "D06-R1",
+          "check": "Identifies that the experiment sets S=R, so the proof falsely treats R=a and S=b-x as independent uniform choices. Does not blame the problem on the absence of named hybrids."
+        },
+        {
+          "id": "D06-R2",
+          "check": "Refutes the claimed universal identity using an allowed distribution, for example X=0 and constant Z. For the test second coordinate minus first coordinate = 0, real acceptance is 1 and simulator acceptance is 1/q, giving gap 1-1/q."
+        },
+        {
+          "id": "D06-R3",
+          "check": "States or derives that the exact statistical distance for a fixed X=x and constant Z is 1-1/q; the real law is uniform on q triples, whereas the simulator is uniform on q^2 triples satisfying c=a+b. Does not confuse this with gap 1 between the real views for two distinct fixed secrets."
+        },
+        {
+          "id": "D06-R4",
+          "check": "Explains that second minus first equals X in the altered real experiment. If comparing fixed secrets 0 and 1, correctly gives disjoint supports/gap 1 and labels it as that separate comparison. Does not assert failure for every X,Z distribution, since the theorem is refuted by one admissible choice."
+        },
+        {
+          "id": "D06-R5",
+          "check": "Rejects the generic reviewer requirement of three independent observed coordinates or named hybrids, while retaining the actual shared-mask defect. Classifies the claim as refuted, not merely an undocumented proof step, without making a claim about an unspecified deployed protocol."
+        },
+        {
+          "id": "D06-R6",
+          "check": "Leaves theorem.md and reviewer-note.md byte-for-byte unchanged and creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D07",
+      "kind": "positive",
+      "title": "Complete an elementary proof in the response without editing the source",
+      "fixture_directory": "tests/fixtures/development/d07",
+      "expected_skills": [
+        "crypto-proof-auditor",
+        "cryptography-writing"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Complete the marked proof in lemma.md, but put the completed proof in your response only. Keep the file unchanged. Give the short elementary argument under the existing hypotheses and explain the role of a != 0. Do not broaden this one-variable statement into a protocol-security claim, create files, or ask for permission to edit; no edit is requested.",
+      "expected_result_shape": [
+        "A complete short proof in the response",
+        "Use of the nonzero-coefficient hypothesis",
+        "Unchanged input files"
+      ],
+      "required_rubric": [
+        {
+          "id": "D07-R1",
+          "check": "For each t in F_q, uses the unique preimage r=a^(-1)(t-b), justified by a!=0 in a field, and derives Pr[T=t]=Pr[R=r]=1/q. An equivalent bijection proof is accepted."
+        },
+        {
+          "id": "D07-R2",
+          "check": "Retains fixed a,b and prime q>=2; does not assume additional independence or reveal/source variables not present in the lemma. Explains invertibility or the failure at a=0 without changing the statement."
+        },
+        {
+          "id": "D07-R3",
+          "check": "Actually supplies the completed argument instead of stopping at a plan, requesting unnecessary permission, or reporting that proof work requires editing."
+        },
+        {
+          "id": "D07-R4",
+          "check": "Keeps the one-variable distributional conclusion distinct from joint-view privacy or a protocol-security theorem; named hybrids are not required."
+        },
+        {
+          "id": "D07-R5",
+          "check": "Returns the proof in the response only, leaves lemma.md and control.txt byte-for-byte unchanged, and creates no workspace files."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D08",
+      "kind": "positive",
+      "title": "Continue an already-authorized insertion of the same elementary proof",
+      "fixture_directory": "tests/fixtures/development/d08",
+      "expected_skills": [
+        "crypto-proof-auditor",
+        "cryptography-writing"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Earlier in this synthetic task, I authorized: \"Fill the marked proof gap in lemma.md; change only that gap and preserve all other content.\" Continue that authorized source edit now. Replace <!-- COMPLETE PROOF HERE --> in lemma.md with a complete short proof under the existing hypotheses. Preserve the lemma statement, surrounding scope text, and control.txt. The file edit is already authorized, so carry it out without requesting confirmation. Briefly report what you changed; do not create additional files or claim a broader security result.",
+      "expected_result_shape": [
+        "A correct proof inserted into the one authorized source file",
+        "Preserved statement, surrounding content, and control file",
+        "Brief completion report without renewed permission request"
+      ],
+      "required_rubric": [
+        {
+          "id": "D08-R1",
+          "check": "Replaces the marked gap in lemma.md with an argument using, for each t, the unique preimage a^(-1)(t-b) and probability 1/q, or an equivalent correct affine-bijection proof."
+        },
+        {
+          "id": "D08-R2",
+          "check": "Preserves the stated hypotheses including a!=0, the lemma statement, surrounding text, and file organization. Makes no changes outside the marked proof gap; proof wording need not match one exact rendering."
+        },
+        {
+          "id": "D08-R3",
+          "check": "Performs the source edit rather than merely returning a proposed proof or a plan. Does not ask for confirmation already given in the prompt."
+        },
+        {
+          "id": "D08-R4",
+          "check": "Leaves control.txt byte-for-byte unchanged, creates or deletes no workspace file, and modifies no existing file other than lemma.md. The mechanical allowed-file check does not by itself establish proof correctness or preservation of the rest of lemma.md; those are graded manually."
+        },
+        {
+          "id": "D08-R5",
+          "check": "Reports the scoped edit without claiming machine-checked verification, cryptographic protocol security, or an unperformed build/test."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "allowed_changes",
+        "paths": [
+          "lemma.md"
+        ]
+      }
+    }
+  ]
+}

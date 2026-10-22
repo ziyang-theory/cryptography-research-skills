@@ -1,0 +1,22 @@
+{
+  "provenance": "Synthetic accounting specification; no implementation, measurement, or security theorem is supplied.",
+  "field_order": 17,
+  "encoding_bits_per_field_element": 5,
+  "relation": "v[i,k] = b[i,k] + a[i,k] * Delta over F_17",
+  "party_holdings": {
+    "P0": "Delta and every b[i,k]",
+    "P1": "Every a[i,k] and v[i,k]"
+  },
+  "joint_law": "One uniform Delta is shared across all calls. All a[i,k] and b[i,k] are mutually independent uniform field elements and independent of Delta. Each v[i,k] is determined by the relation.",
+  "unit": "One scalar entry is one reconstructed relation v=b+a*Delta, counted once rather than once per party, share, or stored element.",
+  "calls": [
+    {"id": "A", "coordinates": 4, "width": 2, "usable_entries": 7},
+    {"id": "B", "coordinates": 3, "width": 2, "usable_entries": 5},
+    {"id": "C", "coordinates": 4, "width": 2, "usable_entries": 8}
+  ],
+  "padding_policy": "Each coordinate generates width scalar entries. Generated entries beyond usable_entries are padding and discarded. All other generated entries are used exactly once.",
+  "setup_bits_per_call": "alpha",
+  "online_field_elements_per_usable_entry": {"P0_to_P1": 1, "P1_to_P0": 1},
+  "communication_contract": "Setup traffic is exactly alpha transmitted bits per provider call. The online consumer sends exactly the stated correction elements for each usable entry and none for padding. Sum sends in both directions once. These setup and online messages are disjoint and exhaust the declared logical-traffic scope. No broadcast, transport headers, retransmissions, or other traffic is included.",
+  "resource_scope": "Compatibility with this hypothetical consumer is stipulated solely for this accounting exercise. Shared Delta couples the entries; separate provider calls do not imply independent complete instances. This is one-use material, not a reuse claim. There are no timing records."
+}

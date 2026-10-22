@@ -100,7 +100,7 @@ def load_catalog(root):
     return skills
 
 
-def local_reference(target, source, files, boundary=None):
+def local_reference(target, source, files, boundary=None, file_only=False):
     """Check local file existence and containment; external URLs are not fetched."""
     target = target.strip()
     if target.startswith('<') and target.endswith('>'):
@@ -124,8 +124,48 @@ def local_reference(target, source, files, boundary=None):
     destination = PurePosixPath(*parts).as_posix()
     if boundary and not (destination == boundary or destination.startswith(boundary + '/')):
         raise ValueError(f'Reference escapes skill in {source}: {target}')
-    if destination not in files and not any(name.startswith(destination + '/') for name in files):
+    if destination not in files and (file_only or not any(name.startswith(destination + '/') for name in files)):
         raise ValueError(f'Missing local reference in {source}: {target}')
+
+
+def yaml_mapping(text, source):
+    """Parse metadata safely without interpreting host-specific fields as code."""
+    try:
+        import yaml
+    except ImportError as error:
+        raise ValueError(
+            'Packaging validation requires PyYAML; install requirements-dev.txt'
+        ) from error
+    try:
+        value = yaml.safe_load(text)
+    except yaml.YAMLError as error:
+        raise ValueError(f'Invalid YAML in {source}: {error}') from error
+    if not isinstance(value, dict):
+        raise ValueError(f'{source} must be a YAML mapping')
+    return value
+
+
+def validate_skill_ui(data, source, files, boundary):
+    """Check known presentation fields, not the host's complete metadata schema."""
+    metadata = yaml_mapping(data.decode('utf-8'), source)
+    if 'interface' not in metadata:
+        return
+    interface = metadata['interface']
+    if not isinstance(interface, dict):
+        raise ValueError(f'{source}.interface must be a mapping')
+    for field in ('display_name', 'short_description', 'default_prompt',
+                  'brand_color', 'icon_small', 'icon_large'):
+        if field in interface:
+            require_string(interface[field], f'{source}.interface.{field}')
+    for field in ('icon_small', 'icon_large'):
+        if field not in interface:
+            continue
+        target = interface[field]
+        parsed = urlsplit(target)
+        if parsed.scheme or parsed.netloc or not parsed.path or parsed.query or parsed.fragment:
+            raise ValueError(f'{source}.interface.{field} must be a relative local file path')
+        # Icon paths resolve from the skill root, and must name packaged files.
+        local_reference(target, boundary + '/SKILL.md', files, boundary, file_only=True)
 
 
 def validate_references(files):
@@ -142,13 +182,8 @@ def validate_references(files):
             targets += re.findall(r'(?m)^\s*\[[^\]\n]+\]:\s*(<[^>]+>|\S+)', text)
             for target in targets:
                 local_reference(target, name, files, boundary)
-        elif name.endswith(('.yaml', '.yml')):
-            # Asset paths in agents/openai.yaml resolve from the skill root.
-            # These scalar fields are the only YAML paths used by skill UIs.
-            text = data.decode('utf-8')
-            for match in re.finditer(r'(?m)^\s*(?:icon_small|icon_large):\s*(.+?)\s*$', text):
-                target = match.group(1).strip('"\'')
-                local_reference(target, boundary + '/SKILL.md', files, boundary)
+        elif name == boundary + '/agents/openai.yaml':
+            validate_skill_ui(data, name, files, boundary)
 
 
 def require_string(value, label, maximum=None):
@@ -219,11 +254,11 @@ def collect_package(root):
         frontmatter = re.match(r'\A---\r?\n(.*?)\r?\n---(?:\r?\n|$)', skill_text, re.DOTALL)
         if not frontmatter:
             raise ValueError(f'Missing SKILL.md frontmatter: {name}')
-        found_name = re.search(r'(?m)^name:\s*["\']?([^\s"\']+)["\']?\s*$', frontmatter.group(1))
-        if not found_name or found_name.group(1) != name:
+        metadata = yaml_mapping(frontmatter.group(1), f'{name}/SKILL.md frontmatter')
+        require_string(metadata.get('name'), f'{name}/SKILL.md name')
+        if metadata['name'] != name:
             raise ValueError(f'SKILL.md name differs from catalog: {name}')
-        if not re.search(r'(?m)^description:\s*\S', frontmatter.group(1)):
-            raise ValueError(f'Missing skill description: {name}')
+        require_string(metadata.get('description'), f'{name}/SKILL.md description')
     for name in ('LICENSE', 'CITATION.cff'):
         files[name] = read_regular(root / name, root)
     files['README.md'] = read_regular(root / 'submission' / 'PLUGIN_README.md', root)

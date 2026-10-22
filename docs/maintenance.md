@@ -18,6 +18,7 @@ tests/test_install.py              Isolated installer regression tests
 submission/                       Plugin release inputs and review fixtures
 scripts/build_plugin.py            Reproducible skills-only plugin packaging
 tests/test_build_plugin.py         Plugin packaging regression tests
+requirements-dev.txt              Packaging/test development dependencies
 ```
 
 Each skill has a self-contained `SKILL.md`, optional task-specific `references/`, and optional `agents/openai.yaml`. The three collections are installation groups, not additional skills. Installation defaults to Research. Keep each skill in one collection according to its main deliverable; companion skills can belong to another collection without becoming mandatory dependencies.
@@ -37,13 +38,16 @@ Change existing guidance before adding a new skill. A new skill needs a distinct
 
 ## Validate changes
 
-Run the installer tests with:
+Install the development dependencies in your Python environment, then run the tests:
 
 ```sh
+python3 -m pip install -r requirements-dev.txt
 python3 -m unittest discover -s tests -v
 ```
 
-The tests isolate personal directories in temporary homes and check selection, shared targets, repeated installation, dry-run, and conflict protection. Also validate changed skill frontmatter, UI metadata, and local links, including whether every reference is reachable and each skill works when copied alone. Run `git diff --check` and inspect the diff against the working state that preceded the edit.
+PyYAML is required only by packaging preflight and its tests; version 6.0.3 was tested. Standalone installation and the distributed skills do not require it. The installer tests can still run with the standard library alone using `python3 -m unittest discover -s tests -p test_install.py -v`.
+
+The tests isolate personal directories in temporary homes and check selection, shared targets, repeated installation, dry-run, and conflict protection. Packaging preflight safely parses skill frontmatter and optional `agents/openai.yaml`, checks required strings and known interface field types, and resolves icon paths to packaged files. These are local structural checks, not complete host-schema validation. Also check whether every reference is reachable and each skill works when copied alone. Run `git diff --check` and inspect the diff against the working state that preceded the edit.
 
 For substantive routing or workflow changes, try representative requests with an independent reviewer. Include a narrow task that should stay narrow and a technical case whose safeguards must survive. These checks provide behavioral evidence, not proof of response quality across all tasks.
 

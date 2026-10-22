@@ -1,0 +1,34 @@
+{
+  "provenance": "Invented synthetic records for a writing exercise, not measurements of real software or historical experimental evidence.",
+  "common_workload": {"and_gates": 1000, "executions_per_record": 1},
+  "common_contract": "A and B are hypothetical implementations of the same Boolean computation, with the same input/output ownership, static passive corruption target, two concurrent parties on the same hypothetical hardware, and fresh ideal correlations per execution. These declared settings are not verified security claims.",
+  "timer_contract": "Each record describes one continuous total wall interval, from start of setup through final output. Setup and online are contiguous disjoint subintervals covering that total; online includes the required final check and output handling. Party work overlaps inside each interval. No arithmetic sum of party-local timers is used.",
+  "communication_contract": "Online payload counts only. Sum the two parties' sends once for aggregate bidirectional payload. Receives, setup traffic, framing, and transport overhead are excluded. No broadcast is used.",
+  "records": [
+    {
+      "name": "A",
+      "reported_time_ms": 20,
+      "reported_time_scope": "online",
+      "setup_ms": 30,
+      "online_ms": 20,
+      "total_wall_ms": 50,
+      "reported_online_bytes": 12000,
+      "reported_byte_aggregation": "maximum of the two directional send totals",
+      "p0_sent_online_bytes": 12000,
+      "p1_sent_online_bytes": 8000
+    },
+    {
+      "name": "B",
+      "reported_time_ms": 35,
+      "reported_time_scope": "total including setup",
+      "setup_ms": 10,
+      "online_ms": 25,
+      "total_wall_ms": 35,
+      "reported_online_bytes": 18000,
+      "reported_byte_aggregation": "sum of both directional send totals",
+      "p0_sent_online_bytes": 9000,
+      "p1_sent_online_bytes": 9000
+    }
+  ],
+  "limitations": "One invented record per variant. No repetitions, dispersion, raw instrument logs, correctness tests, source code, concrete-security calibration, or explanation isolating the cause of a difference is supplied. No setup communication value is supplied."
+}

@@ -2,7 +2,24 @@
 
 > **Source status:** These are retained earlier reading notes, not findings independently reverified in the 2026-09-14 skill update. Keep this collection separate from the supplied 30-paper corpus. Check the exact primary version before reusing locators, numerical claims, or reported defects; see [evidence sources](evidence-sources.md).
 
-These notes distinguish the evidence modes represented by the source set. Page references are PDF pages; ASHIV20's printed proceedings pages are 1592-1603. Recheck the exact paper version before reusing numbers.
+These notes distinguish the evidence modes represented by the source set. The retained locators use version-dependent PDF pages, which may differ from printed proceedings pages. Recheck the exact paper version before reusing numbers.
+
+## Source identities and retrieval
+
+The exact historically reviewed revision is unknown for each of these eight entries. The primary records below identify the papers and provide retrieval routes; their dates identify the linked records, not the earlier reviewed PDFs. Titles and record dates were checked on 2026-10-22; the historical page locators and technical observations below were not reverified. A later or corrected edition does not inherit an earlier defect report.
+
+| ID | Primary retrieval route | Linked record or edition |
+| --- | --- | --- |
+| WRK17 | [Authenticated Garbling and Efficient Maliciously Secure Two-Party Computation](https://eprint.iacr.org/2017/030) | ePrint 2017/030; last revision listed 2017-05-22 |
+| KRRW18 | [Optimizing Authenticated Garbling for Faster Secure Two-Party Computation](https://eprint.iacr.org/2018/578) | ePrint 2018/578; last revision listed 2018-10-11 |
+| DPSZ12 | [Multiparty Computation from Somewhat Homomorphic Encryption](https://eprint.iacr.org/2011/535) | ePrint 2011/535; last revision listed 2012-11-06 |
+| ASHIV20 | [Is the Classical GMW Paradigm Practical? The Case of Non-Interactive Actively Secure 2PC](https://doi.org/10.1145/3372297.3423366); [author bibliography](https://www.cs.rochester.edu/users/grads/mfaghihi/) | CCS 2020; author bibliography lists October 2020, pp. 1591–1605. Publisher PDF was not retrieved. |
+| BCGI18 | [Compressing Vector OLE](https://eprint.iacr.org/2019/273) | ePrint 2019/273, received 2019-03-12; identifies a major revision of CCS 2018 |
+| HKNOS25 | [Multiparty Garbling from OT with Linear Scaling and RAM Support](https://eprint.iacr.org/2025/444) | ePrint 2025/444; received 2025-03-07 |
+| LXYY25 | [Efficient Pseudorandom Correlation Generators for Any Finite Field](https://eprint.iacr.org/2025/169) | ePrint 2025/169; last revision listed 2025-05-20 |
+| MMST25 | [Pseudorandom Correlation Generators for Multiparty Beaver Triples over F2](https://eprint.iacr.org/2025/1182) | ePrint 2025/1182; received 2025-06-24 |
+
+Match a retrieved edition to its own section and page numbering before using the retained locators. No historical file hash is available here to establish that match; the WRK17 locator conflict in [evidence sources](evidence-sources.md) remains unresolved.
 
 ## Evidence modes in the sample
 
@@ -43,10 +60,12 @@ This is not a mandatory heading list. Collapse sections when the evidence is sma
 
 ## Source-derived validation warnings
 
-- WRK17's reviewed PDF has stale/conflicting abstract and body AES totals. Reconcile the final manuscript globally after updating results.
-- ASHIV20 Figure 8's overall caption does not accurately describe all five panels. Check every panel title, legend, security status, and prose reference against the caption.
-- BCGI18 labels near-local-minimum parameter search results as optimal in a caption and contains an apparent arithmetic mismatch in a derived setup total. Calibrate optimization language and machine-check calculations.
-- HKNOS25 has table-header/prose-ratio inconsistencies even though its comparison is analytical. Formula-derived tables require the same QA as measurements.
+These inherited observations remain unverified because the exact reviewed revisions are unknown. They motivate checks, not claims that the linked editions contain the reported defects.
+
+- Earlier notes report stale/conflicting abstract and body AES totals in WRK17. Reconcile the final manuscript globally after updating results.
+- Earlier notes report that ASHIV20 Figure 8's overall caption does not accurately describe all five panels. Check every panel title, legend, security status, and prose reference against the caption.
+- Earlier notes report that BCGI18 labels near-local-minimum parameter search results as optimal in a caption and contains an apparent arithmetic mismatch in a derived setup total. Calibrate optimization language and machine-check calculations.
+- Earlier notes report table-header/prose-ratio inconsistencies in HKNOS25 even though its comparison is analytical. Formula-derived tables require the same QA as measurements.
 - LXYY25 and MMST25 show why output-count normalization matters: large headline workloads may be extrapolated, while only smaller instances were run.
 
 ## Common missing fields in the sample

@@ -16,10 +16,17 @@ from statistics import median
 
 SUBMISSION = Path(__file__).resolve().parents[1]
 CASE_FILE = SUBMISSION / "review-cases.json"
+SUITES = ("submission", "development")
 
 
-def read_cases():
-    return json.loads(CASE_FILE.read_text(encoding="utf-8"))
+def case_file(suite="submission"):
+    if suite not in SUITES:
+        raise ValueError(f"Unknown review suite: {suite}")
+    return CASE_FILE if suite == "submission" else SUBMISSION / "development-cases.json"
+
+
+def read_cases(suite="submission"):
+    return json.loads(case_file(suite).read_text(encoding="utf-8"))
 
 
 def fixture_path(case):
@@ -59,16 +66,24 @@ def expected_files(case):
         if files[name].count(old) != 1:
             raise ValueError(f"Expected exactly one permitted replacement in {case['id']}")
         files[name] = files[name].replace(old, new, 1)
+    elif rule["mode"] == "allowed_changes":
+        paths = rule.get("paths")
+        if (not isinstance(paths, list) or not paths
+                or any(not isinstance(name, str) or name not in files for name in paths)
+                or len(paths) != len(set(paths))):
+            raise ValueError(f"Allowed changes must name distinct existing fixture files in {case['id']}")
     elif rule["mode"] != "unchanged":
         raise ValueError(f"Unknown filesystem mode: {rule['mode']}")
     return files
 
 
-def validate():
-    document = read_cases()
+def validate(suite="submission"):
+    document = read_cases(suite)
     cases = document["cases"]
-    if [case["id"] for case in cases] != ["P01", "P02", "P03", "P04", "P05", "N01", "N02", "N03"]:
-        raise ValueError("Expected exactly five positive and three negative cases in order")
+    expected_ids = (["P01", "P02", "P03", "P04", "P05", "N01", "N02", "N03"]
+                    if suite == "submission" else [f"D{i:02}" for i in range(1, 9)])
+    if [case["id"] for case in cases] != expected_ids:
+        raise ValueError(f"Expected {suite} cases in order: {', '.join(expected_ids)}")
     required = {"id", "kind", "title", "fixture_directory", "expected_skills",
                 "execution_status", "prompt", "expected_result_shape",
                 "required_rubric", "filesystem_rule"}
@@ -76,7 +91,7 @@ def validate():
     for case in cases:
         if required - case.keys():
             raise ValueError(f"Missing fields in {case['id']}: {required - case.keys()}")
-        expected_kind = "positive" if case["id"].startswith("P") else "negative"
+        expected_kind = "negative" if case["id"].startswith("N") else "positive"
         if case["kind"] != expected_kind or case["execution_status"] != "not_run":
             raise ValueError(f"Unexpected kind or claimed execution in {case['id']}")
         if not case["prompt"].strip() or not case["required_rubric"] or not case["expected_result_shape"]:
@@ -86,6 +101,9 @@ def validate():
                 raise ValueError(f"Invalid rubric item: {item['id']}")
             rubric_ids.add(item["id"])
         expected_files(case)
+
+    if suite == "development":
+        return cases
 
     # Independently check the published arithmetic oracle using exact rationals.
     record = json.loads((SUBMISSION / "tests/fixtures/p04/observations.json").read_text())
@@ -120,7 +138,7 @@ def select(cases, case_id):
     raise ValueError(f"Unknown case: {case_id}")
 
 
-def prepare(case):
+def prepare(case, suite="submission"):
     root = Path(tempfile.mkdtemp(prefix=f"crypto-plugin-review-{case['id']}-"))
     workspace = root / "workspace"
     workspace.mkdir()
@@ -129,23 +147,25 @@ def prepare(case):
         shutil.copytree(source, workspace, dirs_exist_ok=True)
     snapshot = root / "initial-state.json"
     record = {
+        "suite": suite,
         "case_id": case["id"],
         "workspace": str(workspace),
-        "case_file_sha256": hashlib.sha256(CASE_FILE.read_bytes()).hexdigest(),
+        "case_file_sha256": hashlib.sha256(case_file(suite).read_bytes()).hexdigest(),
         "initial_sha256": hashes(file_bytes(workspace)),
         "allowed_final_sha256": hashes(expected_files(case)),
     }
     snapshot.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({"case_id": case["id"], "workspace": str(workspace),
+    print(json.dumps({"suite": suite, "case_id": case["id"], "workspace": str(workspace),
                       "snapshot": str(snapshot), "prompt": case["prompt"],
                       "behavioral_execution": "NOT RUN"}, indent=2))
 
 
-def check(case, workspace, snapshot):
+def check(case, workspace, snapshot, suite="submission"):
     record = json.loads(snapshot.read_text(encoding="utf-8"))
-    if record["case_id"] != case["id"] or Path(record["workspace"]).resolve() != workspace.resolve():
+    if (record.get("suite", "submission") != suite or record["case_id"] != case["id"]
+            or Path(record["workspace"]).resolve() != workspace.resolve()):
         raise ValueError("Snapshot does not belong to this case/workspace")
-    if record["case_file_sha256"] != hashlib.sha256(CASE_FILE.read_bytes()).hexdigest():
+    if record["case_file_sha256"] != hashlib.sha256(case_file(suite).read_bytes()).hexdigest():
         raise ValueError("Case definitions changed since preparation; stage a fresh case")
     if not workspace.is_dir():
         raise ValueError("Workspace is missing")
@@ -153,16 +173,21 @@ def check(case, workspace, snapshot):
     expected = record["allowed_final_sha256"]
     added = sorted(observed.keys() - expected.keys())
     removed = sorted(expected.keys() - observed.keys())
-    changed = sorted(name for name in observed.keys() & expected.keys() if observed[name] != expected[name])
+    rule = case["filesystem_rule"]
+    allowed = set(rule["paths"]) if rule["mode"] == "allowed_changes" else set()
+    content_changes = {name for name in observed.keys() & expected.keys() if observed[name] != expected[name]}
+    changed = sorted(content_changes - allowed)
     passed = not (added or removed or changed)
-    print(json.dumps({"case_id": case["id"], "filesystem_check": "PASS" if passed else "FAIL",
+    print(json.dumps({"suite": suite, "case_id": case["id"], "filesystem_check": "PASS" if passed else "FAIL",
                       "added": added, "removed": removed, "unexpected_content": changed,
+                      "permitted_content_changes": sorted(content_changes & allowed),
                       "behavioral_grade": "NOT ASSESSED: review response and tool trace manually"}, indent=2))
     return 0 if passed else 1
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--suite", choices=SUITES, default="submission")
     sub = parser.add_subparsers(dest="action", required=True)
     sub.add_parser("validate")
     stage = sub.add_parser("prepare")
@@ -172,16 +197,19 @@ def main():
     compare.add_argument("workspace", type=Path)
     compare.add_argument("snapshot", type=Path)
     args = parser.parse_args()
-    cases = validate()
+    cases = validate(args.suite)
     if args.action == "validate":
-        print("PASS: 5 positive + 3 negative case definitions, fixture paths, and arithmetic oracles")
+        if args.suite == "submission":
+            print("PASS: 5 positive + 3 negative case definitions, fixture paths, and arithmetic oracles")
+        else:
+            print("PASS: 8 development case definitions, fixture paths, and filesystem rules")
         print("Behavioral test execution: NOT RUN; this is review-material validation only")
         return 0
     case = select(cases, args.case_id)
     if args.action == "prepare":
-        prepare(case)
+        prepare(case, args.suite)
         return 0
-    return check(case, args.workspace, args.snapshot)
+    return check(case, args.workspace, args.snapshot, args.suite)
 
 
 if __name__ == "__main__":

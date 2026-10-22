@@ -6,15 +6,18 @@ Version **0.1.0** was submitted, approved, and published on **2026-09-21**. See 
 
 ## Build the package
 
-From the repository root, run:
+From the repository root, install the packaging/test dependencies in your Python environment and run:
 
 ```sh
+python3 -m pip install -r requirements-dev.txt
 python3 scripts/build_plugin.py --check
 python3 -m unittest discover -s tests -v
 python3 scripts/build_plugin.py
 ```
 
 The default outputs are the staged plugin in `dist/crypto-research-skills/`, a versioned ZIP, checksums, and a file inventory. The ZIP is the upload artifact; the original source checkout is not a plugin root. Rebuilding unchanged release inputs should produce an identical ZIP. Generated files are ignored by Git.
+
+PyYAML is a development dependency for safe metadata parsing (tested with 6.0.3), not a dependency of standalone installation or the distributed skills. Preflight requires mapping-valued frontmatter with a matching string name and nonempty string description. Optional `agents/openai.yaml` must be a mapping; its known interface fields must be nonempty strings, and icons must name relative files within the skill. Unknown metadata fields are preserved. These checks do not implement the host's complete metadata schema, and validation does not rewrite the packaged YAML.
 
 `plugin.json` is the portable Agent Plugins 1.0 manifest. The build also derives `.codex-plugin/plugin.json` for the supported Codex compatibility format. Both use the same identity and presentation metadata. Skill directories are copied intact under the package's root `skills/` directory. The package includes `LICENSE`, `CITATION.cff`, a package-specific README, and the logo assets; it does not include this submission dossier or test fixtures.
 
