@@ -1,6 +1,30 @@
 # Source evidence and limits
 
-## Provenance
+## AITCS working-group report: Section 2 and Appendix A
+
+Source: user-supplied `AITCS white paper 9.29.26.pdf`, titled **AI and TCS: The Next Six Months**, **Working Group Report**, by the **September 2026 Working Group**. The cover is dated **28 September 2026**; the filename is a version identifier, not the cover date. Source-file SHA-256: `650203371ff3831a84f3815aa9aadde63297c3ee25fbeabebf256be8df65c0e8`.
+
+Section 2 and Appendix A were read directly and checked against rendered pages during this update. Printed page numbers match PDF page numbers. The report is source material for the skill, not authorization to implement its other actions. It describes its actions as working proposals (Introduction, p. 2), so neither the checklist nor its suggested placement establishes a conference requirement.
+
+- **Section 2.1, pp. 6–9:** proposes an AI Methodology section comprising six overlapping contribution categories and free-form Details. Categories 1–4 use a hypothetical human coauthorship threshold; categories 5–6 use any substantial contribution. The Details record supplied inputs, tool proposals, retained or revised contributions, and checking of claims and attributions, in proportion to their significance. The proposed format also applies to papers without qualifying AI contributions; its negative answers still require factual support.
+- **Section 2.2, p. 9:** recommends best-effort tracing of idea lineage, consultation of original papers, and prominent credit where ideas and results are first introduced or motivated. AI-generated arguments can lack accurate attribution; model output is not evidence of novelty. Disclosure and scholarly credit serve different purposes.
+- **Appendix A, pp. 19–21:** contrasts generic lists of activities and responsibility assurances with accounts specifying human groundwork, inputs, AI ideas, human extensions, consequential errors, and repairs. Its examples also distinguish reconstruction from reproduction by documenting supplied and withheld inputs, and warn that prior conversations or memory may contribute context beyond the stated prompt.
+
+### Appendix A example provenance and limits
+
+The following are the report's descriptions of the papers, not independent checks of their disclosures, correctness, or reproduction claims. Versions and paper-page locators are reproduced from the report. Reopen the primary versions before quoting or presenting paper-exact claims as independently verified.
+
+| Report locator | Example and reported paper locator | Drafting lesson drawn by the report |
+| --- | --- | --- |
+| p. 19 | Assadi, Jiang, and Xiang, *Semi-Streaming Matching in a Single Pass II: Greedy is Optimal*, arXiv:2607.14656v2, PDF p. 18 | Distinguish a human-supplied relaxation solution from an AI-proposed random-walk idea and subsequent human exposition. |
+| pp. 19–20 | Chandrasekaran, Chekuri, and Kulkarni, *An iterative rounding 2-approximation for Feedback Vertex Set via AI-assisted proof of an extreme point property*, arXiv:2609.04414v1, PDF pp. 5–6 | Specify research notes already supplied, key ideas proposed by tools, and how the authors incorporated and extended them. |
+| p. 20 | Branzei, Panageas, and Paparas, *The Query Complexity of Local Search in Rounds on General Graphs*, arXiv:2601.13266v2, PDF pp. 22–23 | Describe a circular argument and the human hint used to repair it; counterexamples can also shape the research. |
+| p. 20 | Inoue et al., *Three-edge-coloring apex cubic graphs*, arXiv:2608.22870v1, PDF pp. 1, 3, 41 | State pseudocode and public inputs received, original source withheld, and computational outputs reportedly reproduced. |
+| pp. 20–21 | Zamir, *k-Coloring is Faster than Computing the Chromatic Number*, arXiv:2607.25973v1, PDF p. 40 | A stated prompt may omit prior-chat or memory context, and a model may reproduce an existing proof framework without attribution. |
+
+These examples support contribution-specific drafting and caution about attribution and context. They do not establish prevalence, universal authorship norms, independence of a new experiment, or venue compliance. The skill's treatment of unresolved checklist answers and preservation of narrow edit scope are drafting safeguards, not additional mandates claimed from the report.
+
+## Earlier cryptography disclosure review: provenance
 
 Derived from the user-supplied `ai_acknowledgements_eprint_jul_sep_2026.md`, titled **AI acknowledgements in recent cryptography papers**, review date **16 September 2026**. Its primary window is ePrint first receipts from **1 July through 16 September 2026**, not the whole third quarter.
 
