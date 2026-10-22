@@ -7,7 +7,7 @@ description: Draft or minimally edit cryptography manuscripts, including definit
 
 Make the contribution and argument precise and readable. Use established terms when they express the intended formal meaning; otherwise name the object or relationship plainly. Theory-only writing needs no implementation or experiments.
 
-Aim to follow the writing rules of [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/STE_faq.html): prefer short, clear sentences, one topic per sentence, and active voice where appropriate. Apply these as style guidance, without imposing the standard's restricted vocabulary or dictionary-based word-use restrictions. Preserve mathematical precision, established cryptographic terminology, notation, and the author's explicit instructions.
+Use [ASD-STE100 Simplified Technical English](https://www.asd-ste100.org/STE_faq.html) as plain-language style guidance: prefer clear, focused sentences and active voice where appropriate. Judge clarity by continuity, emphasis, and grammatical structure as well as length; a longer or passive sentence may keep the relationship clearer. Do not impose the standard's restricted vocabulary or dictionary-based word-use restrictions. Preserve mathematical precision, established cryptographic terminology, notation, and the author's explicit instructions.
 
 Prefer concrete cryptographic nouns and operations over generic labels such as “endpoints,” “layer,” “interface,” “publish,” or “pad.” Name the parties, OT roles, protocol phase, primitive, PRF outputs, messages, broadcast, or reconstruction actually meant. Prefer “corrupted parties” to “coalition” when describing the corrupted set, and name supplied correlations rather than calling them “scalar correlations” or “OT state.” Explain what is sampled or causes an abort instead of relying on “marginal” or “cutoff” alone.
 
@@ -41,6 +41,8 @@ Use the entrypoint alone for a straightforward grammar edit with fixed meaning. 
 | --- | --- |
 | Abstract, introduction, or conclusion structure; consistency with a technical overview | [Abstracts, introductions, and conclusions](references/abstracts-and-introductions.md) |
 | Explain a construction or proof idea | [Technical overviews](references/technical-overviews.md) |
+| Sentence or paragraph coherence; substantial prose revision | [Prose and coherence](references/prose-and-coherence.md) |
+| Exposition of definitions, notation, formulas, or lemmas | [Mathematical exposition](references/mathematical-exposition.md) |
 | Preferred wording, an ambiguous cryptographic word, or a claim verb | [Terminology](references/terminology.md) |
 | Security statements, experiments, reductions, or full proofs | [Security claims](references/security-claims.md) |
 | MPC, simulation, corruption, composition, or output guarantees | [Secure computation](references/secure-computation.md) |
