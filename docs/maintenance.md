@@ -18,6 +18,10 @@ tests/test_install.py              Isolated installer regression tests
 submission/                       Plugin release inputs and review fixtures
 scripts/build_plugin.py            Reproducible skills-only plugin packaging
 tests/test_build_plugin.py         Plugin packaging regression tests
+.claude-plugin/                   Claude plugin manifest and marketplace catalog
+scripts/sync_claude_plugin.py      Derive Claude metadata from release inputs
+tests/test_sync_claude_plugin.py   Claude metadata and discovery regression tests
+docs/claude-publishing.md          Claude release and directory submission guide
 requirements-dev.txt              Packaging/test development dependencies
 ```
 
@@ -42,6 +46,7 @@ Install the development dependencies in your Python environment, then run the te
 
 ```sh
 python3 -m pip install -r requirements-dev.txt
+python3 scripts/sync_claude_plugin.py --check
 python3 -m unittest discover -s tests -v
 ```
 
@@ -52,3 +57,5 @@ The tests isolate personal directories in temporary homes and check selection, s
 For substantive routing or workflow changes, try representative requests with an independent reviewer. Include a narrow task that should stay narrow and a technical case whose safeguards must survive. These checks provide behavioral evidence, not proof of response quality across all tasks.
 
 For the OpenAI plugin release layout, metadata, review cases, and build commands, see the [submission guide](../submission/README.md). The package builder copies the selected source skills into a generated `skills/` directory without changing standalone installation. Keep behavioral test observations separate from expected outcomes and from package validation results.
+
+For Claude releases, update the portable identity/version in `submission/plugin.json`, run `python3 scripts/sync_claude_plugin.py`, and commit the generated `.claude-plugin/` files. Run Claude's own validator and a marketplace installation as described in [Claude publishing](claude-publishing.md). The Claude manifest loads the three source collections directly; do not add duplicate skill trees. The OpenAI ZIP build remains independent of these Claude metadata files.

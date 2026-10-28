@@ -1,6 +1,28 @@
 # Installation details
 
-See the [README](../README.md#installation) for the basic Codex and Claude Code installation commands. Run the examples below from the repository root.
+See the [README](../README.md#installation) for the basic Codex and Claude Code installation commands. Run the Python installer examples below from the repository root.
+
+## Claude Code plugin
+
+Install all twelve skills without running the Python installer:
+
+```sh
+claude plugin marketplace add ziyang-theory/cryptography-research-skills
+claude plugin install crypto-research-skills@cryptography-research-skills
+```
+
+Start a fresh session and use `/crypto-research-skills:crypto-proof-auditor`, or another skill from the [catalog](skills.md). The marketplace is named `cryptography-research-skills`; its plugin is named `crypto-research-skills`.
+
+To receive a newer release:
+
+```sh
+claude plugin marketplace update cryptography-research-skills
+claude plugin update crypto-research-skills@cryptography-research-skills
+```
+
+For a temporary session using a local checkout, run `claude --plugin-dir /path/to/cryptography-research-skills`. The plugin manifest points to the existing collection directories, so its workflows use the same source as standalone installation. Choose one Claude installation method to avoid exposing the same workflow twice. Existing standalone links are not removed by plugin installation; review them before removing any yourself.
+
+See [Claude publishing](claude-publishing.md) for validation and directory submission. The remaining sections describe the selective standalone installer.
 
 ## How Codex and Claude Code use the same skills
 
