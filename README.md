@@ -34,7 +34,7 @@ The skills work with **Codex and Claude Code**. Choose among three collections:
 - **Writing:** five skills to express established ideas and evidence in manuscript prose, prior-work comparisons, evaluation sections, and publication materials.
 - **Implementation:** three skills for protocol code, reproducible benchmarks, and research artifacts.
 
-You need Python 3 and your chosen agent installed. Clone this repository to a stable location; the installer creates directory symlinks to its skill folders.
+Claude Code users can install all twelve skills through the plugin manager below. For selective installation in either agent, you need Python 3 and a stable checkout; the installer creates directory symlinks to its skill folders.
 
 The [skill catalog](docs/skills.md) lists the skills in each collection. Start with the skill matching your requested result; specialist references and companion skills are loaded only when needed. The collections can be used independently and do not prescribe a sequence.
 
@@ -53,21 +53,36 @@ python3 scripts/install.py --agent codex --collection research
 
 ### Claude Code
 
-Install Research:
+Install all twelve skills through Claude Code's plugin manager:
+
+```sh
+claude plugin marketplace add ziyang-theory/cryptography-research-skills
+claude plugin install crypto-research-skills@cryptography-research-skills
+```
+
+In a fresh Claude Code session, invoke a plugin skill with its namespace:
+
+```text
+/crypto-research-skills:crypto-proof-auditor Audit the security proof in this manuscript.
+```
+
+Alternatively, install only Research as standalone skills from your checkout:
 
 ```sh
 python3 scripts/install.py --agent claude --collection research
 ```
 
-Run both commands to use the same skills in both tools. Replace `research` with `writing` or `implementation` to install that collection, or with `all` to install all twelve skills. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Research.
+For the Python installer, replace `research` with `writing` or `implementation` to install that collection, or with `all` to install all twelve skills. Omitting `--agent` defaults to Codex; omitting `--collection` defaults to Research. Run the installer for each agent if you want both tools to use the same checkout.
 
-Start a fresh agent session after installation. In Codex, mention `$crypto-proof-auditor`; in Claude Code, try:
+Start a fresh agent session after installation. In Codex, mention `$crypto-proof-auditor`; for a standalone Claude Code installation, try:
 
 ```text
 /crypto-proof-auditor Audit the security proof in this manuscript.
 ```
 
 The installer preserves existing files and matching links, and migrates recognized links to this checkout's former collection paths. Keep the checkout in place while the skills are installed. See the [installation details](docs/installation.md) for migration, personal directories, individual skills, custom destinations, previews, updates, and conflict handling.
+
+The plugin contains instructions and reference notes. It declares no MCP server, hooks, authentication, telemetry, or publisher-operated data endpoint. The host agent supplies file access, browsing, editing, and execution under the user's permissions; workflows may need tools such as a compiler or LaTeX installation. See the [scope and data-handling description](submission/PLUGIN_README.md#scope-and-tools).
 
 ## Showcase: a short MPC security proof
 
@@ -93,6 +108,7 @@ The response follows the simulator description with labeled hybrids and explanat
 - [Installation details](docs/installation.md): how Codex and Claude Code share the skills and additional installation options.
 - [Maintenance](docs/maintenance.md): repository layout, validation, and guidance for changes.
 - [OpenAI plugin submission](submission/README.md): build the skills-only plugin package and reproduce its review cases.
+- [Claude publishing](docs/claude-publishing.md): marketplace metadata, release checks, and Anthropic directory submission.
 
 ## License and citation
 
