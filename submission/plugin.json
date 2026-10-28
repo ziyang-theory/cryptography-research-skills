@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "crypto-research-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Twelve focused workflows for cryptography research, proof review, manuscript writing, protocol implementation, benchmarking, and reproducible artifacts.",
   "author": {
     "name": "Ziyang Jin",
@@ -22,6 +22,9 @@
         "category": "Education & Research",
         "capabilities": ["Research framing and literature evidence", "Cryptographic proof review", "Technical writing and manuscript checks", "Protocol implementation and benchmark accounting", "Reproducible research artifacts"],
         "websiteURL": "https://github.com/ziyang-theory/cryptography-research-skills",
+        "supportURL": "https://github.com/ziyang-theory/cryptography-research-skills/blob/main/submission/PLUGIN_README.md#source-support-and-license",
+        "privacyPolicyURL": "https://github.com/ziyang-theory/cryptography-research-skills/blob/main/submission/PLUGIN_README.md#scope-and-tools",
+        "termsOfServiceURL": "https://github.com/ziyang-theory/cryptography-research-skills/blob/main/LICENSE",
         "defaultPrompt": [
           "Audit this cryptographic proof under its stated model. Report gaps without editing the source.",
           "Improve this cryptography paragraph with the smallest edit that preserves its claim and notation.",
