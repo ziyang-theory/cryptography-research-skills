@@ -42,4 +42,4 @@ Existing behavioral results for `0.1.0` do not establish behavioral results for 
 
 ## Separate GitHub source release
 
-[GitHub v2.0.0 — Second public release](https://github.com/ziyang-theory/cryptography-research-skills/releases/tag/v2.0.0) was published on October 27, 2026 and marked Latest. It points to source commit `54dc589af0ac14635fc455be9f64d071abe0e4bf`, which contains the same skill sources. It includes release notes and GitHub's source ZIP/tarball. The local OpenAI `0.2.0` metadata and release-record commits are not part of that tag; they remain awaiting push. GitHub publication does not establish OpenAI approval or publication.
+[GitHub v2.0.0 — Second public release](https://github.com/ziyang-theory/cryptography-research-skills/releases/tag/v2.0.0) was published on October 27, 2026 and marked Latest. It points to source commit `54dc589af0ac14635fc455be9f64d071abe0e4bf`, which contains the same skill sources. It includes release notes and GitHub's source ZIP/tarball. The OpenAI `0.2.0` metadata and release-record commits are maintained on `main` and are not part of that tag. GitHub publication does not establish OpenAI approval or publication.
