@@ -1,6 +1,6 @@
 # Release record: Cryptography Research Skills 0.2.0
 
-Prepared on October 27, 2026 from source commit `54dc589`, with the package version advanced to `0.2.0`. This is the second plugin release candidate after the [published 0.1.0 release](publication-20260921.md).
+Prepared on October 27, 2026 from source commit `54dc589`, with the package version advanced to `0.2.0`. Approved and published on October 28, 2026, this is the second plugin release after the [published 0.1.0 release](publication-20260921.md).
 
 ## Changes since 0.1.0
 
@@ -33,12 +33,14 @@ Existing behavioral results for `0.1.0` do not establish behavioral results for 
 
 - [Existing plugin management page](https://platform.openai.com/plugins/manage/plugins_6ab0c5fbd69081919fa85386d207bb40).
 - [Public directory listing](https://chatgpt.com/plugins/plugins_6ab0c5fbd69081919fa85386d207bb40).
-- Draft submission: `appsub_6ae1459fd9a48191bcf6c0aa3e0c2ba4`, uploaded on October 27, 2026. The portal still shows `0.1.0` as the published version.
+- Submission: `appsub_6ae1459fd9a48191bcf6c0aa3e0c2ba4`, uploaded on October 27, 2026 and published on October 28, 2026. The portal now shows `0.2.0` as the published version.
 - The initial upload flagged missing support, privacy policy, and terms URLs. The manifest now links to the existing public package README's support and data-handling sections and the repository's MIT license. No new policy commitments were added. The corrected archive was reuploaded to the same draft.
 - Initial archive SHA-256: `af235bf1f88fa2ede7ee7438efd3ba61d60194abb750b55fbc121114627f0ba2`; a copy is retained as `crypto-research-skills-0.2.0-initial.zip` in the release output directory.
 - After the corrected upload, the portal showed no blocking metadata findings and one non-blocking request to review the linked privacy explanation against the guidelines. All twelve skill scans subsequently passed. On October 27, 2026, the portal was observed showing version `0.2.0` as **In review**, while `0.1.0` remained published. This is a status observation, not a server-provided submission timestamp.
-- The publisher explicitly confirmed all six required attestations and authorized submission followed by publication on approval. The six statements were checked in the portal. They cover OpenAI's terms/guidelines, applicable law, transfers/trades, third-party rights, under-18 suitability, and under-13 targeting/data sharing. Publication is waiting for review approval.
-- A ten-minute follow-up was scheduled in the release chat to submit after scans pass and publish after approval, with notifications only on completion, failure, or required publisher action.
+- The publisher explicitly confirmed all six required attestations and authorized submission followed by publication on approval. The six statements were checked in the portal. They cover OpenAI's terms/guidelines, applicable law, transfers/trades, third-party rights, under-18 suitability, and under-13 targeting/data sharing.
+- On October 28, 2026, the portal showed `0.2.0 · Approved` and **Ready to publish**. Publishing the approved version produced **Plugin published!**. A subsequent page refresh confirmed **0.2.0 · Published** and **Publication Version 0.2.0**, replacing `0.1.0`. Verification occurred at approximately 00:53 America/Toronto (04:53 UTC); this is an observation time, not a server-provided publication timestamp. The portal noted that visibility in ChatGPT would follow shortly.
+- Publication evidence is saved locally at `dist/releases/0.2.0/published.png`. The published package is the corrected archive and SHA-256 recorded above; no duplicate submission was created.
+- The ten-minute follow-up was deleted after publication was verified.
 
 ## Separate GitHub source release
 
