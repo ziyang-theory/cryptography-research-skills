@@ -1,0 +1,26 @@
+{
+  "name": "crypto-research-skills",
+  "version": "0.2.0",
+  "description": "Twelve focused workflows for cryptography research, proof review, manuscript writing, protocol implementation, benchmarking, and reproducible artifacts.",
+  "author": {
+    "name": "Ziyang Jin",
+    "email": "ziyang@cs.toronto.edu",
+    "url": "https://github.com/ziyang-theory"
+  },
+  "homepage": "https://github.com/ziyang-theory/cryptography-research-skills",
+  "repository": "https://github.com/ziyang-theory/cryptography-research-skills",
+  "license": "MIT",
+  "keywords": [
+    "cryptography",
+    "research",
+    "MPC",
+    "zero-knowledge",
+    "proofs",
+    "scientific-writing"
+  ],
+  "skills": [
+    "./research/",
+    "./writing/",
+    "./implementation/"
+  ]
+}
