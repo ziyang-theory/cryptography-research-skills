@@ -4,7 +4,7 @@ This directory contains release inputs and review materials for the skills-only 
 
 Version **0.1.0** was submitted, approved, and published on **2026-09-21**. See the [publication record](publication-20260921.md) for the directory link, submitted package checksum, and validation evidence.
 
-Version **0.2.0** is the second release candidate, prepared and uploaded as a draft on **2026-10-27**. See the [release record](release-0.2.0.md) for changes, validation evidence, and the observed submission/publication status.
+Version **0.2.0** is the second release candidate, prepared and uploaded on **2026-10-27**. All twelve portal skill scans passed, and the portal now shows **In review**. See the [release record](release-0.2.0.md) for changes, validation evidence, and the observed submission/publication status.
 
 ## Build the package
 
