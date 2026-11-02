@@ -25,6 +25,14 @@ Select the smallest baseline set that answers the claim: the closest predecessor
 
 Review or suggested wording is read-only unless edits are requested. When editing, preserve the manuscript's notation and voice. Do not strengthen security, performance, or priority claims for rhetorical effect.
 
+## Review, revise, and recheck
+
+Before delivery, check the comparison's evidence and prose. For a substantial section or table, use a separate reviewer when available; supply the original request, author preferences, source variants and locators, calculations, and draft or diff. A delegated reviewer returns findings without starting another review chain. For a local edit or unavailable delegation, perform a focused self-review without claiming independence.
+
+Ask for exact unsupported comparisons or unclear passages, a reason, and minimal proposed corrections. Prefer direct claims, familiar prose, established terms, and clear sentence connections. Apply ASD-STE100-inspired clarity without dictionary restrictions; remove repetitive or defensive framing while retaining conditions, tradeoffs, and source-defined terms. No change is a valid finding.
+
+Adjudicate suggestions and apply supported edits within scope. Recheck changed claims, table cells, bounds, and denominators against the source after prose edits. Use one review-and-revision pass by default; repeat for a concrete unresolved mismatch or new change. Finish with the supported comparison and specific remaining evidence gaps; do not strengthen a ranking to satisfy a reviewer.
+
 ## Optional detail
 
 - [Comparison method](references/comparison-method.md): substantial sections/tables, uncertain normalization, or mixed numerical provenance.

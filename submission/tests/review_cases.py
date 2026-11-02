@@ -81,7 +81,7 @@ def validate(suite="submission"):
     document = read_cases(suite)
     cases = document["cases"]
     expected_ids = (["P01", "P02", "P03", "P04", "P05", "N01", "N02", "N03"]
-                    if suite == "submission" else [f"D{i:02}" for i in range(1, 9)])
+                    if suite == "submission" else [f"D{i:02}" for i in range(1, 11)])
     if [case["id"] for case in cases] != expected_ids:
         raise ValueError(f"Expected {suite} cases in order: {', '.join(expected_ids)}")
     required = {"id", "kind", "title", "fixture_directory", "expected_skills",
@@ -202,7 +202,7 @@ def main():
         if args.suite == "submission":
             print("PASS: 5 positive + 3 negative case definitions, fixture paths, and arithmetic oracles")
         else:
-            print("PASS: 8 development case definitions, fixture paths, and filesystem rules")
+            print("PASS: 10 development case definitions, fixture paths, and filesystem rules")
         print("Behavioral test execution: NOT RUN; this is review-material validation only")
         return 0
     case = select(cases, args.case_id)

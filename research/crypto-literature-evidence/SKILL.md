@@ -17,6 +17,12 @@ Establish what a source actually says and whether it applies to the question. Ti
 
 For a single claim, give the conclusion, source/version, exact locator, and decisive qualification. For a survey, also state coverage, strict matches versus related discussions, inaccessible sources, and unresolved dependencies. No corpus worksheet is required for a narrow question.
 
+## Review, correct, and recheck
+
+Before delivery, check the material conclusions against their primary-source versions and locators. For a substantial survey or synthesis, use a separate reviewer when available; supply the original question, source material, and proposed claims with citations. A delegated reviewer returns findings without starting another review chain. For a single lookup or unavailable delegation, perform a focused self-review without claiming independence.
+
+Adjudicate source-backed objections, correct unsupported attributions or interpretations, and recheck affected conclusions and citations. Use one review-and-revision pass by default; repeat for a concrete unresolved mismatch or new evidence. No correction is a valid finding. Finish when the scoped claims are supported or report the exact inaccessible source or unresolved conflict; do not broaden the search indefinitely or treat reviewer agreement as source verification.
+
 ## Further detail
 
 - [Evidence method](references/evidence-method.md): multi-paper reviews, scoped novelty searches, version conflicts, numerical attribution, and completeness claims.

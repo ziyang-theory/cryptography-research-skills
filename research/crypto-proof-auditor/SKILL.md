@@ -27,6 +27,12 @@ Determine whether the conclusion follows under the stated definition, model, and
 
 A theory audit requires no implementation or experiments. These references are self-contained; optional writing or implementation skills are useful only when that additional work is requested.
 
+## Review findings and recheck repairs
+
+Before delivery, check that each finding follows from the stated model and cited proof step. For a substantial audit or completion, use a separate reviewer when available; provide the original request, theorem, definitions, relevant proof, and proposed findings or repair. A delegated reviewer returns findings without starting another review chain. For a local audit or unavailable delegation, perform a focused self-review without claiming independence.
+
+Adjudicate objections and correct the audit report; repair manuscript sources only when authorized. Recheck changed proof steps and downstream claims after an accepted repair. Use one review-and-revision pass by default; repeat for a concrete unresolved defect or a new change. No confirmed defect is a valid finding, not proof that every obligation is discharged. Finish with the supported disposition and remaining obligations when evidence or an authorial choice is missing; do not change the theorem to make the review pass.
+
 ## Report findings
 
 Lead with supported findings, ordered by consequence. For each, give the claim and source anchor, failed obligation, evidence, consequence, smallest defensible repair or missing lemma, and residual uncertainty. Scale the format to the question; a fixed worksheet is unnecessary. Identify valid challenged steps as well as invalid ones when adjudicating a disputed inference.

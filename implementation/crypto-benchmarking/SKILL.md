@@ -18,6 +18,12 @@ Keep continuous elapsed time, party-local time, CPU work and sums of separately 
 
 Functional validation, protocol correspondence, empirical performance and cryptographic security are separate conclusions. Preserve differences between the implemented sampler/configuration and the theorem's distribution; matching parameter widths does not establish matched security. Reanalysis need not trigger an expensive rerun or manuscript edits.
 
+## Review, correct, and recheck
+
+Before delivery, review the measurement contract, raw evidence, calculations, and resulting claims. For a substantial experiment or reanalysis, use a separate reviewer when available; supply the original request, configuration, observations, formulas, and results. A delegated reviewer returns findings without starting another review chain. For a small calculation or unavailable delegation, perform a focused self-review without claiming independence.
+
+Adjudicate concrete discrepancies, preserve raw records, correct derived results, and recompute affected summaries and comparisons. Collect additional measurements only to address a concrete defect or evidence gap, within the authorized experiment scope. Preserve prior observations and record why additional measurements were needed. Use one review-and-revision pass by default; repeat for an unresolved discrepancy or new evidence. No correction is a valid finding. Finish with supported results and any missing evidence or failed checks; do not rerun until a preferred performance result appears.
+
 ## References by task
 
 - [Experiments and timing](references/experiments-and-timing.md): collecting measurements, comparing optimizations, repetition and resource accounting.

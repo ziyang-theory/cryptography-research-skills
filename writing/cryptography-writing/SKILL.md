@@ -33,6 +33,14 @@ manuscript edits.
 
 Local definitions take precedence over generic terminology. Keep correctness, security, and implementation evidence distinct; likewise joint distributions versus marginals, success probability versus advantage, concrete versus asymptotic bounds, and ideal-resource guarantees versus concrete instantiations. A stylistic edit cannot establish a missing theorem.
 
+## Review, revise, and recheck
+
+Before delivery, review technical meaning and presentation within the requested scope. For a substantial draft or rewrite, including a rewrite of a whole passage spanning multiple paragraphs, use a separate reviewer when delegation is available. Give the reviewer the original request, author preferences, relevant definitions or sources, and draft or diff. The task owner arranges this review; a delegated reviewer returns findings without starting another review chain. For a localized wording correction that leaves surrounding prose intact, or when delegation is unavailable, perform a focused self-review without claiming independence.
+
+Check for stock framing, repetition, inflated wording, unnecessary caveats, unfamiliar invented labels, and unclear sentence or paragraph connections. Apply the directness and ASD-STE100-inspired guidance above. Prefer familiar explanatory words and established cryptographic terms; word rarity or an AI-detector score is not a quality criterion. The reviewer should identify exact passages, explain each concrete defect, and propose minimal replacements, flagging possible changes of meaning. No change is a valid finding.
+
+Adjudicate suggestions before applying supported, in-scope edits. After style edits, recheck affected claims against the source: preserve quantifiers, sampling dependencies, assumptions, bounds, uncertainty, notation, and source-defined terms. Recheck applicable source/build properties when affected. Use one review-and-revision pass by default, followed by these targeted checks; repeat only for a concrete unresolved defect or a new change. Deliver when those checks are satisfied, or report the specific remaining issue when evidence or an authorial choice is missing. Do not keep rewriting merely to obtain a stylistic approval.
+
 ## Load details only for the current task
 
 Use the entrypoint alone for a straightforward grammar edit with fixed meaning. For drafting or terminology changes, use the terminology reference above; read other references only for the relevant task:

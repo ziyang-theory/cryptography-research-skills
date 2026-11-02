@@ -1,0 +1,1 @@
+Let q be a prime power, let X take values in F_q, and let Z be a finite-valued random variable jointly distributed with X. Let R be uniform over F_q and independent of (X,Z). For every x,z with positive probability, X+R is uniform over F_q conditional on X=x and Z=z. Consequently, (X+R,Z) and (U,Z) have the same distribution, where U is uniform over F_q and independent of Z.

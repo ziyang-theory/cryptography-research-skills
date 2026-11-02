@@ -1,7 +1,7 @@
 {
   "format_version": 1,
   "title": "Cryptography Research Skills: supplemental development cases",
-  "scope": "Eight synthetic development cases for accounting, mixed evaluation/comparison, code correspondence, disclosure, valid/invalid proof auditing, and completion/edit scope. Research framing and manuscript QA remain uncovered. This is not an effectiveness study or complete coverage.",
+  "scope": "Ten synthetic development cases for accounting, mixed evaluation/comparison, code correspondence, disclosure, valid/invalid proof auditing, completion/edit scope, and prose review. Research framing and manuscript QA remain uncovered. This is not an effectiveness study or complete coverage.",
   "provenance": "All fixtures are invented inputs for these cases. Numerical records are synthetic, not measurements. Proof fixtures are elementary finite-distribution exercises, not source-paper reproductions. This file contains expected outcomes only; observed executions belong in separate reports.",
   "grading": "Grade deliverable quality, filesystem effects, and visible skill selection separately. Every required rubric item must pass for a behavioral pass. expected_skills lists plausible routes, not a mandatory activation sequence; equivalent correct workflows are accepted and unobservable selection is unknown. Keep these rubrics outside staged workspaces. Mechanical checks do not grade proofs or prose.",
   "cases": [
@@ -357,6 +357,92 @@
         "paths": [
           "lemma.md"
         ]
+      }
+    },
+    {
+      "id": "D09",
+      "kind": "positive",
+      "title": "Rewrite substantial prose without weakening its technical conditions",
+      "fixture_directory": "tests/fixtures/development/d09",
+      "expected_skills": [
+        "cryptography-writing"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Rewrite draft.md into clear manuscript prose using source.md as the fixed technical source. Improve the whole passage where needed, preserve its technical claims, and use established cryptographic terms. Return only the revised prose. Do not browse, edit files, prove the result, or add claims.",
+      "expected_result_shape": [
+        "Concise manuscript prose with the supplied technical conditions",
+        "Preserved joint-view distance bound and online-round scope",
+        "Unchanged input files"
+      ],
+      "required_rubric": [
+        {
+          "id": "D09-R1",
+          "check": "Preserves one execution among n parties, a static semi-honest adversary corrupting at most t parties with t < n/2, and ideal preprocessing from F_corr. Does not claim malicious or adaptive security, preprocessing reuse, or a concrete implementation of F_corr."
+        },
+        {
+          "id": "D09-R2",
+          "check": "Preserves the simulator's access to the corrupted parties' inputs and outputs, and statistical distance at most 2^(-kappa) between the real and simulated joint views. Does not replace this with a marginal-distribution statement, perfect security, or an unspecified advantage or failure probability."
+        },
+        {
+          "id": "D09-R3",
+          "check": "States two broadcast rounds for the online phase and excludes preprocessing from this count. Does not present two rounds as the total cost or infer other communication costs."
+        },
+        {
+          "id": "D09-R4",
+          "check": "Removes redundant apology, repetition, inflated framing, and vague invented labels while retaining material conditions. Does not need to repeat every unsupported extension as a disclaimer, and does not delete qualifications merely because they restrict the result."
+        },
+        {
+          "id": "D09-R5",
+          "check": "Returns usable, connected manuscript prose using familiar explanatory wording and precise technical terms. Does not add a checklist, process report, proof, citation, or claim of unobserved independent review. Equivalent clear wording is accepted; there is no word-count or forbidden-word oracle."
+        },
+        {
+          "id": "D09-R6",
+          "check": "Leaves source.md and draft.md byte-for-byte unchanged, creates no workspace files, and does not browse."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
+      }
+    },
+    {
+      "id": "D10",
+      "kind": "positive",
+      "title": "Keep already-clear mathematical prose narrow and precise",
+      "fixture_directory": "tests/fixtures/development/d10",
+      "expected_skills": [
+        "cryptography-writing"
+      ],
+      "execution_status": "not_run",
+      "prompt": "Review passage.md for clarity. Change wording only where you can identify a concrete improvement; keep the passage unchanged if it is already clear. Preserve its mathematics and return the passage only. Do not browse, edit files, or expand the argument.",
+      "expected_result_shape": [
+        "The unchanged passage or a defensible small wording improvement",
+        "Preserved mathematical conditions and conclusion",
+        "No expanded review workflow in the response"
+      ],
+      "required_rubric": [
+        {
+          "id": "D10-R1",
+          "check": "Accepts the passage unchanged or makes only a defensible, small wording improvement. Does not manufacture a defect or rewrite the argument solely to produce a different version."
+        },
+        {
+          "id": "D10-R2",
+          "check": "Preserves the finite-field domain of X and R, independence of R from (X,Z), conditioning only on values with positive probability, and the joint-distribution conclusion with U uniform and independent of Z. Does not assume that X and Z are independent or replace joint equality by a statement about marginals."
+        },
+        {
+          "id": "D10-R3",
+          "check": "Retains precise technical language such as uniform and independent, or an equally exact formulation. Does not replace these concepts with vague everyday approximations or add invented labels."
+        },
+        {
+          "id": "D10-R4",
+          "check": "Returns only the passage, without a checklist, unnecessary caveats, additional proof steps, unrelated explanation, or claim of unobserved independent review."
+        },
+        {
+          "id": "D10-R5",
+          "check": "Leaves passage.md byte-for-byte unchanged, creates no workspace files, and does not browse."
+        }
+      ],
+      "filesystem_rule": {
+        "mode": "unchanged"
       }
     }
   ]

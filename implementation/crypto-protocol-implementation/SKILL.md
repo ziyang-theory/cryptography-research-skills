@@ -16,6 +16,12 @@ Connect the governing specification to the code and the behavior being changed. 
 
 For MPC, track party-local views and correlation ownership. For proof systems, track statement/witness separation, setup, transcript challenges and acceptance. Functional correctness, memory/runtime safety, specification conformance, cryptographic security, leakage and measured performance require distinct evidence.
 
+## Review, repair, and revalidate
+
+Before delivery, review the changed code and validation evidence against the specification and affected contract. For substantial implementation or optimization work, use a separate reviewer when available; supply the original request, specification, code or diff, and check results. A delegated reviewer returns findings without starting another review chain. For a small change or unavailable delegation, perform a focused self-review without claiming independence.
+
+Adjudicate concrete discrepancies, make authorized repairs, and rerun affected checks, including required project checks. For read-only reviews, correct findings and describe repairs without changing code. Use one review-and-revision pass by default; repeat for a specific unresolved failure or a new change. No defect is a valid finding. Finish when the scoped checks pass or report the failing check or missing dependency; do not weaken the specification or present functional tests as a security proof.
+
 ## References by task
 
 - [Specification and distributions](references/specification-and-distributions.md): reproductions, variants, samplers, correlations and setup.

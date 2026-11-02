@@ -19,6 +19,14 @@ Use established cryptographic terms: name the parties, protocol phases, subproto
 
 A component benchmark, ideal-resource fixture or modeled cost is valid evidence for its stated scope, but is not an end-to-end measurement. Builds, tests and smoke runs establish only their tested coverage. Preserve unknowns instead of filling them by unstated extrapolation.
 
+## Review, revise, and recheck
+
+Before delivery, check both the empirical argument and its presentation. For a substantial section or rewrite, use a separate reviewer when available; supply the original request, author preferences, evidence, calculations, and draft or diff. A delegated reviewer returns findings without starting another review chain. For a local edit or unavailable delegation, perform a focused self-review without claiming independence.
+
+Ask for exact unsupported claims or unclear passages, a reason, and minimal proposed corrections. Prefer direct claims, familiar prose, established terms, and clear sentence connections. Apply ASD-STE100-inspired clarity without dictionary restrictions; remove inflated, repetitive, or defensive framing while preserving evidence labels, uncertainty, and exclusions. No change is a valid finding.
+
+Adjudicate suggestions and apply supported edits within scope. After prose edits, recheck affected numbers, causal claims, measurement conditions, and comparisons against the evidence. Use one review-and-revision pass by default; repeat for a concrete unresolved mismatch or new change. Finish with the supported text and specific missing evidence; the review does not authorize new experiments.
+
 ## References by task
 
 - [Evaluation method](references/evaluation-method.md): result records, measurement semantics, evidence labels and final checks; read the relevant sections when these are uncertain.

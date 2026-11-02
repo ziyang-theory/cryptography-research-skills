@@ -29,6 +29,12 @@ Select additional guidance by the obstacle:
 
 These are optional methods and hypothetical exercises, not a sequence every project must complete.
 
+## Challenge, revise, and recheck
+
+Before delivery, challenge the candidate against the fixed target and its missing lemmas. For a substantial construction attempt, use a separate reviewer when available; supply the original question, model, candidate, and supporting derivations. A delegated reviewer returns findings without starting another review chain. For a narrow question or unavailable delegation, perform a focused self-review without claiming independence.
+
+Adjudicate concrete objections, revise supported steps within scope, and recheck affected dependencies. Use one review-and-revision pass by default; repeat for a specific unresolved defect or a new candidate change. A counterexample or precise remaining obstacle is a valid result. Finish when the requested result is supported or report the missing evidence or model choice that prevents further progress, without silently relaxing the target. This loop does not require code, experiments, or manuscript edits.
+
 ## Return the mathematical result
 
 Give a candidate lemma with a proof attempt, a counterexample identifying the violated requirement, a justified local transformation, or a precise remaining obstacle. State what is derived, assumed, source-supported, or open, and which unresolved premise most affects the next step. Do not promote a local calculation to whole-construction security.

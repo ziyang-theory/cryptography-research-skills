@@ -32,4 +32,12 @@ Use [drafting patterns](references/drafting-patterns.md) only when a starter cla
 
 If venue compliance is requested or constrains the draft, check the current official policy for the relevant year, track, and stage, with its date/version. Examples are not policy. If the policy is unavailable, state that limitation and continue fact-based drafting.
 
+## Review, revise, and recheck
+
+Before delivery, check the disclosure against the contribution account and actual checking records. For a substantial methodology section or rewrite, use a separate reviewer when available; supply the original request, author preferences, relevant account, and draft or diff. A delegated reviewer returns findings without starting another review chain. For a short disclosure or unavailable delegation, perform a focused self-review without claiming independence.
+
+Ask for exact unsupported attributions or unclear passages, a reason, and minimal proposed corrections. Prefer direct, natural prose, familiar words, and clear sentence connections, using ASD-STE100-inspired clarity without dictionary restrictions. Remove apologies and repetition while preserving uncertainty and distinctions among kinds of assistance and checking. No change is a valid finding.
+
+Adjudicate suggestions and apply supported edits within scope. After prose edits, recheck who did what, what was retained, and what was actually verified. Use one review-and-revision pass by default; repeat for a concrete unresolved mismatch or new information. Finish with the supported disclosure and material unknowns; the reviewing agent's work must not become a claim of human verification.
+
 Return one usable paragraph or section, followed by material unresolved facts or policy qualifications. For the checklist format, justify answers from the contribution thresholds; an unknown is not No, and below-threshold assistance is not necessarily non-use. For review, identify concrete mismatches and offer minimal replacements. This disclosure reports a process; it is not a correctness certificate or an instruction to audit the paper's proofs.

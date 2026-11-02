@@ -66,7 +66,7 @@ class ReviewCaseTests(unittest.TestCase):
 
     def test_all_development_cases_validate_and_cli_selects_them(self):
         self.assertEqual([case['id'] for case in CASES.validate('development')],
-                         [f'D{i:02}' for i in range(1, 9)])
+                         [f'D{i:02}' for i in range(1, 11)])
         with mock.patch.object(sys, 'argv', ['review_cases.py', '--suite', 'development', 'validate']), \
                 redirect_stdout(io.StringIO()):
             self.assertEqual(CASES.main(), 0)

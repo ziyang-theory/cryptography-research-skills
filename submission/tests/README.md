@@ -7,9 +7,10 @@ This corpus defines expected outcomes. Its `execution_status: not_run` values ar
 template defaults, not a summary of execution reports. See the separate
 [2026-09-21 behavioral report](../behavioral-review-20260921.md) for observed runs.
 
-The separate [`../development-cases.json`](../development-cases.json) adds eight
+The separate [`../development-cases.json`](../development-cases.json) adds ten
 development cases for adjacent workflows, valid and invalid proof arguments, and
-response versus source completion. It leaves the submission cases unchanged.
+response versus source completion, including substantial and narrow prose review.
+It leaves the submission cases unchanged.
 Both suites use the same staging, side-effect checker, and optional CLI runner.
 The default suite is always `submission`; select `--suite development` explicitly.
 
@@ -66,6 +67,8 @@ or evidence of cryptographic security. The false statement in P01 is intentional
 | D06 | Audit of the minimally altered invalid counterpart |
 | D07 | Completion of an elementary argument in the response |
 | D08 | Insertion of that argument into the named source file |
+| D09 | Substantial prose revision preserving technical conditions |
+| D10 | Review of already-clear prose without unnecessary rewriting |
 
 These prompts do not name skills. Grade the deliverable, side effects, and visible
 skill selection separately; selection is unknown when the trace does not expose
@@ -79,7 +82,7 @@ python3 submission/tests/review_cases.py --suite development prepare D08
 python3 submission/tests/review_cases.py --suite development check D08 /printed/workspace /printed/snapshot.json
 ```
 
-D01–D07 require unchanged files. D08 permits content changes only to the existing
+D01–D07 and D09–D10 require unchanged files. D08 permits content changes only to the existing
 `lemma.md`; additions, deletions, and changes to other files fail the mechanical
 check. An unchanged or incorrect `lemma.md` can pass that narrow check: manually
 grade the completed proof and diff against the rubric. No exact-byte proof oracle
@@ -87,6 +90,27 @@ is imposed. The rubric stays outside every staged workspace.
 
 The unit tests include finite supporting checks of the synthetic mathematical
 oracles. They do not replace the general arguments or grade a model response.
+
+For D09 and D10, grade technical meaning and clarity rather than exact wording or
+word rarity. Inspect any visible review activity separately from final prose;
+asserting that a review occurred is not evidence of it. An unchanged passage is
+a valid response for D10. P02 in the submission suite separately
+checks a one-word source edit that must stay narrow.
+
+Record D09's workflow observations separately from its prose grade:
+
+- Was delegation available for the run?
+- Did a separate reviewer receive the original request and relevant source and draft?
+- Did that review finish before delivery?
+- Were accepted edits checked for preserved technical meaning?
+
+Use visible tool activity or review artifacts for these observations; mark
+unobservable steps **unknown** rather than inferring them from good prose or a
+claim that review occurred. If delegation was unavailable, assess the focused
+self-review fallback using the same evidence rule. If no edits were accepted,
+mark the post-edit check not applicable. A prose pass can coexist with a failed
+or unverified workflow. D10 and P02 allow a focused self-check; they do not
+require a separate reviewer.
 
 ## Negative-case interpretation
 
