@@ -6,8 +6,11 @@ from fractions import Fraction
 import importlib.util
 import io
 import json
+import os
 from pathlib import Path
 import shutil
+import socket
+import subprocess
 import sys
 import tempfile
 import unittest
@@ -107,6 +110,47 @@ class ReviewCaseTests(unittest.TestCase):
                 else:
                     original.unlink()
                 self.assertEqual(self.check(case, workspace, snapshot)[0], 1)
+
+    @unittest.skipUnless(hasattr(os, 'mkfifo'), 'Named pipes are unavailable')
+    def test_checker_rejects_added_fifo_without_reading_it(self):
+        _, workspace, snapshot = self.stage('N03')
+        os.mkfifo(workspace / 'unexpected-pipe')
+        result = subprocess.run(
+            [sys.executable, str(ROOT / 'submission/tests/review_cases.py'),
+             'check', 'N03', str(workspace), str(snapshot)],
+            capture_output=True, text=True, timeout=5,
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('Unsupported filesystem entry', result.stderr)
+        self.assertNotIn('"filesystem_check": "PASS"', result.stdout)
+
+    @unittest.skipUnless(hasattr(socket, 'AF_UNIX'), 'Unix sockets are unavailable')
+    def test_checker_rejects_added_socket(self):
+        case, workspace, snapshot = self.stage('N03')
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as listener:
+            # A relative address avoids the platform's short Unix-socket path limit.
+            previous_directory = Path.cwd()
+            try:
+                os.chdir(workspace)
+                try:
+                    listener.bind('unexpected-socket')
+                except PermissionError as error:
+                    self.skipTest(f'Unix socket creation is not permitted: {error}')
+            finally:
+                os.chdir(previous_directory)
+            with self.assertRaisesRegex(ValueError, 'Unsupported filesystem entry'):
+                self.check(case, workspace, snapshot)
+
+    @unittest.skipUnless(hasattr(os, 'mkfifo'), 'Named pipes are unavailable')
+    def test_prepare_rejects_special_fixture_before_creating_workspace(self):
+        case = CASES.select(CASES.validate(), 'P01')
+        os.mkfifo(CASES.fixture_path(case) / 'unexpected-pipe')
+        with mock.patch.object(CASES.tempfile, 'mkdtemp') as create_workspace, \
+                mock.patch.object(CASES.shutil, 'copytree') as copy_fixture:
+            with self.assertRaisesRegex(ValueError, 'Unsupported filesystem entry'):
+                CASES.prepare(case)
+        create_workspace.assert_not_called()
+        copy_fixture.assert_not_called()
 
     def test_allowed_changes_permits_only_existing_named_content(self):
         case = CASES.select(CASES.validate('development'), 'D08')

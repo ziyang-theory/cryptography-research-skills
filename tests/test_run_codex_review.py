@@ -1,6 +1,6 @@
 """Runner status/provenance tests using real staging and mocked model processes."""
 
-from contextlib import redirect_stdout
+from contextlib import redirect_stderr, redirect_stdout
 import hashlib
 import importlib.util
 import io
@@ -12,6 +12,7 @@ import sys
 import tempfile
 import unittest
 from unittest import mock
+import zipfile
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,6 +45,7 @@ class ReviewRunnerTests(unittest.TestCase):
         self.output = self.root / 'results'
         self.calls = []
         self.model_exit = 0
+        self.version_error = None
         self.model_error = None
         self.model_effect = None
         self.check_exit = None
@@ -64,6 +66,8 @@ class ReviewRunnerTests(unittest.TestCase):
     def run_process(self, command, **kwargs):
         self.calls.append(command)
         if command[1] == '--version':
+            if self.version_error:
+                raise self.version_error
             return subprocess.CompletedProcess(command, 0, stdout='codex test-version\n')
         if command[1] == 'exec':
             if self.model_error:
@@ -93,8 +97,24 @@ class ReviewRunnerTests(unittest.TestCase):
 
     def run_cases(self, *arguments):
         argv = ['run_codex_review.py', '--output-dir', str(self.output), *arguments]
-        with mock.patch.object(sys, 'argv', argv), redirect_stdout(io.StringIO()):
-            return RUNNER.main()
+        errors = io.StringIO()
+        with mock.patch.object(sys, 'argv', argv), redirect_stdout(io.StringIO()), redirect_stderr(errors):
+            result = RUNNER.main()
+        self.error_output = errors.getvalue()
+        return result
+
+    def startup_record(self):
+        return json.loads((self.output / 'startup.json').read_text())
+
+    def assert_cases_not_started(self, *case_ids):
+        record = self.startup_record()
+        self.assertEqual(record['cases'], [{'case_id': name, 'status': 'NOT STARTED'} for name in case_ids])
+        for case_id in case_ids:
+            self.assertFalse((self.output / case_id).exists())
+        self.assertEqual(list(self.output.rglob('run.json')), [])
+        self.assertEqual(record['loaded_package_binding'], 'UNVERIFIED')
+        self.assertIsNone(record['loaded_package_content_identity'])
+        self.assertTrue(record['behavioral_grade'].startswith('NOT RUN'))
 
     def record(self, case_id='P01'):
         return json.loads((self.output / case_id / 'run.json').read_text())
@@ -110,6 +130,98 @@ class ReviewRunnerTests(unittest.TestCase):
         self.assertEqual(record['filesystem_check_exit_code'], 0)
         self.assertIsNone(record['filesystem_check_launch_error'])
         self.assert_unassessed(record)
+
+    def test_explicit_candidate_archive_works_without_default_archive(self):
+        retained = self.root / 'retained-candidate.zip'
+        self.archive.replace(retained)
+        self.assertEqual(self.run_cases('--case', 'P01', '--candidate-archive', str(retained)), 0)
+        record = self.record()
+        self.assertEqual(record['candidate_archive_path'], str(retained))
+        self.assertEqual(record['candidate_archive_sha256'], hashlib.sha256(retained.read_bytes()).hexdigest())
+        self.assertEqual(record['loaded_package_binding'], 'UNVERIFIED')
+        self.assertEqual(self.startup_record()['status'], 'PASSED')
+        self.assertFalse(self.archive.exists())
+
+    def test_retained_archive_version_is_not_inferred_from_checkout(self):
+        manifest_path = self.submission / 'plugin.json'
+        manifest = json.loads(manifest_path.read_text())
+        manifest['version'] = '0.2.0'
+        manifest_path.write_text(json.dumps(manifest))
+        retained = self.root / 'retained-0.1.0.zip'
+        with zipfile.ZipFile(retained, 'w') as archive:
+            archive.writestr('plugin.json', json.dumps({**manifest, 'version': '0.1.0'}))
+        self.assertEqual(self.run_cases('--case', 'P01', '--candidate-archive', str(retained)), 0)
+        expected_hash = hashlib.sha256(retained.read_bytes()).hexdigest()
+        for record in (self.startup_record(), self.record()):
+            self.assertEqual(record['source_manifest_version'], '0.2.0')
+            self.assertIsNone(record['candidate_plugin_version'])
+            self.assertEqual(record['candidate_archive_sha256'], expected_hash)
+            self.assertEqual(record['loaded_package_binding'], 'UNVERIFIED')
+            self.assertIsNone(record['loaded_package_content_identity'])
+
+    def test_missing_candidate_archive_records_failure_before_starting_cases(self):
+        self.archive.unlink()
+        self.assertEqual(self.run_cases('--case', 'P01', '--case', 'P02'), 1)
+        record = self.startup_record()
+        self.assertEqual(record['status'], 'FAILED')
+        self.assertEqual(record['phase'], 'candidate_archive')
+        self.assertIsNone(record['candidate_archive_sha256'])
+        self.assertEqual(self.calls, [])
+        self.assertIn('scripts/build_plugin.py', self.error_output)
+        self.assertIn('--candidate-archive', self.error_output)
+        self.assert_cases_not_started('P01', 'P02')
+
+    def test_unreadable_candidate_archive_records_error_without_launching_codex(self):
+        read_bytes = Path.read_bytes
+        def unreadable(path):
+            if path == self.archive:
+                raise PermissionError('synthetic archive read denied')
+            return read_bytes(path)
+        with mock.patch.object(Path, 'read_bytes', autospec=True, side_effect=unreadable):
+            self.assertEqual(self.run_cases('--case', 'P01'), 1)
+        record = self.startup_record()
+        self.assertEqual(record['status'], 'FAILED')
+        self.assertEqual(record['error_type'], 'PermissionError')
+        self.assertIn('archive read denied', record['error'])
+        self.assertEqual(self.calls, [])
+        self.assert_cases_not_started('P01')
+
+    def test_missing_cli_records_startup_failure_without_staging_cases(self):
+        executable = str(self.root / 'missing-codex')
+        self.version_error = FileNotFoundError(2, 'No such file or directory', executable)
+        self.assertEqual(self.run_cases('--codex', executable, '--case', 'P01', '--case', 'P02'), 1)
+        record = self.startup_record()
+        self.assertEqual(record['status'], 'FAILED')
+        self.assertEqual(record['phase'], 'codex_version')
+        self.assertEqual(record['error_type'], 'FileNotFoundError')
+        self.assertIsNone(record['exit_code'])
+        self.assertEqual(self.calls, [[executable, '--version']])
+        self.assertEqual(record['candidate_archive_sha256'], hashlib.sha256(self.archive.read_bytes()).hexdigest())
+        self.assertIn('Check --codex', self.error_output)
+        self.assert_cases_not_started('P01', 'P02')
+
+    def test_nonzero_cli_version_retains_exit_status_and_diagnostics(self):
+        self.version_error = subprocess.CalledProcessError(
+            9, ['codex', '--version'], output='partial version output', stderr='synthetic startup failure')
+        self.assertEqual(self.run_cases('--case', 'P01'), 9)
+        record = self.startup_record()
+        self.assertEqual(record['status'], 'FAILED')
+        self.assertEqual(record['phase'], 'codex_version')
+        self.assertEqual(record['exit_code'], 9)
+        self.assertEqual(record['stdout'], 'partial version output')
+        self.assertEqual(record['stderr'], 'synthetic startup failure')
+        self.assertEqual(self.calls, [['codex', '--version']])
+        self.assert_cases_not_started('P01')
+
+    def test_reusing_output_directory_does_not_overwrite_startup_evidence(self):
+        self.archive.unlink()
+        self.assertEqual(self.run_cases('--case', 'P01'), 1)
+        original = (self.output / 'startup.json').read_bytes()
+        self.archive.write_bytes(b'candidate now exists')
+        self.assertEqual(self.run_cases('--case', 'P01'), 1)
+        self.assertEqual((self.output / 'startup.json').read_bytes(), original)
+        self.assertEqual(self.calls, [])
+        self.assertIn('new output directory', self.error_output)
 
     def test_codex_failure_retains_record_and_stops_before_next_case(self):
         self.model_exit = 7
@@ -159,7 +271,9 @@ class ReviewRunnerTests(unittest.TestCase):
         self.assertEqual(self.run_cases('--case', 'P01'), 0)
         first = self.record()
         self.assertEqual(first['candidate_archive_sha256'], hashlib.sha256(self.archive.read_bytes()).hexdigest())
-        self.assertIn('candidate_plugin_version', first)
+        manifest = json.loads((self.submission / 'plugin.json').read_text())
+        self.assertEqual(first['source_manifest_version'], manifest['version'])
+        self.assertIsNone(first['candidate_plugin_version'])
         self.assertNotIn('plugin_version', first)
         self.assertNotIn('archive_sha256', first)
         self.assertEqual(first['loaded_package_binding'], 'UNVERIFIED')

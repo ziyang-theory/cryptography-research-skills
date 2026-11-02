@@ -55,6 +55,10 @@ or evidence of cryptographic security. The false statement in P01 is intentional
    the manual behavioral rubric and the filesystem check. Save actual outcomes in
    a separate run report; do not substitute fixture validation for behavioral runs.
 
+The snapshot compares regular-file paths and contents. Symlinks and special files,
+such as named pipes and sockets, are rejected. Directory metadata and changes to
+empty directories are not tracked.
+
 ## Development cases
 
 | Case | Requested result |
@@ -126,18 +130,38 @@ not mean the assistant should refuse to help with the supported part of the task
 
 ## Optional Codex CLI runner
 
-After installing `crypto-research-skills@personal`, run the synthetic cases with:
+The runner requires an installed `crypto-research-skills@personal` plugin, a
+working Codex CLI, and a readable local candidate ZIP for the recorded checksum.
+Installing the plugin does not create that ZIP in this checkout. To build the
+default candidate from the current sources and run the cases, use:
 
 ```sh
+python3 scripts/build_plugin.py
 python3 submission/tests/run_codex_review.py --codex /path/to/codex
 ```
+
+The default archive is `dist/crypto-research-skills-<manifest-version>.zip`.
+To review a retained candidate without rebuilding it, select its exact file:
+
+```sh
+python3 submission/tests/run_codex_review.py --codex /path/to/codex \
+  --candidate-archive /path/to/retained-candidate.zip
+```
+
+This option selects the file to hash; it does not install the archive or establish
+that its bytes are the instructions loaded by the installed plugin.
 
 Use repeated `--case P01` arguments to select cases and `--output-dir PATH` to
 choose the output location. Use `--suite development` with optional `--case D01`
 selections for the supplemental suite. The runner uses fresh workspaces, records
-visible responses and tool traces, and checks file effects. It retains `run.json`
-and stops with nonzero status if Codex or the checker fails, including a launch
-error. Successful mechanical checks leave the behavioral grade `NOT ASSESSED`.
+visible responses and tool traces, and checks file effects. The output directory's
+`startup.json` records archive and CLI-version checks. An unreadable or missing
+archive, or a failed `codex --version`, produces a startup failure record with all
+selected cases marked `NOT STARTED` and exits nonzero. The startup record describes
+initialization only; subsequent execution is recorded in each case's `run.json`.
+Per-case records are retained if Codex execution or the checker fails, including
+a launch error. Use a new output directory for each invocation to preserve prior
+evidence. Successful mechanical checks leave the behavioral grade `NOT ASSESSED`.
 
 The runner ignores saved user configuration. It disables only the discovered
 `~/.agents/skills/<name>/SKILL.md` paths for these twelve skills and their resolved
@@ -146,8 +170,10 @@ discovery locations and system/global instructions may still apply. Authenticati
 comes from the existing Codex account.
 
 The repository manifest version and local ZIP SHA-256 are recorded as
-`candidate_plugin_version` and `candidate_archive_sha256`. The runner enables the
-installed plugin by name without establishing its loading origin or contents:
+`source_manifest_version` and `candidate_archive_sha256` in both startup and
+per-case records. The runner hashes the ZIP without reading its metadata, so
+`candidate_plugin_version` remains null. The runner enables the installed plugin
+by name without establishing its loading origin or contents:
 `loaded_package_binding` remains `UNVERIFIED` and its content identity is null.
 It records `model_selection: cli_default`, with no requested override and an
 unknown resolved model. These runs show behavior in the recorded environment;

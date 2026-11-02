@@ -105,6 +105,9 @@ def local_reference(target, source, files, boundary=None, file_only=False):
     target = target.strip()
     if target.startswith('<') and target.endswith('>'):
         target = target[1:-1]
+    # URL parsing otherwise mistakes a Windows drive letter for a URI scheme.
+    if re.match(r'^[A-Za-z]:', unquote(target)):
+        raise ValueError(f'Non-portable reference in {source}: {target}')
     parsed = urlsplit(target)
     if parsed.scheme == 'file' or target.startswith('~/'):
         raise ValueError(f'Non-portable reference in {source}: {target}')
@@ -126,6 +129,17 @@ def local_reference(target, source, files, boundary=None, file_only=False):
         raise ValueError(f'Reference escapes skill in {source}: {target}')
     if destination not in files and (file_only or not any(name.startswith(destination + '/') for name in files)):
         raise ValueError(f'Missing local reference in {source}: {target}')
+
+
+def local_image_reference(target, source, files, boundary=None):
+    """Listing and skill images must name a packaged file, not a Markdown anchor."""
+    target = target.strip()
+    if target.startswith('<') and target.endswith('>'):
+        raise ValueError(f'Image reference in {source} must be a literal file path: {target}')
+    parsed = urlsplit(target)
+    if parsed.scheme or parsed.netloc or not parsed.path or parsed.query or parsed.fragment:
+        raise ValueError(f'Image reference in {source} must be a relative local file path: {target}')
+    local_reference(target, source, files, boundary, file_only=True)
 
 
 def yaml_mapping(text, source):
@@ -160,12 +174,8 @@ def validate_skill_ui(data, source, files, boundary):
     for field in ('icon_small', 'icon_large'):
         if field not in interface:
             continue
-        target = interface[field]
-        parsed = urlsplit(target)
-        if parsed.scheme or parsed.netloc or not parsed.path or parsed.query or parsed.fragment:
-            raise ValueError(f'{source}.interface.{field} must be a relative local file path')
         # Icon paths resolve from the skill root, and must name packaged files.
-        local_reference(target, boundary + '/SKILL.md', files, boundary, file_only=True)
+        local_image_reference(interface[field], boundary + '/SKILL.md', files, boundary)
 
 
 def validate_references(files):
@@ -238,7 +248,7 @@ def validate_manifest(manifest, files):
         raise ValueError('interface.defaultPrompt must not contain duplicate starter prompts')
     for key in ('composerIcon', 'logo'):
         require_string(interface.get(key), f'interface.{key}')
-        local_reference(interface[key], 'plugin.json', files)
+        local_image_reference(interface[key], 'plugin.json', files)
     return overlay
 
 
@@ -305,6 +315,40 @@ def check_owned_stage(stage, inventory_path):
         raise ValueError(f'Existing stage contains modified or additional files: {stage}')
 
 
+def publish_outputs(output_dir, replacements):
+    """Restore previous outputs if finalization fails; retain backups if recovery fails."""
+    backups = Path(tempfile.mkdtemp(prefix='.plugin-backup-', dir=output_dir))
+    changed = []
+    try:
+        for prepared, destination in replacements:
+            previous = None
+            if destination.exists():
+                previous = backups / destination.name
+                destination.replace(previous)
+            changed.append((destination, previous))
+            prepared.replace(destination)
+    except BaseException as error:
+        recovery_errors = []
+        for destination, previous in reversed(changed):
+            try:
+                if destination.is_dir():
+                    shutil.rmtree(destination)
+                else:
+                    destination.unlink(missing_ok=True)
+                if previous is not None:
+                    previous.replace(destination)
+            except OSError as recovery_error:
+                recovery_errors.append(str(recovery_error))
+        if recovery_errors:
+            raise OSError(f'Build finalization failed; recovery is incomplete. '
+                          f'Previous outputs are retained in {backups}: '
+                          + '; '.join(recovery_errors)) from error
+        shutil.rmtree(backups)
+        raise
+    else:
+        shutil.rmtree(backups)
+
+
 def build(root=ROOT, output_dir=None, check=False):
     root = Path(root).absolute()
     manifest, skills, files = collect_package(root)
@@ -325,6 +369,8 @@ def build(root=ROOT, output_dir=None, check=False):
     for output in (archive, inventory_path, output_dir / 'SHA256SUMS'):
         if output.is_symlink():
             raise ValueError(f'Symlink output is not permitted: {output}')
+        if output.exists() and not output.is_file():
+            raise ValueError(f'Non-regular output is not permitted: {output}')
     with tempfile.TemporaryDirectory(prefix='.plugin-build-', dir=output_dir) as temporary:
         temporary = Path(temporary)
         staged = temporary / NAME
@@ -353,12 +399,16 @@ def build(root=ROOT, output_dir=None, check=False):
             'skills': {name: f'{collection}/{name}' for name, (collection, _) in sorted(skills.items())},
             'files': [{'path': name, 'bytes': len(data), 'sha256': sha256(data)} for name, data in files.items()],
         }
-        if stage.exists():
-            shutil.rmtree(stage)
-        staged.replace(stage)
-        temporary_archive.replace(archive)
-        inventory_path.write_bytes(json_bytes(inventory))
-        (output_dir / 'SHA256SUMS').write_text(f'{digest}  {archive_name}\n', encoding='utf-8')
+        temporary_inventory = temporary / inventory_path.name
+        temporary_inventory.write_bytes(json_bytes(inventory))
+        temporary_checksums = temporary / 'SHA256SUMS'
+        temporary_checksums.write_text(f'{digest}  {archive_name}\n', encoding='utf-8')
+        publish_outputs(output_dir, [
+            (staged, stage),
+            (temporary_archive, archive),
+            (temporary_inventory, inventory_path),
+            (temporary_checksums, output_dir / 'SHA256SUMS'),
+        ])
     return {'archive': str(archive), 'sha256': digest, 'skills': len(skills), 'files': len(files)}
 
 

@@ -23,6 +23,8 @@ def main():
     parser.add_argument('--suite', choices=review_cases.SUITES, default='submission')
     parser.add_argument('--case', action='append', dest='case_ids', help='Case ID; repeat to select multiple')
     parser.add_argument('--output-dir', type=Path, help='Directory for traces and results; default: new temporary directory')
+    parser.add_argument('--candidate-archive', type=Path,
+                        help='Candidate ZIP to hash (default: dist/<plugin>-<version>.zip); does not install it')
     args = parser.parse_args()
     cases = review_cases.validate(args.suite)
     if args.case_ids:
@@ -32,9 +34,53 @@ def main():
     output.mkdir(parents=True, exist_ok=True)
     root = review_cases.SUBMISSION.parent
     manifest = json.loads((review_cases.SUBMISSION / 'plugin.json').read_text())
-    archive = root / 'dist' / f'{manifest["name"]}-{manifest["version"]}.zip'
-    archive_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
-    version = subprocess.run([args.codex, '--version'], capture_output=True, text=True, check=True).stdout.strip()
+    archive = (args.candidate_archive or root / 'dist' / f'{manifest["name"]}-{manifest["version"]}.zip')
+    archive = archive.expanduser().absolute()
+    startup_path = output / 'startup.json'
+    version_command = [args.codex, '--version']
+    startup = {
+        'suite': args.suite, 'started_at': datetime.now(timezone.utc).isoformat(),
+        'finished_at': None, 'status': 'STARTING', 'phase': 'candidate_archive',
+        'cases': [{'case_id': case['id'], 'status': 'NOT STARTED'} for case in cases],
+        'source_manifest_version': manifest['version'], 'candidate_plugin_version': None,
+        'candidate_archive_path': str(archive), 'candidate_archive_sha256': None,
+        'codex_version': None, 'command': version_command,
+        'exit_code': None, 'error_type': None, 'error': None,
+        'stdout': None, 'stderr': None,
+        'loaded_package_binding': 'UNVERIFIED', 'loaded_package_content_identity': None,
+        'behavioral_grade': 'NOT RUN: no case has started at initialization',
+    }
+    try:
+        with startup_path.open('x', encoding='utf-8') as stream:
+            stream.write(json.dumps(startup, indent=2) + '\n')
+    except OSError as error:
+        print(f'Cannot create startup record {startup_path}: {error}. Use a new output directory.', file=sys.stderr)
+        return 1
+    try:
+        if not archive.is_file():
+            raise ValueError(f'Candidate archive is missing or is not a regular file: {archive}')
+        archive_hash = hashlib.sha256(archive.read_bytes()).hexdigest()
+        startup['candidate_archive_sha256'] = archive_hash
+        startup['phase'] = 'codex_version'
+        version = subprocess.run(version_command, capture_output=True, text=True, check=True).stdout.strip()
+        startup['codex_version'] = version
+    except (OSError, ValueError, subprocess.CalledProcessError) as error:
+        startup.update({
+            'status': 'FAILED', 'finished_at': datetime.now(timezone.utc).isoformat(),
+            'error_type': type(error).__name__, 'error': str(error),
+            'exit_code': getattr(error, 'returncode', None),
+            'stdout': getattr(error, 'stdout', None), 'stderr': getattr(error, 'stderr', None),
+        })
+        startup_path.write_text(json.dumps(startup, indent=2) + '\n', encoding='utf-8')
+        if startup['phase'] == 'candidate_archive':
+            remedy = ('Build the default candidate with python3 scripts/build_plugin.py '
+                      'from the repository root, or pass --candidate-archive PATH to a readable ZIP.')
+        else:
+            remedy = 'Check --codex and confirm that the executable runs successfully with --version.'
+        print(f'Startup failed: {error}. {remedy} Inspect {startup_path}.', file=sys.stderr)
+        return getattr(error, 'returncode', None) or 1
+    startup.update({'status': 'PASSED', 'finished_at': datetime.now(timezone.utc).isoformat(), 'exit_code': 0})
+    startup_path.write_text(json.dumps(startup, indent=2) + '\n', encoding='utf-8')
     # Suppress discovered default personal .agents copies and their resolved
     # targets only. Other skill discovery locations are not inspected here.
     catalog = json.loads((root / 'collections.json').read_text())
@@ -91,7 +137,8 @@ def main():
         record = {
             'suite': args.suite, 'case_id': case['id'], 'started_at': started,
             'finished_at': datetime.now(timezone.utc).isoformat(),
-            'codex_version': version, 'candidate_plugin_version': manifest['version'],
+            'codex_version': version, 'source_manifest_version': manifest['version'],
+            'candidate_plugin_version': None,
             'candidate_archive_sha256': archive_hash, 'candidate_archive_path': str(archive),
             'loaded_package_binding': 'UNVERIFIED', 'loaded_package_content_identity': None,
             'loaded_package_binding_reason': 'The runner enables the installed plugin by name; it does not establish its loading origin or content.',

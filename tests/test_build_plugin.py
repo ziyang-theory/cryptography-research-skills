@@ -178,6 +178,20 @@ class BuildPluginTests(unittest.TestCase):
             BUILDER.build(self.root)
         self.assertFalse((self.root / 'dist').exists())
 
+    def test_windows_drive_references_are_rejected_before_outputs(self):
+        source = self.skill / 'SKILL.md'
+        original = source.read_text(encoding='utf-8')
+        for target in ('C:/Users/example/private.md', r'C:\Users\example\private.md',
+                       'c:relative.md', '%43%3A/Users/example/private.md'):
+            with self.subTest(target=target):
+                source.write_text(original + f'\n[Private]({target})\n', encoding='utf-8')
+                with self.assertRaisesRegex(ValueError, 'Non-portable reference'):
+                    BUILDER.build(self.root)
+                self.assertFalse((self.root / 'dist').exists())
+        source.write_text(original + '\n[Source](https://example.org/paper.pdf#page=2)\n',
+                          encoding='utf-8')
+        self.assertEqual(BUILDER.build(self.root, check=True)['skills'], 12)
+
     def test_frontmatter_requires_mapping_and_nonempty_string_fields(self):
         name = self.skill.name
         cases = [
@@ -293,7 +307,9 @@ class BuildPluginTests(unittest.TestCase):
                       encoding='utf-8')
         self.assertGreater(BUILDER.build(self.root, check=True)['files'], 0)
         for target in ('./assets/', '../other-skill/icon.png', '/tmp/icon.png',
-                       'https://example.org/icon.png', '#icon', './assets/icon.png?raw=1'):
+                       'https://example.org/icon.png', '#icon', './assets/icon.png?raw=1',
+                       '<https://example.org/icon.png>', '<//example.org/icon.png>',
+                       '<./assets/icon.png>', '  <https://example.org/icon.png>  '):
             with self.subTest(target=target):
                 ui.write_text(f'interface: {{icon_large: {json.dumps(target)}}}\n', encoding='utf-8')
                 with self.assertRaises(ValueError):
@@ -319,6 +335,24 @@ class BuildPluginTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'Missing local reference'):
             BUILDER.build(self.root, check=True)
 
+    def test_listing_images_require_packaged_file_paths(self):
+        interface = self.manifest['extensions']['com.openai']['interface']
+        for field in ('composerIcon', 'logo'):
+            for target in ('./assets/', '#missing-logo', './assets/logo.png#part',
+                           './assets/logo.png?raw=1', 'https://example.org/logo.png',
+                           '/tmp/logo.png', 'C:/Users/example/logo.png', './missing.png',
+                           '<https://example.org/logo.png>', '<//example.org/logo.png>',
+                           '<./assets/logo.png>', '  <https://example.org/logo.png>  '):
+                with self.subTest(field=field, target=target):
+                    interface[field] = target
+                    self.write_manifest()
+                    with self.assertRaises(ValueError):
+                        BUILDER.build(self.root)
+                    self.assertFalse((self.root / 'dist').exists())
+            interface[field] = './assets/logo.png'
+        self.write_manifest()
+        self.assertEqual(BUILDER.build(self.root, check=True)['skills'], 12)
+
     def test_modified_existing_stage_is_preserved(self):
         BUILDER.build(self.root)
         sentinel = self.root / 'dist' / BUILDER.NAME / 'user-notes.md'
@@ -326,6 +360,93 @@ class BuildPluginTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, 'modified or additional'):
             BUILDER.build(self.root)
         self.assertEqual(sentinel.read_text(encoding='utf-8'), 'preserve this file')
+
+    def test_non_file_output_collision_preserves_stage_and_allows_retry(self):
+        output_names = (f'{BUILDER.NAME}-0.1.0.zip', f'{BUILDER.NAME}-build.json', 'SHA256SUMS')
+        for index, name in enumerate(output_names):
+            with self.subTest(output=name):
+                output = self.root / f'collision-{index}'
+                first = BUILDER.build(self.root, output)
+                collision = output / name
+                previous = collision.read_bytes()
+                collision.unlink()
+                collision.mkdir()
+                before = dict(BUILDER.tree_files(output, output, exclude_caches=False))
+                source = self.skill / 'SKILL.md'
+                source.write_text(source.read_text() + '\nA changed source for the next build.\n')
+                with self.assertRaises(ValueError):
+                    BUILDER.build(self.root, output)
+                self.assertTrue(collision.is_dir())
+                self.assertEqual(dict(BUILDER.tree_files(output, output, exclude_caches=False)), before)
+                collision.rmdir()
+                collision.write_bytes(previous)
+                retry = BUILDER.build(self.root, output)
+                self.assertNotEqual(retry['sha256'], first['sha256'])
+
+    def test_failed_output_replacement_restores_previous_build_and_allows_retry(self):
+        names = (BUILDER.NAME, f'{BUILDER.NAME}-0.1.0.zip',
+                 f'{BUILDER.NAME}-build.json', 'SHA256SUMS')
+        original_replace = Path.replace
+        for index, name in enumerate(names):
+            with self.subTest(output=name):
+                output = self.root / f'failure-{index}'
+                first = BUILDER.build(self.root, output)
+                before = dict(BUILDER.tree_files(output, output, exclude_caches=False))
+                source = self.skill / 'SKILL.md'
+                source.write_text(source.read_text() + '\nA changed source for the next build.\n')
+
+                def fail_publication(path, target):
+                    if path.parent.name.startswith('.plugin-build-') and Path(target).name == name:
+                        raise PermissionError('simulated finalization failure')
+                    return original_replace(path, target)
+
+                with mock.patch.object(Path, 'replace', fail_publication):
+                    with self.assertRaisesRegex(PermissionError, 'simulated finalization failure'):
+                        BUILDER.build(self.root, output)
+                self.assertEqual(dict(BUILDER.tree_files(output, output, exclude_caches=False)), before)
+                self.assertEqual({p.name for p in output.iterdir()}, set(names))
+                retry = BUILDER.build(self.root, output)
+                self.assertNotEqual(retry['sha256'], first['sha256'])
+
+    def test_failed_first_publication_leaves_no_partial_outputs(self):
+        output = self.root / 'first-failure'
+        original_replace = Path.replace
+
+        def fail_archive(path, target):
+            if path.parent.name.startswith('.plugin-build-') and Path(target).suffix == '.zip':
+                raise PermissionError('simulated finalization failure')
+            return original_replace(path, target)
+
+        with mock.patch.object(Path, 'replace', fail_archive):
+            with self.assertRaises(PermissionError):
+                BUILDER.build(self.root, output)
+        self.assertEqual(list(output.iterdir()), [])
+        self.assertEqual(BUILDER.build(self.root, output)['skills'], 12)
+
+    def test_failed_recovery_retains_previous_stage_backup(self):
+        output = self.root / 'recovery-failure'
+        BUILDER.build(self.root, output)
+        stage = output / BUILDER.NAME
+        before = {p.relative_to(stage): data for p, data in BUILDER.tree_files(stage, stage)}
+        source = self.skill / 'SKILL.md'
+        source.write_text(source.read_text() + '\nA changed source for the next build.\n')
+        original_replace = Path.replace
+
+        def fail_publication_and_recovery(path, target):
+            if path.parent.name.startswith('.plugin-build-') and Path(target).suffix == '.zip':
+                raise PermissionError('simulated finalization failure')
+            if path.parent.name.startswith('.plugin-backup-') and Path(target) == stage:
+                raise PermissionError('simulated recovery failure')
+            return original_replace(path, target)
+
+        with mock.patch.object(Path, 'replace', fail_publication_and_recovery):
+            with self.assertRaisesRegex(OSError, 'recovery is incomplete.*retained'):
+                BUILDER.build(self.root, output)
+        backups = list(output.glob('.plugin-backup-*'))
+        self.assertEqual(len(backups), 1)
+        saved_stage = backups[0] / BUILDER.NAME
+        self.assertEqual({p.relative_to(saved_stage): data
+                          for p, data in BUILDER.tree_files(saved_stage, saved_stage)}, before)
 
     def test_manifest_rejects_scope_expansion_and_inconsistent_listing(self):
         baseline = json.dumps(self.manifest)

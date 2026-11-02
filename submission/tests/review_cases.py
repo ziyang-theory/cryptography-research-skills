@@ -8,6 +8,7 @@ import argparse
 import hashlib
 import json
 import shutil
+import stat
 import tempfile
 from fractions import Fraction
 from pathlib import Path
@@ -46,10 +47,13 @@ def file_bytes(root):
         return {}
     result = {}
     for path in sorted(root.rglob("*")):
-        if path.is_symlink():
+        mode = path.lstat().st_mode
+        if stat.S_ISLNK(mode):
             raise ValueError(f"Symlink is not a review fixture: {path}")
-        if path.is_file():
+        if stat.S_ISREG(mode):
             result[path.relative_to(root).as_posix()] = path.read_bytes()
+        elif not stat.S_ISDIR(mode):
+            raise ValueError(f"Unsupported filesystem entry in review files: {path}")
     return result
 
 
@@ -139,6 +143,7 @@ def select(cases, case_id):
 
 
 def prepare(case, suite="submission"):
+    allowed_final = hashes(expected_files(case))
     root = Path(tempfile.mkdtemp(prefix=f"crypto-plugin-review-{case['id']}-"))
     workspace = root / "workspace"
     workspace.mkdir()
@@ -152,7 +157,7 @@ def prepare(case, suite="submission"):
         "workspace": str(workspace),
         "case_file_sha256": hashlib.sha256(case_file(suite).read_bytes()).hexdigest(),
         "initial_sha256": hashes(file_bytes(workspace)),
-        "allowed_final_sha256": hashes(expected_files(case)),
+        "allowed_final_sha256": allowed_final,
     }
     snapshot.write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"suite": suite, "case_id": case["id"], "workspace": str(workspace),
